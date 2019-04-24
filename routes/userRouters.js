@@ -29,14 +29,14 @@ module.exports = app => {
     }
   });
 
-  app.post("/auth/admins" , requireLogin , requireAdmin , async(req , res)=> {
+  app.post("/auth/admins", async (req, res) => {
     let { username } = req.body;
     username = req.body.username.toLowerCase();
     try {
       const user = await new User({
         ...req.body,
-        username ,
-        type:'admin',
+        username,
+        type: "admin"
       });
       user.password = user.auth.generateSalts(user.password);
       user.save();
@@ -47,39 +47,40 @@ module.exports = app => {
     }
   });
 
-  app.post('/auth/login' , async(req , res)=> {
+  app.post("/auth/login", async (req, res) => {
     try {
-      let { username , password } = req.body ;
+      let { username, password } = req.body;
       username = username.toLowerCase();
-      const user = await User.findOne({username});
-      const isTrue =  user.auth.comparePassword(password);
+      const user = await User.findOne({ username });
+      const isTrue = user.auth.comparePassword(password);
       const token = user.auth.generateAuthToken();
 
-      if(isTrue && user.type === 'admin' ) {
-           return res.cookie('alpha-access' , token , {
-          maxAge:1000*60*60*24*15 ,
-          signed:true ,
-          httpOnly:true // that means we cannot get this cookie from document.cookie
-        }).send(user);
-
-      } else if(isTrue && user.type === 'member') {
-        return res.cookie('omega-access' , token , {
-       maxAge:1000*60*60*24*15 ,
-       signed:true ,
-       httpOnly:true // that means we cannot get this cookie from document.cookie
-     }).send(user);
+      if (isTrue && user.type === "admin") {
+        return res
+          .cookie("alpha-access", token, {
+            maxAge: 1000 * 60 * 60 * 24 * 15,
+            signed: true,
+            httpOnly: true // that means we cannot get this cookie from document.cookie
+          })
+          .send(user);
+      } else if (isTrue && user.type === "member") {
+        return res
+          .cookie("omega-access", token, {
+            maxAge: 1000 * 60 * 60 * 24 * 15,
+            signed: true,
+            httpOnly: true // that means we cannot get this cookie from document.cookie
+          })
+          .send(user);
       } else {
-        throw Error('Something is Wrong with the user type');
+        throw Error("Something is Wrong with the user type");
       }
-    } catch(err) {
-      res.status(400).send('Something went wrong');
+    } catch (err) {
+      res.status(400).send("Something went wrong");
       console.log(err);
     }
-
-
   });
 
-  app.get('/auth/me' , requireLogin , (req , res)=> {
+  app.get("/auth/me", requireLogin, (req, res) => {
     res.status(200).json(req.user);
-  })
+  });
 };
