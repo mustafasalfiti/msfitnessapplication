@@ -52,4 +52,4 @@ userSchema.methods.auth = {
   }
 }
 
-module.exports = mongoose.model('User' , memberSchema);
+module.exports = mongoose.model('User' , userSchema);

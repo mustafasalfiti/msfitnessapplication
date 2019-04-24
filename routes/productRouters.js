@@ -1,5 +1,5 @@
 const Product = require("../models/Product");
-const { requireLogin, requireAdmin } = require("../middlewares/auth");
+const { requireLogin , requireAdmin } = require("../middlewares/auth");
 
 module.exports = app => {
   app.get("/products", requireLogin, async (req, res) => {

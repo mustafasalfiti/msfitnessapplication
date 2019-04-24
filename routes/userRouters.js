@@ -1,8 +1,8 @@
 const User = require("../models/User");
-const { requireLogin, requireAdmin } = require("../middlewares/auth");
+const { requireLogin , requireAdmin } = require("../middlewares/auth");
 
 module.exports = app => {
-  app.get("/auth/members", requireLogin, requireAdmin, async (req, res) => {
+  app.get("/auth/members", requireLogin, requireAdmin, async(req, res) => {
     try {
       const members = await User.find({ type: "member" }, "-password");
       res.status(200).json(members);
@@ -83,4 +83,5 @@ module.exports = app => {
   app.get("/auth/me", requireLogin, (req, res) => {
     res.status(200).json(req.user);
   });
+
 };
