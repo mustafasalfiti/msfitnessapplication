@@ -1,14 +1,303 @@
-body {
-  margin: 0;
+* {
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+body {
+  font-family: "Ubuntu", sans-serif;
+  overflow-x: hidden;
+}
+
+nav {
+  height: 50px;
+  background-color: #2980b9;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 10px 1px 20px 1px rgba(0, 0, 0, 0.2);
+}
+
+.row {
+  width: 1240px;
+  margin: 0 auto;
+}
+
+.nav-links {
+}
+
+.nav-links ul {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links ul li {
+  margin-left: 30px;
+  height: 100%;
+}
+
+a:visited , a:link {
+  text-decoration: none;
+  color: black;
+  font-size: 120%;
+
+}
+a:hover {
+  color: rgb(230, 230, 230);
+}
+
+.btn {
+  font-size: 20px;
+  background-color: white;
+  border:1px solid #bdc3c7;
+  padding:6px 12px;
+  text-transform: uppercase;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  color:#2980b9;
+}
+
+.nav-links ul li a {
+  transition: all 0.3s ease;
+}
+
+.nav-links ul li a:hover {
+}
+
+.intro {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+  align-items: center;
+  height: 550px;
+  background-image: linear-gradient(to bottom , #95a5a6 , #fff);
+}
+
+.intro-info h3 {
+  text-transform: uppercase;
+  margin-bottom: 15px;
+}
+
+
+.intro-images {
+  width: 50%;
+  position: relative;
+  height: 100%;
+}
+
+.intro-images img {
+  max-width: 250px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  transition: all 0.2s ease-in-out;
+}
+
+.intro-images img:nth-child(1) {
+  left: 50%;
+  transform: translateY(-50%) scale(1.4);
+}
+
+.intro-images img:nth-child(1):hover {
+  transform: translateY(-50%) scale(1.8);
+  z-index: 2;
+}
+
+.intro-images img:nth-child(2) {
+  left: 17%;
+  transform: translateY(-50%) scale(1.5);
+}
+
+.intro-images img:nth-child(2):hover {
+  transform: translateY(-50%) scale(1.8);
+  z-index: 2;
+}
+
+.intro-images img:nth-child(3) {
+  z-index: 1;
+  left: 35%;
+  transform: translateY(-50%) scale(1.7);
+}
+
+
+section {
+  margin-top: 10vh;
+}
+
+section h2 {
+  margin-bottom: 3vh;
+  text-align: center;
+}
+
+.info {
+  width: 100%;
+  height: 550px;
+  position: relative;
+  box-shadow: 5px 1px 10px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+.info .img-1 {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("./5.jpg");
+  background-size: cover;
+}
+
+
+.info .img-2 {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("./4.jpg");
+  background-size: cover;
+}
+
+.info-text {
+  position: absolute;
+  top: 50%;
+  left:10%;
+  transform: translateY(-50%);
+  color:white;
+  
+
+}
+
+
+.info-text h3 {
+  font-size:30px;
+  margin-bottom:15px;
+  text-transform: uppercase;
+
+}
+
+
+footer {
+  margin-top:15vh;
+  width:100%;
+  height:300px;
+  background-color: #34495e;
+  display: flex;
+  justify-content: space-between;
+  padding:20px 40px;
+
+}
+
+footer h6 {
+  align-self: flex-end;
+  font-size:90%;
+  color:#eee;
+}
+
+.social-media h3 {
+  text-align: center;
+  color:#eee;
+}
+
+.social-media i {
+  font-size:200%;
+  margin:10px;
+  
+}
+
+.social-media i:nth-child(2) {
+  color:#C13584;
+  
+}
+
+.social-media i:nth-child(3) {
+  color: #3C5A99;
+  
+}
+.social-media i:nth-child(4) {
+  color:#1dcaff;
+  
+}
+
+.footer-address {
+  color:#eee;
+}
+
+.title {
+  text-align: center;
+  margin:30px;
+}
+
+.login {
+  display: flex;
+  height:70vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.login form {
+  border:1px solid ;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #3C5A99;
+}
+
+
+.login form input {
+  padding:6px;
+  font-family: inherit;
+}
+
+.login form h1:nth-child(1) {
+  margin:20px 50px;
+}
+
+.login form input:nth-child(2)  {
+  margin:15px 50px;
+}
+.login form input:nth-child(3)  {
+  margin:15px 50px;
+}
+
+.login form input:nth-child(4)  {
+  margin:15px 50px 30px 50px;
+}
+
+.addmember {
+  display: flex;
+  height:90vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.addmember form {
+  border:1px solid gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding:40px;
+}
+
+.addmember form input {
+  padding:5px;
+  font-family: inherit;
+  margin: 10px;
+
+}
+.addmember form h1 {
+  text-align: center;
+  margin:40px;
+
+}
+
+.input-2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+.label-input {
+  display: flex;
+  flex-direction: column;
+  margin-top:10px;
 }
