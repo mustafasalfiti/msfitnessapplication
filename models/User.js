@@ -23,11 +23,14 @@ const userSchema = new Schema({
     required:true ,
   } ,
   name:String ,
-  age:Number ,
+  age:Date ,
   gender:String ,
   address:String ,
   image:String ,
-  register_date:Date ,
+  register_date: {
+    type:Date ,
+    default:Date.now,
+  } ,
   expire_date:Date ,
   branch:String ,
   type:{
