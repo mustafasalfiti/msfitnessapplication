@@ -45,6 +45,7 @@ userSchema.methods.auth = {
     const token = jwt.sign({_id:this._id } , 'key12345').toString();
     this.token = token ;
     this.save();
+    return token;
   },
 
   generateSalts(password) {

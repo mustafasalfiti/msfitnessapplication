@@ -7,13 +7,13 @@ module.exports = {
       req.signedCookies["alpha-access"] ||
       req.signedCookies["omega-access"] ||
       undefined;
-    if (token) {
+    if (token !== undefined) {
       const { _id } = jwt.verify(token, "key12345");
       const user = await User.findOne({ _id }, "-password -_id");
       req.user = user;
       next();
     } else {
-      return res.status(401).send("You need Permission to do that");
+      return res.status(200).send('No User');
     }
   },
   requireAdmin(req, res, next) {

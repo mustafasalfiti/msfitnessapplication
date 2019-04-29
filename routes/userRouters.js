@@ -1,8 +1,8 @@
 const User = require("../models/User");
-const { requireLogin , requireAdmin } = require("../middlewares/auth");
+const { requireLogin, requireAdmin } = require("../middlewares/auth");
 
 module.exports = app => {
-  app.get("/auth/members", requireLogin, requireAdmin, async(req, res) => {
+  app.get("/auth/members", requireLogin, requireAdmin, async (req, res) => {
     try {
       const members = await User.find({ type: "member" }, "-password");
       res.status(200).json(members);
@@ -12,7 +12,7 @@ module.exports = app => {
     }
   });
 
-  app.post("/auth/members", async (req, res) => {
+  app.post("/auth/members", requireLogin, requireAdmin, async (req, res) => {
     let { username } = req.body;
     username = req.body.username.toLowerCase();
     try {
@@ -21,7 +21,7 @@ module.exports = app => {
         username
       });
       user.password = user.auth.generateSalts(user.password);
-      user.save();
+      await user.save();
       res.status(200).send("User Successfully Created");
     } catch (err) {
       res.status(400).send("Something went wrong");
@@ -39,11 +39,11 @@ module.exports = app => {
         type: "admin"
       });
       user.password = user.auth.generateSalts(user.password);
-      user.save();
+      console.log();
+      await user.save();
       res.status(200).send("User Successfully Created");
     } catch (err) {
-      res.status(400).send("Something went wrong");
-      console.log(err);
+      res.status(400).send({...err});
     }
   });
 
@@ -54,7 +54,7 @@ module.exports = app => {
       const user = await User.findOne({ username });
       const isTrue = user.auth.comparePassword(password);
       const token = user.auth.generateAuthToken();
-
+      
       if (isTrue && user.type === "admin") {
         return res
           .cookie("alpha-access", token, {
@@ -83,5 +83,4 @@ module.exports = app => {
   app.get("/auth/me", requireLogin, (req, res) => {
     res.status(200).json(req.user);
   });
-
 };
