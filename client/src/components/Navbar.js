@@ -12,9 +12,28 @@ export default function Navbar() {
           <ul>
             <li>
               <NavLink to="/">Home</NavLink>
-            </li>                                                                                                                                                        
+            </li>
+            <li>
+              <NavLink to="/products">Products</NavLink>
+            </li>
             <li>
               <NavLink to="/cart">Cart</NavLink>
+            </li>
+            <li id="hoverli">
+              <a href="#">Admin</a>
+              <ul>
+                <li>
+                  <NavLink to="/members">Control Members</NavLink>
+                </li>
+
+                <li>
+                  <NavLink to="/admin/products">Control Products</NavLink>
+                </li>
+
+                <li>
+                  <NavLink to="/" onClick={user.logoutUser}>Logout</NavLink>
+                </li>
+              </ul>
             </li>
           </ul>
         );
@@ -25,10 +44,10 @@ export default function Navbar() {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/contactus">Products</NavLink>
+              <NavLink to="/products">Products</NavLink>
             </li>
             <li>
-              <NavLink to="/products">Contact us</NavLink>
+              <NavLink to="/contactus">Contact us</NavLink>
             </li>
             <li>
               <NavLink to={`/${user.username}`}>My Profile</NavLink>
@@ -36,6 +55,10 @@ export default function Navbar() {
 
             <li>
               <NavLink to="/cart">Cart</NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/" onClick={user.logoutUser}>Logout</NavLink>
             </li>
           </ul>
         );
@@ -59,13 +82,13 @@ export default function Navbar() {
 
   return (
     <nav>
-      <div className="nav-logo">
-        <a className="btn" href="#">
-          MS Fitness
-        </a>
-      </div>
-      <div className="nav-links">
-        {renderNanlinks()}
+      <div className="row">
+        <div className="nav-logo">
+          <a className="btn" href="#">
+            MS Fitness
+          </a>
+        </div>
+        <div className="nav-links">{renderNanlinks()}</div>
       </div>
     </nav>
   );

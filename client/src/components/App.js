@@ -30,6 +30,9 @@ export default function App() {
       case "REGISTER_USER": {
         return action.data;
       }
+      case "LOGOUT_USER": {
+        return null;
+      }
       case "FETCH_USER": {
         return action.data;
       }
@@ -50,11 +53,16 @@ export default function App() {
     dispatch({ type: "LOGIN_USER", data: response.data });
   }
 
+
+  async function logoutUser() {
+    const response = await axios.get("/auth/logout");
+    dispatch({ type: "LOGOUT_USER"});
+  }
+
   React.useEffect(() => {
     fetchUser();
   }, []);
 
-  console.log(user);
 
   function renderRoutes() {
     if (user) {
@@ -63,10 +71,10 @@ export default function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/members" component={Members} />
-            <Route exact path="/products" component={Products} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/:username" component={Home} />
 
+            <Route exact path="/admin/products" component={Products} />
             <Route exact path="/members/create" component={AddMember} />
             <Route exact path="/products/create" component={AddProduct} />
             <Route exact path="/products/:id" component={ShowProduct} />
@@ -97,7 +105,7 @@ export default function App() {
 
   return (
     <div>
-      <UserContext.Provider value={{ loginUser , user }}>
+      <UserContext.Provider value={{ loginUser , user , logoutUser}}>
         <BrowserRouter>
             {isDone ? renderRoutes() : ''}
         </BrowserRouter>
