@@ -1,18 +1,23 @@
 import React from "react";
 import Navbar from "./Navbar";
 import handleInputState from "../utils/handleInputState";
-import Field from "./Field";
+import Field  from "./Field";
+import axios from 'axios';
 
-export default function Addmember() {
+export default function Addmember({history}) {
   const [errors, setErrors] = React.useState({});
-  const [showError, setShowError] = React.useState(false);
-  function handleSubmit(event) {
+  const [showError , setShowError]= React.useState(false);
+  
+  async function handleSubmit(event) {
+    event.preventDefault();
     if (Object.keys(errors).length === 0) {
-      console.log("hello from inside");
-      console.log(values);
+      const response = await axios.post('/auth/members' , values);
+      if(response.status === 200) {
+        history.push('/members');
+      }
+      console.log(response);
     }
     setShowError(true);
-    event.preventDefault();
   }
 
   let { values, handleChange } = handleInputState({
@@ -89,173 +94,119 @@ export default function Addmember() {
               value={values}
               onChange={handleChange}
             />
-            <div className="label-input">
-              <label>Fullname : </label>
-              <span className="errorText">
-                {errors.fullname && showError ? errors.fullname : ""}
-              </span>
-
-              <input
-                className={errors.fullname && showError ? "input-error" : ""}
-                value={values.fullname}
-                type="text"
-                name="fullname"
-                placeholder="Fullname"
-                onChange={handleChange}
-              />
-            </div>
+            <Field
+              name="fullname"
+              placeholder="Fullname"
+              label="Fullname"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="input-2">
-            <div className="label-input">
-              <label>Phone Number : </label>
-              <span className="errorText">
-                {errors.phone_number && showError ? errors.phone_number : ""}
-              </span>
+            <Field
+              name="phone_number"
+              placeholder="Phone Number"
+              label="Phone Number"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
 
-              <input
-                className={
-                  errors.phone_number && showError ? "input-error" : ""
-                }
-                value={values.phone_number}
-                type="text"
-                name="phone_number"
-                placeholder="Phone number"
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="label-input">
-              <label>Branch : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
-
-              <input
-                className={errors.branch && showError ? "input-error" : ""}
-                value={values.branch}
-                type="text"
-                name="branch"
-                placeholder="Branch"
-                onChange={handleChange}
-              />
-            </div>
+            <Field
+              name="branch"
+              placeholder="Branch"
+              label="Branch"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="input-2">
-            <div className="label-input">
-              <label>Gender : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
-
-              <input
-                className={errors.gender && showError ? "input-error" : ""}
-                value={values.gender}
-                type="text"
-                name="gender"
-                placeholder="Gender"
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="label-input">
-              <label>Address : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
-
-              <input
-                className={errors.address && showError ? "input-error" : ""}
-                value={values.address}
-                type="text"
-                name="address"
-                placeholder="Address"
-                onChange={handleChange}
-              />
-            </div>
+            <Field
+              name="gender"
+              placeholder="Gender"
+              label="Gender"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+            <Field
+              name="address"
+              placeholder="Address"
+              label="Address"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="input-2">
-            <div className="label-input">
-              <label>Birthday : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
+            <Field
+              name="birthday"
+              placeholder="Birthday"
+              label="Birthday"
+              type="date"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
 
-              <input
-                className={errors.birthday && showError ? "input-error" : ""}
-                value={values.birthday}
-                type="date"
-                name="birthday"
-                onChange={handleChange}
-              />
-            </div>
+            <Field
+              name="register_date"
+              label="Register Date"
+              type="date"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
 
-            <div className="label-input">
-              <label>Register Date : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
-
-              <input
-                className={
-                  errors.register_date && showError ? "input-error" : ""
-                }
-                value={values.register_date}
-                type="date"
-                name="register_date"
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="label-input">
-              <label>Expire Date : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
-
-              <input
-                className={errors.expire_date && showError ? "input-error" : ""}
-                value={values.expire_date}
-                type="date"
-                name="expire_date"
-                onChange={handleChange}
-              />
-            </div>
+            <Field
+              name="expire_date"
+              label="Expire Date"
+              type="date"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="input-2">
-            <div className="label-input">
-              <label>Password : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
+            <Field
+              name="password"
+              placeholder="Password"
+              label="Password"
+              type="password"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
 
-              <input
-                className={errors.password && showError ? "input-error" : ""}
-                value={values.password}
-                type="password"
-                name="password"
-                placeholder="password"
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="label-input">
-              <label>Image : </label>
-              <span className="errorText">
-                {errors.username && showError ? errors.username : ""}
-              </span>
-
-              <input
-                className={errors.image ? "input-error" : ""}
-                value={values.image}
-                type="file"
-                onChange={handleChange}
-                name="image"
-              />
-            </div>
+            <Field
+              name="image"
+              label="Image"
+              type="file"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
           </div>
 
           <input type="submit" value="Submit" />
