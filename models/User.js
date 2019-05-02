@@ -22,7 +22,7 @@ const userSchema = new Schema({
     type:String ,
     required:true ,
   } ,
-  name:String ,
+  fullname:String ,
   age:Date ,
   gender:String ,
   address:String ,

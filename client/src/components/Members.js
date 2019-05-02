@@ -1,22 +1,50 @@
 import React from "react";
 import Navbar from "./Navbar";
-import { NavLink } from 'react-router-dom';
-
+import { NavLink } from "react-router-dom";
+import { fetchMembers } from "../actions";
+import Store from "../context/store";
 
 export default function Members() {
+  const { dispatch, members } = React.useContext(Store);
+
+  React.useEffect(() => {
+    fetchMembers(dispatch);
+  }, []);
+
+  function renderMembers() {
+    if (members !== null) {
+      return members.map((member, i) => (
+        <tr key={member._id}>
+          <td>{i + 1}</td>
+          <td>{member.username}</td>
+          <td>{member.fullname}</td>
+          <td>{member.phone_number}</td>
+          <td>{member.address}</td>
+          <td>{member.expire_date}</td>
+          <td>
+            <NavLink to={`/admin/members/${member.username}`}>
+              more info
+            </NavLink>
+          </td>
+        </tr>
+      ));
+    } else {
+      return <tr>Loading</tr>;
+    }
+  }
   return (
     <div>
       <header>
         <Navbar />
       </header>
-      <div className="info"> 
+      <div className="info">
         <div className="info-panel">
           <div className="info-panel-info">
-            <p>Members: 20</p>
-            <p>Active Members: 16</p>
-            <p>Expired Members: 4</p>
+            <p>Members: {members ? members.length : "Loading"}</p>
+            <p>Active Members: {members ? members.length : "Loading"}</p>
+            <p>Expired Members: {members ? members.length : "Loading"}</p>
           </div>
-          <NavLink to="/members/create">Add Member</NavLink>
+          <NavLink to="/admin/members/create">Add Member</NavLink>
         </div>
 
         <table>
@@ -32,41 +60,8 @@ export default function Members() {
             </tr>
           </thead>
 
-          <tbody>
-            <tr>
-              <td>1</td>
-              <td>mmsalfiti</td>
-              <td>Mustafa Salfiti</td>
-              <td>017651541232</td>
-              <td>Berlin</td>
-              <td>21 - 5 - 2019</td>
-              <td><NavLink to="/members">more info</NavLink></td>
-            </tr>
-
-            <tr>
-              <td>2</td>
-              <td>ibrahimRifae</td>
-              <td>Ibrahim Rifae</td>
-              <td>052812371223</td>
-              <td>Bayern</td>
-              <td>23 - 6 - 2019</td>
-              <td><NavLink to="/members">more info</NavLink></td>
-            </tr>
-
-            <tr>
-              <td>3</td>
-              <td>badersamme2</td>
-              <td>Bader Salfiti</td>
-              <td>0109285889127</td>
-              <td>Berlin</td>
-              <td>11 - 5 - 2019</td>
-              <td><NavLink to="/members">more info</NavLink></td>
-            </tr>
-            </tbody>
+          <tbody>{renderMembers()}</tbody>
         </table>
-      
-      
-      
       </div>
     </div>
   );

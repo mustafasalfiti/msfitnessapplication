@@ -1,16 +1,16 @@
 import React from "react";
 import Navbar from "./Navbar";
 import handleInputState from '../utils/handleInputState'
-import { UserContext } from '../context/UserContext';
+import Store from '../context/store';
 
 export default function Login() {
   
   function handleSubmit(event) {
     event.preventDefault();
-    context.loginUser(values);
+    loginUser(dispatch , values);
   }
   const {values , handleChange } = handleInputState({username:'' , password:''})
-  const context = React.useContext(UserContext) ;
+  const {loginUser , dispatch} = React.useContext(Store) ;
   
   return (
     <div>

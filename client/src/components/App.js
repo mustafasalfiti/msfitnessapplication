@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import axios from "axios";
-import { UserContext } from "../context/UserContext";
+import Store from "../context/store";
 import Home from "./Home";
 import Login from "./Login";
 import Members from "./Members";
@@ -12,85 +11,63 @@ import Products from "./Products";
 import AddProduct from "./AddProduct";
 import ShowProduct from "./ShowProduct";
 
+import reducer from "../reducers";
+
+import { fetchUser, loginUser, logoutUser , } from "../actions";
+
 import Cart from "./Cart";
 
 export default function App() {
   // To Render Page!!
-  const [isDone , setIsDone] = React.useState(false);
+  const [isDone, setIsDone] = React.useState(false);
 
-  setTimeout(()=> {
+  setTimeout(() => {
     setIsDone(true);
-  } , 150)
+  }, 100);
 
-  function userReducer(state, action) {
-    switch (action.type) {
-      case "LOGIN_USER": {
-        return action.data;
-      }
-      case "REGISTER_USER": {
-        return action.data;
-      }
-      case "LOGOUT_USER": {
-        return null;
-      }
-      case "FETCH_USER": {
-        return action.data;
-      }
-      default:
-        return state;
-    }
-  }
-
-  const [user, dispatch] = React.useReducer(userReducer, null);
-
-  async function fetchUser() {
-    const response = await axios.get("/auth/me");
-    dispatch({ type: "FETCH_USER", data: response.data });
-  }
-
-  async function loginUser(data) {
-    const response = await axios.post("/auth/login", data);
-    dispatch({ type: "LOGIN_USER", data: response.data });
-  }
-
-
-  async function logoutUser() {
-    const response = await axios.get("/auth/logout");
-    dispatch({ type: "LOGOUT_USER"});
-  }
+  const [store, dispatch] = React.useReducer(reducer, {
+    user: null,
+    products: null,
+    members: null
+  });
+  console.log(store);
 
   React.useEffect(() => {
-    fetchUser();
+    fetchUser(dispatch);
   }, []);
 
-
   function renderRoutes() {
-    if (user) {
-      if (user.type === "admin") {
+    if (store.user) {
+      if (store.user.type === "admin") {
         return (
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/members" component={Members} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/:username" component={Home} />
 
+            <Route exact path="/admin/members" component={Members} />
             <Route exact path="/admin/products" component={Products} />
-            <Route exact path="/members/create" component={AddMember} />
-            <Route exact path="/products/create" component={AddProduct} />
             <Route exact path="/products/:id" component={ShowProduct} />
+            <Route exact path="/admin/members/create" component={AddMember} />
+            <Route exact path="/admin/products/create" component={AddProduct} />
           </Switch>
         );
-      } else {
-        return <Switch>
+      } else if (store.user.type === "member") {
+        return (
+          <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={Products} />
             <Route exact path="/cart" component={Cart} />
-            <Route exact path={`/${user.username}`} component={ShowMember} />
+            <Route
+              exact
+              path={`/${store.user.username}`}
+              component={ShowMember}
+            />
             <Route exact path="/:else" component={Home} />
 
             <Route exact path="/products/:id" component={ShowProduct} />
-
-        </Switch>
+          </Switch>
+        );
       }
     } else {
       return (
@@ -105,11 +82,11 @@ export default function App() {
 
   return (
     <div>
-      <UserContext.Provider value={{ loginUser , user , logoutUser}}>
-        <BrowserRouter>
-            {isDone ? renderRoutes() : ''}
-        </BrowserRouter>
-      </UserContext.Provider>
+      <Store.Provider
+        value={{ members:store.members ,loginUser, user: store.user, logoutUser, dispatch }}
+      >
+        <BrowserRouter>{isDone ? renderRoutes() : ""}</BrowserRouter>
+      </Store.Provider>
     </div>
   );
 }

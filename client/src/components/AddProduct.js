@@ -44,11 +44,10 @@ export default function Addproduct({ history }) {
   async function handleSubmit(event) {
     event.preventDefault();
     if (Object.keys(errors).length === 0) {
-      // const response = await axios.post("/auth/members", values);
-      console.log('hellaa')
-      // if (response.status === 200) {
-      //   // history.push("/members");
-      // }
+      const response = await axios.post("/products", values);
+      if (response.status === 200) {
+        history.push("/admin/products");
+      }
     }
     setShowError(true);
   }

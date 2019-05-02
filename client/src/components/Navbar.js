@@ -1,9 +1,9 @@
 import React from "react";
-import { UserContext } from "../context/UserContext";
+import Store from "../context/store";
 import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
-  const { user } = React.useContext(UserContext);
+  const { user , logoutUser , dispatch } = React.useContext(Store);
 
   function renderNanlinks() {
     if (user) {
@@ -23,7 +23,7 @@ export default function Navbar() {
               <a href="#">Admin</a>
               <ul>
                 <li>
-                  <NavLink to="/members">Control Members</NavLink>
+                  <NavLink to="/admin/members">Control Members</NavLink>
                 </li>
 
                 <li>
@@ -31,7 +31,7 @@ export default function Navbar() {
                 </li>
 
                 <li>
-                  <NavLink to="/" onClick={user.logoutUser}>Logout</NavLink>
+                  <NavLink to="/" onClick={()=>logoutUser(dispatch)}>Logout</NavLink>
                 </li>
               </ul>
             </li>
@@ -58,7 +58,7 @@ export default function Navbar() {
             </li>
 
             <li>
-              <NavLink to="/" onClick={user.logoutUser}>Logout</NavLink>
+              <NavLink to="/"  onClick={()=>logoutUser(dispatch)} >Logout</NavLink>
             </li>
           </ul>
         );

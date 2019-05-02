@@ -9,16 +9,12 @@ body {
   overflow-x: hidden;
   height: 100%;
   background-repeat: no-repeat;
-
 }
 
 nav {
-  height: 50px;
+  height: 51px;
+  line-height: 50px;
   background-color: #2980b9;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  box-shadow: 10px 1px 20px 1px rgba(0, 0, 0, 0.2);
 }
 
 .row {
@@ -26,24 +22,27 @@ nav {
   margin: 0 auto;
 }
 
-.nav-links {
+.nav-logo {
+  float: left;
 }
 
 .nav-links ul {
   list-style: none;
-  display: flex;
+  float: right;
 }
 
 .nav-links ul li {
-  margin-left: 30px;
+  display: inline-block;
+  padding: 0 20px;
   height: 100%;
+  background-color: white;
 }
 
-a:visited , a:link {
+a:visited,
+a:link {
   text-decoration: none;
   color: black;
   font-size: 120%;
-
 }
 a:hover {
   color: rgb(230, 230, 230);
@@ -52,14 +51,14 @@ a:hover {
 .btn {
   font-size: 20px;
   background-color: white;
-  border:1px solid #bdc3c7;
-  padding:6px 12px;
+  border: 1px solid #bdc3c7;
+  padding: 6px 12px;
   text-transform: uppercase;
   border-radius: 5px;
 }
 
 .btn:hover {
-  color:#2980b9;
+  color: #2980b9;
 }
 
 .nav-links ul li a {
@@ -69,20 +68,39 @@ a:hover {
 .nav-links ul li a:hover {
 }
 
+#hoverli {
+  position: relative;
+}
+.nav-links ul li ul {
+  display: none;
+  position: absolute;
+  z-index: 20;
+}
+
+.nav-links ul li ul li {
+  width: 250px;
+  text-align: center;
+}
+
+#hoverli:hover ul {
+  display: block;
+  position: absolute;
+}
+
 .intro {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 50px;
+  padding: 50px;
   align-items: center;
   height: 550px;
-  background-image: linear-gradient(to bottom , #95a5a6 , #fff);
+  background-image: linear-gradient(to bottom, #95a5a6, #fff);
 }
 
 .intro-info h3 {
   text-transform: uppercase;
   margin-bottom: 15px;
 }
-
 
 .intro-images {
   width: 50%;
@@ -125,7 +143,6 @@ a:hover {
   transform: translateY(-50%) scale(1.7);
 }
 
-
 section {
   margin-top: 10vh;
 }
@@ -140,7 +157,6 @@ section h2 {
   height: 550px;
   position: relative;
   box-shadow: 5px 1px 10px 1px rgba(0, 0, 0, 0.1);
-
 }
 
 .info .img-1 {
@@ -150,7 +166,6 @@ section h2 {
     url("./5.jpg");
   background-size: cover;
 }
-
 
 .info .img-2 {
   width: 100%;
@@ -163,135 +178,122 @@ section h2 {
 .info-text {
   position: absolute;
   top: 50%;
-  left:10%;
+  left: 10%;
   transform: translateY(-50%);
-  color:white;
-  
-
+  color: white;
 }
-
 
 .info-text h3 {
-  font-size:30px;
-  margin-bottom:15px;
+  font-size: 30px;
+  margin-bottom: 15px;
   text-transform: uppercase;
-
 }
 
-
 footer {
-  margin-top:15vh;
-  width:100%;
-  height:300px;
+  margin-top: 15vh;
+  width: 100%;
+  height: 300px;
   background-color: #34495e;
   display: flex;
   justify-content: space-between;
-  padding:20px 40px;
-
+  padding: 20px 40px;
 }
 
 footer h6 {
   align-self: flex-end;
-  font-size:90%;
-  color:#eee;
+  font-size: 90%;
+  color: #eee;
 }
 
 .social-media h3 {
   text-align: center;
-  color:#eee;
+  color: #eee;
 }
 
 .social-media i {
-  font-size:200%;
-  margin:10px;
-  
+  font-size: 200%;
+  margin: 10px;
 }
 
 .social-media i:nth-child(2) {
-  color:#C13584;
-  
+  color: #c13584;
 }
 
 .social-media i:nth-child(3) {
-  color: #3C5A99;
-  
+  color: #3c5a99;
 }
 .social-media i:nth-child(4) {
-  color:#1dcaff;
-  
+  color: #1dcaff;
 }
 
 .footer-address {
-  color:#eee;
+  color: #eee;
 }
 
 .title {
   text-align: center;
-  margin:30px;
+  margin: 30px;
 }
 
 .login {
   display: flex;
-  height:70vh;
+  height: 70vh;
   justify-content: center;
   align-items: center;
 }
 
 .login form {
-  border:1px solid ;
+  border: 1px solid;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   text-align: center;
-  color: #3C5A99;
+  color: #3c5a99;
 }
 
-
 .login form input {
-  padding:6px;
+  padding: 6px;
   font-family: inherit;
 }
 
 .login form h1:nth-child(1) {
-  margin:20px 50px;
+  margin: 20px 50px;
 }
 
-.login form input:nth-child(2)  {
-  margin:15px 50px;
+.login form input:nth-child(2) {
+  margin: 15px 50px;
 }
-.login form input:nth-child(3)  {
-  margin:15px 50px;
+.login form input:nth-child(3) {
+  margin: 15px 50px;
 }
 
-.login form input:nth-child(4)  {
-  margin:15px 50px 30px 50px;
+.login form input:nth-child(4) {
+  margin: 15px 50px 30px 50px;
 }
 
 .addmember {
   display: flex;
-  height:90vh;
+  height: 90vh;
   justify-content: center;
   align-items: center;
 }
 
 .addmember form {
-  border:1px solid gray;
+  border: 1px solid gray;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding:40px;
+  padding: 40px;
 }
 
 .addmember form input {
-  padding:5px;
+  padding: 5px;
   font-family: inherit;
   margin: 10px;
-
 }
 .addmember form h1 {
   text-align: center;
-  margin:40px;
-
+  margin: 40px;
 }
 
 .input-2 {
@@ -302,39 +304,37 @@ footer h6 {
 .label-input {
   display: flex;
   flex-direction: column;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .info {
-  height:90vh;
-
+  height: 90vh;
 }
 
 .info-panel {
-  width:100%;
-  height:30%;
+  width: 100%;
+  height: 30%;
   background: #34495e;
-  color:white;
+  color: white;
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.info-panel-info p{
+.info-panel-info p {
   margin-bottom: 15px;
   font-size: 20px;
   font-weight: 700;
 }
 
 .info-panel a {
-  padding:7px;
+  padding: 7px;
   border-radius: 3px;
   background-color: white;
 }
 
 table {
-  width:100%;
-
+  width: 100%;
 }
 tr {
   display: flex;
@@ -344,21 +344,21 @@ tr {
 }
 
 th {
-  width:100%;
+  width: 100%;
   margin: 5px 0;
 }
 th:nth-child(1) {
-  flex:0.5;
+  flex: 0.5;
 }
 
 td {
   text-align: center;
-  width:100%;
-  margin:3px 0;
+  width: 100%;
+  margin: 3px 0;
 }
 
 td:nth-child(1) {
-  flex:0.5;
+  flex: 0.5;
 }
 
 .showmember {
@@ -369,68 +369,61 @@ td:nth-child(1) {
 .showmember-container {
   display: flex;
   justify-content: space-between;
-  padding:40px 0;
-  margin-top:50px;
-  width:60%;
-  border:1px solid gray;
+  padding: 40px 0;
+  margin-top: 50px;
+  width: 60%;
+  border: 1px solid gray;
 }
 
 .sm-left {
   text-align: center;
-  width:50%;
-
+  width: 50%;
 }
 
 .sm-left h4 {
-  margin:10px 0;
+  margin: 10px 0;
 }
 
 .sm-left button {
-  width:100%;
-  margin-bottom:10px;
-  padding:5px 0;
-  border:0;
-  color:white;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px 0;
+  border: 0;
+  color: white;
   font-family: inherit;
-  transition: all .3s linear;
+  transition: all 0.3s linear;
   cursor: pointer;
-  
 }
 
 .sm-left button:hover {
-  color:black;
-  
+  color: black;
 }
 .sm-left button:nth-child(3) {
-  background-color:rgb(185, 176, 3);
-  
+  background-color: rgb(185, 176, 3);
 }
 
 .sm-left button:nth-child(5) {
-  background-color:rgb(216, 11, 11);
-  
+  background-color: rgb(216, 11, 11);
 }
-
 
 .sm-left button {
-  width:150px;
-  margin-bottom:10px;
-  padding:5px 0;
-  
+  width: 150px;
+  margin-bottom: 10px;
+  padding: 5px 0;
 }
 
-.sm-left img{
-  max-width:200px;
-   border-radius: 5px;
-   border:1px solid #00000022;
-   box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.4);
+.sm-left img {
+  max-width: 200px;
+  border-radius: 5px;
+  border: 1px solid #00000022;
+  box-shadow: 0 15px 10px -10px rgba(0, 0, 0, 0.4);
 }
 
 .sm-right {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width:50%;
+  width: 50%;
 }
 
 .sm-right p {
@@ -445,40 +438,48 @@ td:nth-child(1) {
   word-wrap: break-word;
 }
 
-
 .showproducts {
-margin-top:30px;
+  margin-top: 30px;
 }
 
 .sp-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  width:70%;
-  margin:0 auto;
+  width: 70%;
+  margin: 0 auto;
 }
-
 
 .sp-box {
   display: flex;
   flex-direction: column;
-  border:1px solid gray;
+  border: 1px solid gray;
   text-align: center;
-  margin:20px;
-  height:250px;
+  margin: 20px;
+  height: 250px;
   justify-content: space-between;
   box-shadow: 0px 5px 10px -10px rgba(0, 0, 0, 0.616);
-
-  
 }
 
-
 .sp-box button {
-  border:none;
-  padding:6px 0;
+  border: none;
+  padding: 6px 0;
   cursor: pointer;
 }
 
 .sp-box img {
   max-width: 250px;
+}
+
+
+
+
+.errorText {
+  color:#A63232;
+  margin:2px 0;
+  ;
+}
+
+.input-error {
+  border:1px solid #A63232;
 }

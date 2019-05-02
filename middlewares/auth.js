@@ -9,11 +9,11 @@ module.exports = {
       undefined;
     if (token !== undefined) {
       const { _id } = jwt.verify(token, "key12345");
-      const user = await User.findOne({ _id }, "-password -_id");
+      const user = await User.findOne({ _id }, "-password");
       req.user = user;
       next();
     } else {
-      return res.status(200).send('No User');
+      return res.status(200).send(null);
     }
   },
   requireAdmin(req, res, next) {

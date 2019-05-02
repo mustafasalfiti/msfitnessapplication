@@ -24,7 +24,7 @@ module.exports = app => {
       await user.save();
       res.status(200).send("User Successfully Created");
     } catch (err) {
-      res.status(400).send("Something went wrong");
+      res.status(400).json({ ...err, message: err.message });
       console.log(err);
     }
   });
@@ -43,7 +43,7 @@ module.exports = app => {
       await user.save();
       res.status(200).send("User Successfully Created");
     } catch (err) {
-      res.status(400).send({...err});
+      res.status(400).send({ ...err });
     }
   });
 
@@ -54,7 +54,7 @@ module.exports = app => {
       const user = await User.findOne({ username });
       const isTrue = user.auth.comparePassword(password);
       const token = user.auth.generateAuthToken();
-      
+
       if (isTrue && user.type === "admin") {
         return res
           .cookie("alpha-access", token, {
@@ -77,6 +77,22 @@ module.exports = app => {
     } catch (err) {
       res.status(400).send("Something went wrong");
       console.log(err);
+    }
+  });
+
+  app.get("/auth/logout", requireLogin, (req, res) => {
+    req.user.token = undefined;
+    req.user.save();
+    if (req.user.type === "admin") {
+      return res
+        .clearCookie("alpha-access")
+        .status(200)
+        .send("User Loggout Successfully");
+    } else {
+      return res
+        .clearCookie("omega-access")
+        .status(200)
+        .send("User Loggout Successfully");
     }
   });
 

@@ -14,7 +14,7 @@ export default function Products() {
             <p>Products: 20</p>
             <p>Types: 2</p>
           </div>
-          <NavLink to="/products/create">Add Product</NavLink>
+          <NavLink to="/admin/products/create">Add Product</NavLink>
         </div>
 
         <table>
