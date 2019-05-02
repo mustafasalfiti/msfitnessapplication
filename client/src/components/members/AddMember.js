@@ -1,21 +1,20 @@
 import React from "react";
-import Navbar from "./Navbar";
-import handleInputState from "../utils/handleInputState";
-import Field  from "./Field";
-import axios from 'axios';
+import Navbar from "../base/Navbar";
+import handleInputState from "../../utils/handleInputState";
+import Field  from "../base/Field";
+import Store from '../../context/store';
+import { createMember } from '../../actions';
 
 export default function Addmember({history}) {
   const [errors, setErrors] = React.useState({});
   const [showError , setShowError]= React.useState(false);
-  
+  const {dispatch} = React.useContext(Store);
+
+
   async function handleSubmit(event) {
     event.preventDefault();
     if (Object.keys(errors).length === 0) {
-      const response = await axios.post('/auth/members' , values);
-      if(response.status === 200) {
-        history.push('/members');
-      }
-      console.log(response);
+      createMember(dispatch , values , history)
     }
     setShowError(true);
   }

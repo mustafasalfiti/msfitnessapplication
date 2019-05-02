@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "./Navbar";
-import handleInputState from '../utils/handleInputState'
-import Store from '../context/store';
+import Navbar from "../base/Navbar";
+import handleInputState from '../../utils/handleInputState'
+import Store from '../../context/store';
 
 export default function Login() {
   

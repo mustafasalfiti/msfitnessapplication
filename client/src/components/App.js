@@ -1,21 +1,21 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Store from "../context/store";
-import Home from "./Home";
-import Login from "./Login";
-import Members from "./Members";
-import AddMember from "./AddMember";
-import ShowMember from "./ShowMember";
+import Home from "./base/Home";
+import Login from "./members/Login";
+import Members from "./members/Members";
+import AddMember from "./members/AddMember";
+import ShowMember from "./members/ShowMember";
 
-import Products from "./Products";
-import AddProduct from "./AddProduct";
-import ShowProduct from "./ShowProduct";
+import Products from "./products/Products";
+import AddProduct from "./products/AddProduct";
+import ShowProduct from "./products/ShowProduct";
 
 import reducer from "../reducers";
 
 import { fetchUser, loginUser, logoutUser , } from "../actions";
 
-import Cart from "./Cart";
+import Cart from "./products/Cart";
 
 export default function App() {
   // To Render Page!!
@@ -30,8 +30,8 @@ export default function App() {
     products: null,
     members: null
   });
-  console.log(store);
-
+  
+  console.log(store)
   React.useEffect(() => {
     fetchUser(dispatch);
   }, []);
@@ -83,7 +83,7 @@ export default function App() {
   return (
     <div>
       <Store.Provider
-        value={{ members:store.members ,loginUser, user: store.user, logoutUser, dispatch }}
+        value={{ products:store.products , members:store.members ,loginUser, user: store.user, logoutUser, dispatch }}
       >
         <BrowserRouter>{isDone ? renderRoutes() : ""}</BrowserRouter>
       </Store.Provider>

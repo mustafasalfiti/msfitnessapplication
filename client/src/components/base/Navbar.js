@@ -1,5 +1,5 @@
 import React from "react";
-import Store from "../context/store";
+import Store from "../../context/store";
 import { NavLink } from "react-router-dom";
 
 export default function Navbar() {

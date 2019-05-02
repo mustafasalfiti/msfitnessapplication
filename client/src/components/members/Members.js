@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../base/Navbar";
 import { NavLink } from "react-router-dom";
-import { fetchMembers } from "../actions";
-import Store from "../context/store";
+import { fetchMembers } from "../../actions";
+import Store from "../../context/store";
 
 export default function Members() {
   const { dispatch, members } = React.useContext(Store);
@@ -13,23 +13,23 @@ export default function Members() {
 
   function renderMembers() {
     if (members !== null) {
-      return members.map((member, i) => (
-        <tr key={member._id}>
+      return Object.keys(members).map((id, i) => (
+        <tr key={members[id]._id}>
           <td>{i + 1}</td>
-          <td>{member.username}</td>
-          <td>{member.fullname}</td>
-          <td>{member.phone_number}</td>
-          <td>{member.address}</td>
-          <td>{member.expire_date}</td>
+          <td>{members[id].username}</td>
+          <td>{members[id].fullname}</td>
+          <td>{members[id].phone_number}</td>
+          <td>{members[id].address}</td>
+          <td>{members[id].expire_date}</td>
           <td>
-            <NavLink to={`/admin/members/${member.username}`}>
+            <NavLink to={`/admin/members/${members[id].username}`}>
               more info
             </NavLink>
           </td>
         </tr>
       ));
     } else {
-      return <tr>Loading</tr>;
+      return <tr><td>Loading</td></tr>;
     }
   }
   return (

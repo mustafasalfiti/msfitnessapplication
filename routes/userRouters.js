@@ -22,7 +22,7 @@ module.exports = app => {
       });
       user.password = user.auth.generateSalts(user.password);
       await user.save();
-      res.status(200).send("User Successfully Created");
+      res.status(200).json(user);
     } catch (err) {
       res.status(400).json({ ...err, message: err.message });
       console.log(err);
@@ -41,7 +41,7 @@ module.exports = app => {
       user.password = user.auth.generateSalts(user.password);
       console.log();
       await user.save();
-      res.status(200).send("User Successfully Created");
+      res.status(200).send(user);
     } catch (err) {
       res.status(400).send({ ...err });
     }

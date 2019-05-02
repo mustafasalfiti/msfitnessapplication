@@ -13,10 +13,11 @@ module.exports = app => {
 
   app.post("/products", requireLogin, requireAdmin, async (req, res) => {
     try {
-      const product = await new Product(req.body);
+      const product = await new Product(req.body)
+      await product.save();
       res.status(200).json(product);
     } catch (err) {
-      res.status(400).send("Something went wrong ");
+      res.status(400).send(err);
     }
   });
 

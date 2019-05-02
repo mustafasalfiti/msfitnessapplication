@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./Navbar";
+import Navbar from "../base/Navbar";
 
 export default function Cart() {
   return (

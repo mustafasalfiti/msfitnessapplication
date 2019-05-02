@@ -38,8 +38,57 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT"
   }
 
 
-  //Members 
+  //Members #FF0000#FF0000#FF0000#FF0000#FF0000
+
   export  async function fetchMembers(dispatch) {
     const response = await axios.get("/auth/members");
-    dispatch({ type: FETCH_MEMBERS , data:response.data});
+    dispatch({ type: FETCH_MEMBERS  , data:response.data});
   }
+
+  export  async function createMember(dispatch , values , {push}) {
+    const response = await axios.post("/auth/members" , values);
+    dispatch({ type: CREATE_MEMBER , data:response.data});
+    if(response.status === 200) {
+      push('/admin/members');
+    }
+  }
+
+
+  export  async function updateMember(dispatch) {
+    const response = await axios.get("/auth/members");
+    dispatch({ type: UPDATE_MEMBER , data:response.data});
+  }
+
+
+  export  async function removeMember(dispatch) {
+    const response = await axios.get("/auth/members");
+    dispatch({ type: DELETE_MEMBER , data:response.data});
+  }
+
+
+  //Products #FF0000#FF0000#FF0000#FF0000#FF0000
+
+export  async function fetchProducts(dispatch) {
+  const response = await axios.get("/products");
+  dispatch({ type: FETCH_PRODUCTS , data:response.data});
+}
+
+export  async function createProduct(dispatch , values , {push}) {
+  const response = await axios.post("/products" , values);
+  dispatch({ type: CREATE_PRODUCT , data:response.data});
+  if(response.status === 200) {
+    push('/admin/products');
+  }
+}
+
+
+export  async function updateProduct(dispatch , values) {
+  const response = await axios.put(`/products/${values._id}` , values);
+  dispatch({ type: UPDATE_PRODUCT , data:response.data});
+}
+
+
+export  async function removeProduct(dispatch , id) {
+  const response = await axios.delete(`/products/${id}`);
+  dispatch({ type: DELETE_PRODUCT , data:response.data});
+}
