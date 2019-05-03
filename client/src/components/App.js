@@ -9,7 +9,8 @@ import ShowMember from "./members/ShowMember";
 
 import Products from "./products/Products";
 import AddProduct from "./products/AddProduct";
-import ShowProduct from "./products/ShowProduct";
+import ShowProduct from "./products/ShowProducts";
+import AdminShowProduct from './products/AdminShowProduct';
 
 import reducer from "../reducers";
 
@@ -30,15 +31,15 @@ export default function App() {
     products: null,
     members: null
   });
+  const {members , products , user} = store;
   
-  console.log(store)
   React.useEffect(() => {
     fetchUser(dispatch);
   }, []);
 
   function renderRoutes() {
-    if (store.user) {
-      if (store.user.type === "admin") {
+    if (user) {
+      if (user.type === "admin") {
         return (
           <Switch>
             <Route exact path="/" component={Home} />
@@ -50,9 +51,10 @@ export default function App() {
             <Route exact path="/products/:id" component={ShowProduct} />
             <Route exact path="/admin/members/create" component={AddMember} />
             <Route exact path="/admin/products/create" component={AddProduct} />
+            <Route exact path="/admin/products/:id" component={AdminShowProduct} />
           </Switch>
         );
-      } else if (store.user.type === "member") {
+      } else if (user.type === "member") {
         return (
           <Switch>
             <Route exact path="/" component={Home} />
@@ -60,7 +62,7 @@ export default function App() {
             <Route exact path="/cart" component={Cart} />
             <Route
               exact
-              path={`/${store.user.username}`}
+              path={`/${user.username}`}
               component={ShowMember}
             />
             <Route exact path="/:else" component={Home} />
@@ -83,7 +85,7 @@ export default function App() {
   return (
     <div>
       <Store.Provider
-        value={{ products:store.products , members:store.members ,loginUser, user: store.user, logoutUser, dispatch }}
+        value={{ products:products , members:members ,loginUser, user: user, logoutUser, dispatch }}
       >
         <BrowserRouter>{isDone ? renderRoutes() : ""}</BrowserRouter>
       </Store.Provider>

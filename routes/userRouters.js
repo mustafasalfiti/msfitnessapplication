@@ -29,25 +29,7 @@ module.exports = app => {
     }
   });
 
-  app.post("/auth/admins", async (req, res) => {
-    let { username } = req.body;
-    username = req.body.username.toLowerCase();
-    try {
-      const user = await new User({
-        ...req.body,
-        username,
-        type: "admin"
-      });
-      user.password = user.auth.generateSalts(user.password);
-      console.log();
-      await user.save();
-      res.status(200).send(user);
-    } catch (err) {
-      res.status(400).send({ ...err });
-    }
-  });
-
-  app.post("/auth/login", async (req, res) => {
+  app.post("/auth/members", async (req, res) => {
     try {
       let { username, password } = req.body;
       username = username.toLowerCase();
@@ -77,6 +59,42 @@ module.exports = app => {
     } catch (err) {
       res.status(400).send("Something went wrong");
       console.log(err);
+    }
+  });
+
+
+  app.put("/auth/members/:id", requireLogin, requireAdmin , async(req, res) => {
+    if(req.body.type) {
+      req.body.type = undefined;
+    }
+    try {
+      const member = await User.findOneAndUpdate({_id:req.params.id} , {$set:req.body} , {$new:true});
+      res.status(200).json(member);
+
+    } catch(err) {
+      res.status(400).send(err);
+    }
+  });
+
+  app.put("/members/:id", requireLogin, async(req, res) => {
+    const {password } = req.body
+    try {
+      const member = await User.findOneAndUpdate({_id:req.params.id} , {$set:{password}} , {$new:true});
+      res.status(200).json(member);
+    } catch(err) {
+      res.status(400).send(err);
+    }
+  });
+
+
+
+  app.delete("/auth/members/:id", requireLogin,requireAdmin , async(req, res) => {
+    try {
+      await User.findOneAndRemove({_id:req.params.id});
+      res.status(200).send('User Deleted!');
+
+    } catch(err) {
+      res.status(400).send(err);
     }
   });
 

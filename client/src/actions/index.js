@@ -15,6 +15,7 @@ export const DELETE_MEMBER = "DELETE_MEMBER"
 
 // PRODUCT
 export const FETCH_PRODUCTS = "FETCH_PRODUCTS"
+export const FETCH_PRODUCT  = "FETCH_PRODUCT"
 export const CREATE_PRODUCT = "CREATE_PRODUCT"
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT"
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
@@ -73,6 +74,11 @@ export  async function fetchProducts(dispatch) {
   dispatch({ type: FETCH_PRODUCTS , data:response.data});
 }
 
+export  async function fetchProduct(dispatch , id)  {
+  const response = await axios.get(`/products/${id}`);
+  dispatch({ type: FETCH_PRODUCT , data:response.data});
+}
+
 export  async function createProduct(dispatch , values , {push}) {
   const response = await axios.post("/products" , values);
   dispatch({ type: CREATE_PRODUCT , data:response.data});
@@ -80,7 +86,6 @@ export  async function createProduct(dispatch , values , {push}) {
     push('/admin/products');
   }
 }
-
 
 export  async function updateProduct(dispatch , values) {
   const response = await axios.put(`/products/${values._id}` , values);

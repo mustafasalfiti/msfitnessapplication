@@ -4,6 +4,7 @@ import handleInputState from "../../utils/handleInputState";
 import Field  from "../base/Field";
 import Store from '../../context/store';
 import { createMember } from '../../actions';
+import  {handleMemberErrors} from '../../utils/errors'
 
 export default function Addmember({history}) {
   const [errors, setErrors] = React.useState({});
@@ -34,45 +35,9 @@ export default function Addmember({history}) {
   });
 
   React.useEffect(() => {
-    setErrors(handleErrors(values));
+    setErrors(handleMemberErrors(values));
   }, [values]);
 
-  function handleErrors(values) {
-    let errors = {};
-    if (values.username === "") {
-      errors.username = "Please Enter a Username";
-    }
-    if (values.fullname === "") {
-      errors.fullname = "Please Enter a Fullname";
-    }
-    if (values.phone_number === "") {
-      errors.phone_number = "please enter a phone number";
-    }
-    if (values.branch === "") {
-      errors.branch = "Please enter a branch";
-    }
-    if (values.gender === "") {
-      errors.gender = "please Enter a gender";
-    }
-    if (values.address === "") {
-      errors.address = "please Enter a address";
-    }
-    if (values.birthday === "") {
-      errors.birthday = "please Enter a birthday";
-    }
-    if (values.register_date === "") {
-      errors.register_date = "please Enter a register_date";
-    }
-
-    if (values.expire_date === "") {
-      errors.expire_date = "please Enter a expire_date";
-    }
-
-    if (values.password === "") {
-      errors.password = "please Enter a password";
-    }
-    return errors;
-  }
 
   return (
     <div>

@@ -4,6 +4,7 @@ import handleInputState from "../../utils/handleInputState";
 import Field from "../base/Field";
 import Store from '../../context/store';
 import { createProduct } from '../../actions';
+import {handleProductErrors} from '../../utils/errors' ;
 
 export default function Addproduct({ history }) {
   const [errors, setErrors] = React.useState({});
@@ -19,28 +20,9 @@ export default function Addproduct({ history }) {
     image: ""
   });
 
-  function handleErrors(values) {
-    let errors = {};
-    if (values.name === "") {
-      errors.name = "Please Enter a name";
-    }
-    if (values.amount === "") {
-      errors.amount = "Please Enter a amount";
-    }
-    if (values.type === "") {
-      errors.type = "please enter a type";
-    }
-    if (values.price === "") {
-      errors.price = "Please enter a price";
-    }
-    if (values.description === "") {
-      errors.description = "please Enter a description";
-    }
-    return errors;
-  }
 
   React.useEffect(() => {
-    setErrors(handleErrors(values));
+    setErrors(handleProductErrors(values));
   }, [values]);
 
   async function handleSubmit(event) {
