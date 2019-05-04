@@ -60,9 +60,13 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT"
   }
 
 
-  export  async function updateMember(dispatch) {
-    const response = await axios.get("/auth/members");
+  export  async function updateMember(dispatch , values , {push}) {
+    console.log(values);
+    const response = await axios.put(`/auth/members/${values.username}` ,values);
     dispatch({ type: UPDATE_MEMBER , data:response.data});
+    if(response.status === 200) {
+      push(`/admin/members/${values.username}`);
+    }
   }
 
 

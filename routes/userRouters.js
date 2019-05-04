@@ -13,7 +13,10 @@ module.exports = app => {
 
   app.get("/auth/members/:username", requireLogin, async (req, res) => {
     try {
-      const member = await User.findOne({ username:req.params.username }, "-password");
+      const member = await User.findOne(
+        { username: req.params.username },
+        "-password"
+      );
       res.status(200).json(member);
     } catch (err) {
       res.status(400).send(err);
@@ -40,7 +43,7 @@ module.exports = app => {
     try {
       let { username, password } = req.body;
       username = username.toLowerCase();
-      const user = await User.findOne({ username:req.params.username });
+      const user = await User.findOne({ username: req.params.username });
       const isTrue = user.auth.comparePassword(password);
       const token = user.auth.generateAuthToken();
 
@@ -68,41 +71,56 @@ module.exports = app => {
     }
   });
 
-
-  app.put("/auth/members/:username", requireLogin, requireAdmin , async(req, res) => {
-    if(req.body.type) {
-      req.body.type = undefined;``
+  app.put(
+    "/auth/members/:username",
+    requireLogin,
+    requireAdmin,
+    async (req, res) => {
+      console.log(req.body)
+      if (req.body.type) {
+        req.body.type = undefined;
+      }
+      try {
+        const member = await User.findOneAndUpdate(
+          { username: req.params.username },
+          { $set: req.body },
+          { new: true }
+        );
+        console.log(member);
+        res.status(200).json(member);
+      } catch (err) {
+        res.status(400).send(err);
+      }
     }
+  );
+
+  app.put("/members/:username", requireLogin, async (req, res) => {
+    const { password } = req.body;
     try {
-      const member = await User.findOneAndUpdate({username:req.params.username} , {$set:req.body} , {new:true});
+      const member = await User.findOneAndUpdate(
+        { username: req.params.username },
+        { $set: { password } },
+        { $new: true }
+      );
       res.status(200).json(member);
-
-    } catch(err) {
+    } catch (err) {
       res.status(400).send(err);
     }
   });
 
-  app.put("/members/:username", requireLogin, async(req, res) => {
-    const {password } = req.body
-    try {
-      const member = await User.findOneAndUpdate({username:req.params.username} , {$set:{password}} , {$new:true});
-      res.status(200).json(member);
-    } catch(err) {
-      res.status(400).send(err);
+  app.delete(
+    "/auth/members/:username",
+    requireLogin,
+    requireAdmin,
+    async (req, res) => {
+      try {
+        await User.findOneAndRemove({ username: req.params.username });
+        res.status(200).send("User Deleted!");
+      } catch (err) {
+        res.status(400).send(err);
+      }
     }
-  });
-
-
-
-  app.delete("/auth/members/:username", requireLogin,requireAdmin , async(req, res) => {
-    try {
-      await User.findOneAndRemove({username:req.params.username});
-      res.status(200).send('User Deleted!');
-
-    } catch(err) {
-      res.status(400).send(err);
-    }
-  });
+  );
 
   app.get("/auth/logout", requireLogin, (req, res) => {
     req.user.token = undefined;
