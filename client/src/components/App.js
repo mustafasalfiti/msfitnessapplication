@@ -6,6 +6,8 @@ import Login from "./members/Login";
 import Members from "./members/Members";
 import AddMember from "./members/AddMember";
 import ShowMember from "./members/ShowMember";
+import AdminShowMember from './members/AdminShowMember';
+
 
 import Products from "./products/Products";
 import AddProduct from "./products/AddProduct";
@@ -50,6 +52,7 @@ export default function App() {
             <Route exact path="/admin/products" component={Products} />
             <Route exact path="/products/:id" component={ShowProduct} />
             <Route exact path="/admin/members/create" component={AddMember} />
+            <Route exact path="/admin/members/:id" component={AdminShowMember} />
             <Route exact path="/admin/products/create" component={AddProduct} />
             <Route exact path="/admin/products/:id" component={AdminShowProduct} />
           </Switch>

@@ -7,7 +7,7 @@ module.exports = app => {
       const products = await Product.find({});
       res.status(200).json(products);
     } catch (err) {
-      res.status(400).send("Something went wrong ");
+      res.status(400).send(err);
     }
   });
 
@@ -26,7 +26,7 @@ module.exports = app => {
       const product = await Product.findOne({ _id: req.params.id });
       res.status(200).json(product);
     } catch (err) {
-      res.status(400).send("Something went wrong ");
+      res.status(400).send(err);
     }
   });
 
@@ -35,20 +35,20 @@ module.exports = app => {
       const product = await Product.findOneAndUpdate(
         { _id: req.params.id },
         req.body,
-        { $new: true }
+        { new: true }
       );
       res.status(200).json(product);
     } catch (err) {
-      res.status(400).send("Something went wrong");
+      res.status(400).send(err);
     }
   });
 
   app.delete("/products/:id", requireLogin, requireAdmin, async (req, res) => {
     try {
       await Product.findOneAndRemove({ _id: req.params.id });
-      res.status(200).json(product);
+      res.status(200).json('Successfully Deleted');
     } catch (err) {
-      res.status(400).send("Something went wrong");
+      res.status(400).send(err);
     }
   });
 };

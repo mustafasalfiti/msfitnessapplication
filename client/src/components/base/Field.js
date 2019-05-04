@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-export default function Field({ value  , onChange , name, label , placeholder , type , showError , errors }) {
+export default function Field({ value  , onChange , name, label , placeholder , type , showError , errors  }) {
  
  
   return (
@@ -18,6 +18,7 @@ export default function Field({ value  , onChange , name, label , placeholder , 
         name={name}
         placeholder={placeholder}
         onChange={onChange}
+        
       />
     </div>
   );

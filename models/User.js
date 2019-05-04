@@ -23,7 +23,7 @@ const userSchema = new Schema({
     required:true ,
   } ,
   fullname:String ,
-  age:Date ,
+  birthday:Date ,
   gender:String ,
   address:String ,
   image:String ,
