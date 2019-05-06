@@ -3,15 +3,14 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Store from "../context/store";
 import Home from "./base/Home";
 import Login from "./members/Login";
-import Members from "./members/Members";
-import AddMember from "./members/AddMember";
-import ShowMember from "./members/ShowMember";
+import AdminShowMembers from "./members/AdminShowMembers";
+import AdminAddMember from "./members/AdminAddMember";
 import AdminShowMember from './members/AdminShowMember';
+import ShowMember from "./members/ShowMember";
 
 
-import Products from "./products/Products";
-import AddProduct from "./products/AddProduct";
-import ShowProduct from "./products/ShowProducts";
+import AdminAddProduct from "./products/AdminAddProduct";
+import AdminShowProducts from "./products/AdminShowProducts";
 import AdminShowProduct from './products/AdminShowProduct';
 
 import reducer from "../reducers";
@@ -48,12 +47,12 @@ export default function App() {
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/:username" component={Home} />
 
-            <Route exact path="/admin/members" component={Members} />
-            <Route exact path="/admin/products" component={Products} />
-            <Route exact path="/products/:id" component={ShowProduct} />
-            <Route exact path="/admin/members/create" component={AddMember} />
+            <Route exact path="/admin/members" component={AdminShowMembers} />
+            <Route exact path="/admin/products" component={AdminShowProducts} />
+            <Route exact path="/products/:id" component={Home} />
+            <Route exact path="/admin/members/create" component={AdminAddMember} />
             <Route exact path="/admin/members/:id" component={AdminShowMember} />
-            <Route exact path="/admin/products/create" component={AddProduct} />
+            <Route exact path="/admin/products/create" component={AdminAddProduct} />
             <Route exact path="/admin/products/:id" component={AdminShowProduct} />
           </Switch>
         );
@@ -61,7 +60,7 @@ export default function App() {
         return (
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/products" component={Products} />
+            <Route exact path="/products" component={Home} />
             <Route exact path="/cart" component={Cart} />
             <Route
               exact
@@ -69,8 +68,7 @@ export default function App() {
               component={ShowMember}
             />
             <Route exact path="/:else" component={Home} />
-
-            <Route exact path="/products/:id" component={ShowProduct} />
+            <Route exact path="/products/:id" component={Home} />
           </Switch>
         );
       }

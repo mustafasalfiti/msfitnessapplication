@@ -6,7 +6,7 @@ import Store from '../../context/store';
 import { createMember } from '../../actions';
 import  {handleMemberErrors} from '../../utils/errors'
 
-export default function Addmember({history}) {
+export default function AdminAddMember({history}) {
   const [errors, setErrors] = React.useState({});
   const [showError , setShowError]= React.useState(false);
   const {dispatch} = React.useContext(Store);

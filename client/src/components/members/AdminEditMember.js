@@ -5,7 +5,7 @@ import Store from "../../context/store";
 import { updateMember } from "../../actions";
 import { handleMemberErrors } from "../../utils/errors";
 
-export default function EditMember({
+export default function AdminEditMember({
   handleDeleteMember,
   member,
   editMember,

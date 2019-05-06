@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { fetchMembers } from "../../actions";
 import Store from "../../context/store";
 
-export default function Members() {
+export default function AdminShowMembers() {
   const { dispatch, members } = React.useContext(Store);
 
   React.useEffect(() => {

@@ -7,14 +7,20 @@
 body {
   font-family: "Ubuntu", sans-serif;
   overflow-x: hidden;
-  height: 100%;
   background-repeat: no-repeat;
+  background-image: radial-gradient(180deg  , white,#eee)
+}
+
+.header-container {
+  height:100vh;
+  width:100vw;
+  overflow: hidden;
 }
 
 nav {
   height: 51px;
   line-height: 50px;
-  background-color: #2980b9;
+  background-color: #2c3e50;
 }
 
 .row {
@@ -35,7 +41,16 @@ nav {
   display: inline-block;
   padding: 0 20px;
   height: 100%;
+}
+
+.nav-links ul li ul li {
   background-color: white;
+
+}
+
+.nav-links ul li ul li a{
+  color:#2c3e50
+
 }
 
 a:visited,
@@ -43,6 +58,8 @@ a:link {
   text-decoration: none;
   color: black;
   font-size: 120%;
+  color:white;
+
 }
 a:hover {
   color: rgb(230, 230, 230);
@@ -50,19 +67,23 @@ a:hover {
 
 .btn {
   font-size: 20px;
-  background-color: white;
   border: 1px solid #bdc3c7;
   padding: 6px 12px;
+  border-radius: 1px;
+  transition: all .2s ease-in-out;
+  background-color:#8e44ad;
   text-transform: uppercase;
-  border-radius: 5px;
+
 }
 
 .btn:hover {
-  color: #2980b9;
+  color: #ecf0f1;;
+  background-color: #2c3e50;
+  color:#bdc3c7;
 }
 
 .nav-links ul li a {
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .nav-links ul li a:hover {
@@ -94,12 +115,15 @@ a:hover {
   padding: 50px;
   align-items: center;
   height: 550px;
-  background-image: linear-gradient(to bottom, #95a5a6, #fff);
+  background-image: linear-gradient(to left bottom, #8e44ad, #2c3e50);
 }
 
 .intro-info h3 {
-  text-transform: uppercase;
+  letter-spacing: 1px;
   margin-bottom: 15px;
+  font-size: 1.5rem;
+  color:white;
+
 }
 
 .intro-images {
@@ -115,6 +139,7 @@ a:hover {
   left: 50%;
   transform: translateY(-50%);
   transition: all 0.2s ease-in-out;
+  border:2px solid #FFF;
 }
 
 .intro-images img:nth-child(1) {
@@ -143,19 +168,20 @@ a:hover {
   transform: translateY(-50%) scale(1.7);
 }
 
-section {
-  margin-top: 10vh;
-}
 
 section h2 {
-  margin-bottom: 3vh;
+  margin: 5vh;
   text-align: center;
+  color:transparent;
+  background-image: linear-gradient(to left , #8e44ad, #2c3e50);
+  background-clip: text;
 }
 
 .info {
   width: 100%;
-  height: 550px;
+  height: 450px;
   position: relative;
+  border:1px solid white;
   box-shadow: 5px 1px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -173,6 +199,7 @@ section h2 {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url("./4.jpg");
   background-size: cover;
+  background-position: center;
 }
 
 .info-text {
@@ -193,9 +220,9 @@ footer {
   margin-top: 15vh;
   width: 100%;
   height: 300px;
-  background-color: #34495e;
   display: flex;
   justify-content: space-between;
+  background-color:#2c3e50;
   padding: 20px 40px;
 }
 
@@ -213,6 +240,15 @@ footer h6 {
 .social-media i {
   font-size: 200%;
   margin: 10px;
+  background-color: white;
+  padding:.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .07s ease-out;
+}
+
+.social-media i:hover {
+  transform: scale(1.1);
 }
 
 .social-media i:nth-child(2) {
@@ -236,38 +272,53 @@ footer h6 {
 }
 
 .login {
-  display: flex;
-  height: 70vh;
-  justify-content: center;
-  align-items: center;
+  height: 100vh;
+  width:100vw;
+  position: relative;
 }
 
-.login form {
-  border: 1px solid;
-  border-radius: 10px;
+.login-container {
+  width:20%;
+  position: absolute;
+  top:40%;
+  left:50%;
+  transform: translate(-50% , -40%);
+}
+
+
+.login-container form {
+  border: 1px solid #8e44ad;
+  border-radius: 3px;
   display: flex;
   flex-direction: column;
   text-align: center;
   color: #3c5a99;
 }
 
-.login form input {
+.login-container form input {
   padding: 6px;
   font-family: inherit;
+  border:1px solid #8e44ad;
+  text-align: center;
 }
 
-.login form h1:nth-child(1) {
-  margin: 20px 50px;
+.login-container form h1:nth-child(1) {
+  margin:1.2rem;
+  text-transform: uppercase;
+  text-align: center;
+  color:transparent;
+  background-image: linear-gradient(to left , #8e44ad, #2c3e50);
+  background-clip: text;
 }
 
-.login form input:nth-child(2) {
+.login-container form input:nth-child(2) {
   margin: 15px 50px;
 }
-.login form input:nth-child(3) {
+.login-container form input:nth-child(3) {
   margin: 15px 50px;
 }
 
-.login form input:nth-child(4) {
+.login-container form input:nth-child(4) {
   margin: 15px 50px 30px 50px;
 }
 
@@ -307,9 +358,6 @@ footer h6 {
   margin-top: 10px;
 }
 
-.info {
-  height: 90vh;
-}
 
 .info-panel {
   width: 100%;

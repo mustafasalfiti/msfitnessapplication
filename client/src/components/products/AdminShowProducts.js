@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import Store from "../../context/store";
 import { fetchProducts } from "../../actions";
 
-export default function Products() {
+export default function AdminShowProducts() {
   const { products, dispatch } = React.useContext(Store);
 
   React.useEffect(() => {

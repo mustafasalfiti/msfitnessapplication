@@ -6,7 +6,7 @@ import Store from '../../context/store';
 import { createProduct } from '../../actions';
 import {handleProductErrors} from '../../utils/errors' ;
 
-export default function Addproduct({ history }) {
+export default function AdminAddProduct({ history }) {
   const [errors, setErrors] = React.useState({});
   const [showError, setShowError] = React.useState(false);
   const {dispatch} = React.useContext(Store);

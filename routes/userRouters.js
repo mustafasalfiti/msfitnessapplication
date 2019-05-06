@@ -39,11 +39,12 @@ module.exports = app => {
     }
   });
 
-  app.post("/auth/members", async (req, res) => {
+  app.post("/auth/login", async (req, res) => {
     try {
       let { username, password } = req.body;
       username = username.toLowerCase();
-      const user = await User.findOne({ username: req.params.username });
+      const user = await User.findOne({ username });
+      console.log(user)
       const isTrue = user.auth.comparePassword(password);
       const token = user.auth.generateAuthToken();
 
@@ -67,6 +68,7 @@ module.exports = app => {
         throw Error("Something is Wrong with the user type");
       }
     } catch (err) {
+      console.log(err);
       res.status(400).send(err);
     }
   });

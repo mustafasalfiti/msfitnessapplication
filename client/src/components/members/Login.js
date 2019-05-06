@@ -13,11 +13,11 @@ export default function Login() {
   const {loginUser , dispatch} = React.useContext(Store) ;
   
   return (
-    <div>
+    <div className="login">
       <header>
         <Navbar />
       </header>
-      <div className="login">
+      <div className="login-container">
         <form onSubmit={handleSubmit}>
           <h1>Login</h1>
           <input
