@@ -9,7 +9,7 @@ export default function AdminEditProduct({
   history,
   product,
   editProduct,
-  setEditProduct ,
+  setEditProduct,
   handleDeleteProduct
 }) {
   const [errors, setErrors] = React.useState({});
@@ -39,76 +39,83 @@ export default function AdminEditProduct({
     setShowError(true);
   }
   return (
-    <div className="showmember-container">
-      <div className="sm-left">
+    <div className="editblock-container">
+      <div className="eb-left">
         <img alt={`${product.name}`} src="/1.jpg" />
         <h4>{product.name}</h4>
         <button onClick={() => setEditProduct(!editProduct)}>Edit</button>
         <br />
-        <button onClick={handleDeleteProduct}>Delete Product</button>      </div>
-      <div className="sm-right">
+        <button onClick={handleDeleteProduct}>Delete Product</button>{" "}
+      </div>
+      <div className="eb-right">
         <form onSubmit={handleSubmit}>
-          <Field
-            name="name"
-            placeholder="Name"
-            label="Name"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
-          <Field
-            name="type"
-            placeholder="Type"
-            label="Type"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
+          <div className="input-2">
+            <Field
+              name="name"
+              placeholder="Name"
+              label="Name"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+            <Field
+              name="type"
+              placeholder="Type"
+              label="Type"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+          </div>
 
-          <Field
-            name="price"
-            placeholder="Price"
-            label="Price"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
-          <Field
-            name="amount"
-            placeholder="Amount"
-            label="Amount"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
+          <div className="input-2">
+            <Field
+              name="price"
+              placeholder="Price"
+              label="Price"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+            <Field
+              name="amount"
+              placeholder="Amount"
+              label="Amount"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+          </div>
 
           <Field
             name="image"
             label="Image"
-            type="text"
+            type="file"
             showError={showError}
             errors={errors}
             value={values}
             onChange={handleChange}
           />
 
-          <label>Description : </label>
+          <label id="textarealabel">Description : </label>
           <span className="errorText">
             {errors.description && showError ? errors.description : ""}
           </span>
+          <br/>
           <textarea
             name="description"
             value={values.description}
             onChange={handleChange}
             rows="8"
+            cols="50"
           />
           <input type="submit" value="Submit" />
         </form>

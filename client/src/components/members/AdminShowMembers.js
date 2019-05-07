@@ -22,31 +22,38 @@ export default function AdminShowMembers() {
           <td>{members[id].address}</td>
           <td>{members[id].expire_date}</td>
           <td>
-            <NavLink to={`/admin/members/${members[id].username}`}>
+            <NavLink className="td-link" to={`/admin/members/${members[id].username}`}>
               more info
             </NavLink>
           </td>
         </tr>
       ));
     } else {
-      return <tr><td>Loading</td></tr>;
+      return (
+        <tr>
+          <td>Loading</td>
+        </tr>
+      );
     }
   }
   return (
-    <div>
+    <div className="showinfo">
       <header>
         <Navbar />
-      </header>
-      <div className="info">
-        <div className="info-panel">
-          <div className="info-panel-info">
+        <div className="showinfo-block">
+          <div className="showinfo-blockinfo">
             <p>Members: {members ? members.length : "Loading"}</p>
             <p>Active Members: {members ? members.length : "Loading"}</p>
             <p>Expired Members: {members ? members.length : "Loading"}</p>
           </div>
-          <NavLink to="/admin/members/create">Add Member</NavLink>
+          <div className="showinfo-blocklinks">
+            <NavLink className="btn" to="/admin/members/create">
+              Add Member
+            </NavLink>
+          </div>
         </div>
-
+      </header>
+      <div className="table">
         <table>
           <thead>
             <tr>

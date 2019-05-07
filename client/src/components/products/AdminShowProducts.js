@@ -20,26 +20,39 @@ export default function AdminShowProducts() {
           <td>{products[id].price} </td>
           <td>{products[id].amount}</td>
           <td>
-            <NavLink to={`/admin/products/${products[id]._id}`}>more info</NavLink>
+            <NavLink
+              className="td-link"
+              to={`/admin/products/${products[id]._id}`}
+            >
+              more info
+            </NavLink>
           </td>
         </tr>
       ));
-    } else return <tr><td>Loading</td></tr>;
+    } else
+      return (
+        <tr>
+          <td>Loading</td>
+        </tr>
+      );
   }
   return (
-    <div>
+    <div className="showinfo">
       <header>
         <Navbar />
-      </header>
-      <div className="info">
-        <div className="info-panel">
-          <div className="info-panel-info">
+        <div className="showinfo-block">
+          <div className="showinfo-blockinfo">
             <p>Products: {products ? products.length : "Loading"}</p>
             <p>Types: {products ? products.length : "Loading"}</p>
           </div>
-          <NavLink to="/admin/products/create">Add Product</NavLink>
+          <div className="showinfo-blocklinks">
+            <NavLink className="btn" to="/admin/products/create">
+              Add Product
+            </NavLink>
+          </div>
         </div>
-
+      </header>
+      <div className="table">
         <table>
           <thead>
             <tr>

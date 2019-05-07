@@ -33,11 +33,11 @@ export default function AdminAddProduct({ history }) {
     setShowError(true);
   }
   return (
-    <div>
+    <div className="addblock">
       <header>
         <Navbar />
       </header>
-      <div className="addmember">
+      <div className="addblock-container">
         <form onSubmit={handleSubmit}>
           <h1>Add Product</h1>
           <div className="input-2">

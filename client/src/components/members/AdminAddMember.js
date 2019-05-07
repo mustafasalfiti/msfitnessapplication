@@ -40,11 +40,11 @@ export default function AdminAddMember({history}) {
 
 
   return (
-    <div>
+    <div className="addblock">
       <header>
         <Navbar />
       </header>
-      <div className="addmember">
+      <div className="addblock-container">
         <form onSubmit={handleSubmit}>
           <h1>Add member</h1>
           <div className="input-2">

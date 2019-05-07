@@ -2,7 +2,7 @@ import React from "react";
 import Store from "../../context/store";
 import { fetchProduct, deleteProduct } from "../../actions";
 import Navbar from "../base/Navbar";
-import EditProduct from "./EditProduct";
+import AdminEditProduct from "./AdminEditProduct";
 
 export default function AdminShowProduct({ history }) {
   const { products, dispatch } = React.useContext(Store);
@@ -27,15 +27,15 @@ export default function AdminShowProduct({ history }) {
       let product = products[id];
       if (!editProduct) {
         return (
-          <div className="showmember-container">
-            <div className="sm-left">
+          <div className="editblock-container">
+            <div className="eb-left">
               <img alt={`${product.name}`} src="/1.jpg" />
               <h4>{product.name}</h4>
               <button onClick={() => setEditProduct(!editProduct)}>Edit</button>
               <br />
               <button onClick={handleDeleteProduct}>Delete Product</button>
             </div>
-            <div className="sm-right">
+            <div className="eb-right">
               <p>
                 Name: <span>{product.name}</span>
               </p>
@@ -56,7 +56,7 @@ export default function AdminShowProduct({ history }) {
         );
       } else {
         return (
-          <EditProduct
+          <AdminEditProduct
             setEditProduct={setEditProduct}
             editProduct={editProduct}
             product={product}
@@ -70,11 +70,11 @@ export default function AdminShowProduct({ history }) {
     }
   }
   return (
-    <div>
+    <div className="editblock">
       <header>
         <Navbar />
       </header>
-      <div className="showmember">{renderProduct()}</div>
+      {renderProduct()}
     </div>
   );
 }

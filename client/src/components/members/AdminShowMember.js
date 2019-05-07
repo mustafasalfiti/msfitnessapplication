@@ -2,7 +2,7 @@ import React from "react";
 import Store from "../../context/store";
 import Navbar from "../base/Navbar";
 import { fetchMember, deleteMember } from "../../actions";
-import EditMember from "./EditMember";
+import AdminEditMember from "./AdminEditMember";
 
 export default function AdminShowMember({ history }) {
   const { dispatch, members } = React.useContext(Store);
@@ -28,15 +28,14 @@ export default function AdminShowMember({ history }) {
       let member = members[username];
       if (!editMember) {
         return (
-          <div className="showmember-container">
-            <div className="sm-left">
+          <div className="editblock-container">
+            <div className="eb-left">
               <img src="/1.jpg" />
               <h4>{member.username}</h4>
               <button onClick={() => setEditMember(!editMember)}>Edit</button>
-              <br />
               <button onClick={handleDeleteMember}>Delete Member</button>
             </div>
-            <div className="sm-right">
+            <div className="eb-right">
               <p>
                 Fullname: <span>{member.fullname}</span>
               </p>
@@ -66,7 +65,7 @@ export default function AdminShowMember({ history }) {
         );
       } else {
         return (
-          <EditMember
+          <AdminEditMember
             member={member}
             editMember={editMember}
             setEditMember={setEditMember}
@@ -80,11 +79,11 @@ export default function AdminShowMember({ history }) {
     }
   }
   return (
-    <div>
+    <div className="editblock">
       <header>
         <Navbar />
       </header>
-      <div className="showmember">{renderMember()}</div>
+      <div>{renderMember()}</div>
     </div>
   );
 }

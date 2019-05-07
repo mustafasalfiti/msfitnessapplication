@@ -43,17 +43,17 @@ export default function AdminEditMember({
   }
 
   return (
-    <div className="showmember-container">
-      <div className="sm-left">
+    <div className="editblock-container">
+      <div className="eb-left">
         <img src="/1.jpg" />
         <h4>{member.username}</h4>
         <button onClick={() => setEditMember(!editMember)}>Edit</button>
         <br />
         <button onClick={handleDeleteMember}>Delete Member</button>
       </div>
-      <div className="sm-right" />
-      <form onSubmit={handleSubmit}>
-        <h1>Add member</h1>
+      <div className="eb-right">
+        <form onSubmit={handleSubmit}>
+          <h1>Edit member</h1>
           <Field
             name="fullname"
             placeholder="Fullname"
@@ -64,100 +64,101 @@ export default function AdminEditMember({
             value={values}
             onChange={handleChange}
           />
-        <div className="input-2">
-          <Field
-            name="phone_number"
-            placeholder="Phone Number"
-            label="Phone Number"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
+          <div className="input-2">
+            <Field
+              name="phone_number"
+              placeholder="Phone Number"
+              label="Phone Number"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
 
-          <Field
-            name="branch"
-            placeholder="Branch"
-            label="Branch"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
-        </div>
+            <Field
+              name="branch"
+              placeholder="Branch"
+              label="Branch"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="input-2">
-          <Field
-            name="gender"
-            placeholder="Gender"
-            label="Gender"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
-          <Field
-            name="address"
-            placeholder="Address"
-            label="Address"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="input-2">
+            <Field
+              name="gender"
+              placeholder="Gender"
+              label="Gender"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+            <Field
+              name="address"
+              placeholder="Address"
+              label="Address"
+              type="text"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="input-2">
-          <Field
-            name="birthday"
-            placeholder="Birthday"
-            label="Birthday"
-            type="date"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
+          <div className="input-2">
+            <Field
+              name="birthday"
+              placeholder="Birthday"
+              label="Birthday"
+              type="date"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
 
-          <Field
-            name="register_date"
-            label="Register Date"
-            type="date"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
+            <Field
+              name="register_date"
+              label="Register Date"
+              type="date"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
 
-          <Field
-            name="expire_date"
-            label="Expire Date"
-            type="date"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
-        </div>
+            <Field
+              name="expire_date"
+              label="Expire Date"
+              type="date"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="input-2">
-          <Field
-            name="image"
-            label="Image"
-            type="file"
-            showError={showError}
-            errors={errors}
-            value={values}
-            onChange={handleChange}
-          />
-        </div>
+          <div className="input-2">
+            <Field
+              name="image"
+              label="Image"
+              type="file"
+              showError={showError}
+              errors={errors}
+              value={values}
+              onChange={handleChange}
+            />
+          </div>
 
-        <input type="submit" value="Submit" />
-      </form>
+          <input type="submit" value="Submit" />
+        </form>
+      </div>
     </div>
   );
 }
