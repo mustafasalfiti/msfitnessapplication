@@ -10,9 +10,13 @@ storageMember = multer.diskStorage({
   },
   destination: (req, file, cb) => {
     const url = "/../client/public/uploads/members/";
-    const dir = path.join(__dirname + `${url}${req.body.username}`);
+    const dir = path.join(
+      `${__dirname}${url}${
+        req.params.username ? req.params.username : req.body.username
+      }`
+    );
     const existsPhotoFile = path.join(
-      __dirname + `${url}${req.body.username}/${req.body.image}`
+      `${__dirname}${url}${req.body.username}/${req.body.image}`
     );
     try {
       const isExist = fs.existsSync(dir);
@@ -45,7 +49,7 @@ const upload = multer({
       cb(new Error("you can only upload image"), false);
     }
   },
-  limits: { fileSize: 1000 * 1000 * 2 }
+  limits: { fileSize: 1000 * 1000 * 20 }
 });
 
 module.exports = app => {
@@ -70,21 +74,32 @@ module.exports = app => {
     }
   });
 
-  app.post("/auth/members", requireLogin, requireAdmin, async (req, res) => {
-    let { username } = req.body;
-    username = req.body.username.toLowerCase();
-    try {
-      const user = await new User({
-        ...req.body,
-        username
-      });
-      user.password = user.auth.generateSalts(user.password);
-      await user.save();
-      res.status(200).json(user);
-    } catch (err) {
-      res.status(400).json({ ...err, message: err.message });
+  app.post(
+    "/auth/members",
+    requireLogin,
+    requireAdmin,
+    upload.single("imageFile"),
+    async (req, res) => {
+      let { username } = req.body;
+      username = req.body.username.toLowerCase();
+      if (req.file) {
+        req.body.image = req.file.filename;
+      }
+
+      try {
+        const user = await new User({
+          ...req.body,
+          username
+        });
+
+        user.password = user.auth.generateSalts(user.password);
+        await user.save();
+        res.status(200).json(user);
+      } catch (err) {
+        res.status(400).json({ ...err, message: err.message });
+      }
     }
-  });
+  );
 
   app.post("/auth/login", async (req, res) => {
     try {
@@ -164,10 +179,27 @@ module.exports = app => {
     requireLogin,
     requireAdmin,
     async (req, res) => {
+      const url = "/../client/public/uploads/members/";
+      const dir = path.join(`${__dirname}${url}${req.params.username}`);
       try {
-        await User.findOneAndRemove({ username: req.params.username });
+        if (fs.existsSync(dir)) {
+          fs.readdirSync(dir).forEach(file => {
+            fs.unlinkSync(`${__dirname}${url}${req.params.username}/${file}`);
+          });
+          fs.rmdir(dir, err => {
+            if (err) {
+              new Error(err);
+            } else {
+              console.log("Everything went well");
+            }
+          });
+        }
+        const member = await User.findOneAndRemove({
+          username: req.params.username
+        });
         res.status(200).send("User Deleted!");
       } catch (err) {
+        console.log(err);
         res.status(400).send(err);
       }
     }

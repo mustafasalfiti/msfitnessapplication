@@ -62,7 +62,7 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT"
 
   export  async function updateMember(dispatch , values , {push}) {
     const response = await axios.put(`/auth/members/${values.get("username")}` ,values , {
-      onUploadProgress: progressEvent => console.log(progressEvent.loaded)
+      onUploadProgress: progressEvent => console.log('progress = ' + Math.round(progressEvent.loaded / progressEvent.total) * 100 + '%')
     });
     dispatch({ type: UPDATE_MEMBER , data:response.data});
     if(response.status === 200) {
