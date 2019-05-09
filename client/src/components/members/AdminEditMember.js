@@ -3,7 +3,7 @@ import handleInputState from "../../utils/handleInputState";
 import Field from "../base/Field";
 import Store from "../../context/store";
 import { updateMember } from "../../actions";
-import { handleMemberErrors } from "../../utils/errors";
+import { handleMemberErrors, imageError } from "../../utils/errors";
 
 export default function AdminEditMember({
   handleDeleteMember,
@@ -12,8 +12,11 @@ export default function AdminEditMember({
   setEditMember,
   history
 }) {
+  const [imageFile, setImageFile] = React.useState(null);
+  const [fileError, setFileError] = React.useState(null);
   const [errors, setErrors] = React.useState({});
   const [showError, setShowError] = React.useState(false);
+
   const { dispatch } = React.useContext(Store);
 
   let { values, handleChange } = handleInputState({
@@ -28,15 +31,33 @@ export default function AdminEditMember({
     image: member.image
   });
 
+  function onImageChange(event) {
+    let file = event.target.files[0];
+    const imageFileError = imageError(file);
+    if (imageFileError === undefined) {
+      setFileError(null);
+      setImageFile(file);
+    } else {
+      setFileError(imageFileError);
+    }
+  }
+
   React.useEffect(() => {
     setErrors(handleMemberErrors(values));
   }, [values]);
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (Object.keys(errors).length === 0) {
-      values.username = member.username;
-      updateMember(dispatch, values, history);
+    if (Object.keys(errors).length === 0 && fileError === null) {
+    const data = new FormData();
+    data.append("username", member.username);
+      Object.keys(values).forEach(key => {
+        data.append(key, values[key]);
+      });
+      if(imageFile) {
+        data.append('imageFile' , imageFile)
+      }
+      updateMember(dispatch, data, history);
       setEditMember(false);
     }
     setShowError(true);
@@ -45,7 +66,10 @@ export default function AdminEditMember({
   return (
     <div className="editblock-container">
       <div className="eb-left">
-        <img src="/1.jpg" />
+        <img
+          alt="img"
+          src={`/uploads/members/${member.username}/${member.image}`}
+        />
         <h4>{member.username}</h4>
         <button onClick={() => setEditMember(!editMember)}>Edit</button>
         <br />
@@ -145,15 +169,13 @@ export default function AdminEditMember({
           </div>
 
           <div className="input-2">
-            <Field
-              name="image"
-              label="Image"
-              type="file"
-              showError={showError}
-              errors={errors}
-              value={values}
-              onChange={handleChange}
-            />
+            <div className="label-input">
+              <label>Image : </label>
+              <span className="errorText">
+                {fileError && showError ? fileError: ""}
+              </span>
+              <input type="file" name="image_file" onChange={onImageChange} />
+            </div>
           </div>
 
           <input type="submit" value="Submit" />

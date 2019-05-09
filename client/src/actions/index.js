@@ -61,11 +61,12 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT"
 
 
   export  async function updateMember(dispatch , values , {push}) {
-    console.log(values);
-    const response = await axios.put(`/auth/members/${values.username}` ,values);
+    const response = await axios.put(`/auth/members/${values.get("username")}` ,values , {
+      onUploadProgress: progressEvent => console.log(progressEvent.loaded)
+    });
     dispatch({ type: UPDATE_MEMBER , data:response.data});
     if(response.status === 200) {
-      push(`/admin/members/${values.username}`);
+      push(`/admin/members/${values.get("username")}`);
     }
   }
 

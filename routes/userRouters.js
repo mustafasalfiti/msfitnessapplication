@@ -1,5 +1,52 @@
 const User = require("../models/User");
 const { requireLogin, requireAdmin } = require("../middlewares/auth");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+
+storageMember = multer.diskStorage({
+  filename: (req, file, cb) => {
+    cb(null, req.body.username + Date.now());
+  },
+  destination: (req, file, cb) => {
+    const url = "/../client/public/uploads/members/";
+    const dir = path.join(__dirname + `${url}${req.body.username}`);
+    const existsPhotoFile = path.join(
+      __dirname + `${url}${req.body.username}/${req.body.image}`
+    );
+    try {
+      const isExist = fs.existsSync(dir);
+      if (isExist) {
+        fs.unlink(
+          existsPhotoFile,
+          err => new Error({ message: "cannot unlink image", err })
+        );
+        cb(null, dir);
+      } else {
+        fs.mkdirSync(dir);
+        cb(null, dir);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+});
+
+const upload = multer({
+  storage: storageMember,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(new Error("you can only upload image"), false);
+    }
+  },
+  limits: { fileSize: 1000 * 1000 * 2 }
+});
 
 module.exports = app => {
   app.get("/auth/members", requireLogin, requireAdmin, async (req, res) => {
@@ -44,7 +91,6 @@ module.exports = app => {
       let { username, password } = req.body;
       username = username.toLowerCase();
       const user = await User.findOne({ username });
-      console.log(user)
       const isTrue = user.auth.comparePassword(password);
       const token = user.auth.generateAuthToken();
 
@@ -77,18 +123,21 @@ module.exports = app => {
     "/auth/members/:username",
     requireLogin,
     requireAdmin,
+    upload.single("imageFile"),
     async (req, res) => {
-      console.log(req.body)
       if (req.body.type) {
         req.body.type = undefined;
       }
+      if (req.file) {
+        req.body.image = req.file.filename;
+      }
+
       try {
         const member = await User.findOneAndUpdate(
           { username: req.params.username },
           { $set: req.body },
           { new: true }
         );
-        console.log(member);
         res.status(200).json(member);
       } catch (err) {
         res.status(400).send(err);

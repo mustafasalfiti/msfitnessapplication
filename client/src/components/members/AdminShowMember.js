@@ -30,7 +30,7 @@ export default function AdminShowMember({ history }) {
         return (
           <div className="editblock-container">
             <div className="eb-left">
-              <img src="/1.jpg" />
+            <img alt="img" src={`/uploads/members/${member.username}/${member.image}`} />
               <h4>{member.username}</h4>
               <button onClick={() => setEditMember(!editMember)}>Edit</button>
               <button onClick={handleDeleteMember}>Delete Member</button>
