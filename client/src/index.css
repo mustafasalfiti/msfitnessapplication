@@ -28,6 +28,11 @@ nav {
   margin: 2px 0;
 }
 
+.passwordError {
+  display: block;
+  margin-top:10px;
+}
+
 .input-error {
   border: 1px solid #a63232;
 }
@@ -294,7 +299,7 @@ footer h6 {
   display: flex;
   flex-direction: column;
   text-align: center;
-  color: #3c5a99;
+  color: #2c3e50;
 }
 
 .login-container form input {
@@ -516,6 +521,12 @@ textarea {
 
 .eb-left button:nth-of-type(2):hover {
   background-color: rgb(175, 0, 0);
+}
+
+#btn_edit {
+  width:200px;
+  height:30px;
+  margin-top:5px;
 }
 
 .eb-left button {

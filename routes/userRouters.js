@@ -6,25 +6,18 @@ const path = require("path");
 
 storageMember = multer.diskStorage({
   filename: (req, file, cb) => {
-    cb(null, req.body.username + Date.now());
+    const username = req.params.username || req.body.username;
+    cb(null, username + Date.now());
   },
   destination: (req, file, cb) => {
     const url = "/../client/public/uploads/members/";
-    const dir = path.join(
-      `${__dirname}${url}${
-        req.params.username ? req.params.username : req.body.username
-      }`
-    );
-    const existsPhotoFile = path.join(
-      `${__dirname}${url}${req.body.username}/${req.body.image}`
-    );
+    const username = req.params.username || req.body.username;
+    const dir = path.join(`${__dirname}${url}${username}`);
     try {
-      const isExist = fs.existsSync(dir);
-      if (isExist) {
-        fs.unlink(
-          existsPhotoFile,
-          err => new Error({ message: "cannot unlink image", err })
-        );
+      if (fs.existsSync(dir)) {
+        fs.readdirSync(dir).forEach(file => {
+          fs.unlinkSync(`${__dirname}${url}${req.params.username}/${file}`);
+        });
         cb(null, dir);
       } else {
         fs.mkdirSync(dir);
@@ -160,19 +153,35 @@ module.exports = app => {
     }
   );
 
-  app.put("/members/:username", requireLogin, async (req, res) => {
-    const { password } = req.body;
-    try {
-      const member = await User.findOneAndUpdate(
-        { username: req.params.username },
-        { $set: { password } },
-        { $new: true }
-      );
-      res.status(200).json(member);
-    } catch (err) {
-      res.status(400).send(err);
+  app.put(
+    "/members/:username",
+    requireLogin,
+    upload.single("image_file"),
+    async (req, res) => {
+      const { password, currentPassword } = req.body;
+      try {
+        const member = await User.findOne({ username: req.params.username });
+        if (password) {
+          const isTrue = member.auth.comparePassword(currentPassword);
+          if (isTrue) {
+            member.password = member.auth.generateSalts(password);
+            await member.save();
+            return res.status(200).send(member);
+          } else {
+            return res.status(401).send("Current Password is Incorrect");
+          }
+        } else if (req.file) {
+          member.image = req.file.filename;
+          await member.save();
+          res.status(200).send(member);
+        } else {
+          return new Error("Something went wrong");
+        }
+      } catch (err) {
+        return res.status(400).send("Something went wrong");
+      }
     }
-  });
+  );
 
   app.delete(
     "/auth/members/:username",

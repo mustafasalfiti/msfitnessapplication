@@ -1,7 +1,7 @@
-import { LOGIN_USER, LOGOUT_USER, FETCH_USER } from "../actions";
+import { LOGIN_USER, LOGOUT_USER, FETCH_USER, UPDATE_USER } from "../actions";
 import {
   FETCH_MEMBERS,
-  FETCH_MEMBER ,
+  FETCH_MEMBER,
   CREATE_MEMBER,
   UPDATE_MEMBER,
   DELETE_MEMBER
@@ -26,6 +26,9 @@ export default function reducer(state, action) {
     case FETCH_USER: {
       return { ...state, user: action.data };
     }
+    case UPDATE_USER: {
+      return { ...state , user:action.data};
+    }
 
     /// Member
     case FETCH_MEMBERS: {
@@ -44,7 +47,6 @@ export default function reducer(state, action) {
       return { ...state, members };
     }
     case UPDATE_MEMBER: {
-      
       let members = { ...state.members, [action.data.username]: action.data };
       return { ...state, members };
     }

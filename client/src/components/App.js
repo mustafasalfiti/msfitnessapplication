@@ -5,17 +5,16 @@ import Home from "./base/Home";
 import Login from "./members/Login";
 import AdminShowMembers from "./members/AdminShowMembers";
 import AdminAddMember from "./members/AdminAddMember";
-import AdminShowMember from './members/AdminShowMember';
+import AdminShowMember from "./members/AdminShowMember";
 import ShowMember from "./members/ShowMember";
-
 
 import AdminAddProduct from "./products/AdminAddProduct";
 import AdminShowProducts from "./products/AdminShowProducts";
-import AdminShowProduct from './products/AdminShowProduct';
+import AdminShowProduct from "./products/AdminShowProduct";
 
 import reducer from "../reducers";
 
-import { fetchUser, loginUser, logoutUser , } from "../actions";
+import { fetchUser } from "../actions";
 
 import Cart from "./products/Cart";
 
@@ -30,13 +29,15 @@ export default function App() {
   const [store, dispatch] = React.useReducer(reducer, {
     user: null,
     products: null,
-    members: null
+    members: null ,
   });
-  const {members , products , user} = store;
-  
+  const { members, products, user } = store;
+
   React.useEffect(() => {
     fetchUser(dispatch);
   }, []);
+
+
 
   function renderRoutes() {
     if (user) {
@@ -50,10 +51,26 @@ export default function App() {
             <Route exact path="/admin/members" component={AdminShowMembers} />
             <Route exact path="/admin/products" component={AdminShowProducts} />
             <Route exact path="/products/:id" component={Home} />
-            <Route exact path="/admin/members/create" component={AdminAddMember} />
-            <Route exact path="/admin/members/:id" component={AdminShowMember} />
-            <Route exact path="/admin/products/create" component={AdminAddProduct} />
-            <Route exact path="/admin/products/:id" component={AdminShowProduct} />
+            <Route
+              exact
+              path="/admin/members/create"
+              component={AdminAddMember}
+            />
+            <Route
+              exact
+              path="/admin/members/:id"
+              component={AdminShowMember}
+            />
+            <Route
+              exact
+              path="/admin/products/create"
+              component={AdminAddProduct}
+            />
+            <Route
+              exact
+              path="/admin/products/:id"
+              component={AdminShowProduct}
+            />
           </Switch>
         );
       } else if (user.type === "member") {
@@ -62,11 +79,7 @@ export default function App() {
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={Home} />
             <Route exact path="/cart" component={Cart} />
-            <Route
-              exact
-              path={`/${user.username}`}
-              component={ShowMember}
-            />
+            <Route exact path={`/${user.username}`} component={ShowMember} />
             <Route exact path="/:else" component={Home} />
             <Route exact path="/products/:id" component={Home} />
           </Switch>
@@ -85,9 +98,7 @@ export default function App() {
 
   return (
     <div>
-      <Store.Provider
-        value={{ products:products , members:members ,loginUser, user: user, logoutUser, dispatch }}
-      >
+      <Store.Provider value={{ products, members, user, dispatch  }}>
         <BrowserRouter>{isDone ? renderRoutes() : ""}</BrowserRouter>
       </Store.Provider>
     </div>

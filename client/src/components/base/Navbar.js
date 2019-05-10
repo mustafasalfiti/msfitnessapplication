@@ -1,9 +1,10 @@
 import React from "react";
 import Store from "../../context/store";
 import { NavLink } from "react-router-dom";
+import { logoutUser } from '../../actions';
 
 export default function Navbar() {
-  const { user , logoutUser , dispatch } = React.useContext(Store);
+  const { user ,  dispatch } = React.useContext(Store);
 
   function renderNanlinks() {
     if (user) {

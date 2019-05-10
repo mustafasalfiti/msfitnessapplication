@@ -68,3 +68,32 @@ export function imageError(file) {
     return error = 'it must be an image with types of jpg jpeg png'
   }
 }
+
+export function changePasswordErrors(values) {
+  let errors = {};
+  if(values.currentPassword === '') {
+    errors.currentPassword = 'please Enter Current Password'
+  }
+  if(values.password === '') {
+    errors.password = 'please Enter new password '
+  }
+  if(values.retypedPassword === '') {
+    errors.retypedPassword = 'please repeat new password '
+  }
+  if(values.retypedPassword !== values.password) {
+    errors.doesntMatchPassword = "Password Doesn't match"
+  }
+  return errors;
+}
+
+
+export function LoginErrors(values) {
+  let errors = {};
+  if(values.username === '') {
+    errors.username = 'please enter your username'
+  }
+  if(values.password === '') {
+    errors.password = 'please Enter your password '
+  }
+  return errors;
+}

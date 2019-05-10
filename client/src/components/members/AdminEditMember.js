@@ -49,13 +49,13 @@ export default function AdminEditMember({
   async function handleSubmit(event) {
     event.preventDefault();
     if (Object.keys(errors).length === 0 && fileError === null) {
-    const data = new FormData();
-    data.append("username", member.username);
+      const data = new FormData();
+      data.append("username", member.username);
       Object.keys(values).forEach(key => {
         data.append(key, values[key]);
       });
-      if(imageFile) {
-        data.append('imageFile' , imageFile)
+      if (imageFile) {
+        data.append("imageFile", imageFile);
       }
       updateMember(dispatch, data, history);
       setEditMember(false);
@@ -172,7 +172,7 @@ export default function AdminEditMember({
             <div className="label-input">
               <label>Image : </label>
               <span className="errorText">
-                {fileError && showError ? fileError: ""}
+                {fileError && showError ? fileError : ""}
               </span>
               <input type="file" name="image_file" onChange={onImageChange} />
             </div>
