@@ -3,7 +3,6 @@ import Field from "../base/Field";
 import Store from "../../context/store";
 import { handleProductErrors } from "../../utils/errors";
 import { updateProduct } from "../../actions";
-import handleInputState from "../../utils/handleInputState";
 
 export default function AdminEditProduct({
   history,
@@ -14,9 +13,8 @@ export default function AdminEditProduct({
 }) {
   const [errors, setErrors] = React.useState({});
   const [showError, setShowError] = React.useState(false);
-  const { dispatch } = React.useContext(Store);
-
-  let { values, handleChange } = handleInputState({
+  const { dispatch, handleInputState } = React.useContext(Store);
+  const [values, setValues] = React.useState({
     name: product.name,
     type: product.type,
     price: product.price,
@@ -58,7 +56,7 @@ export default function AdminEditProduct({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
             <Field
               name="type"
@@ -68,7 +66,7 @@ export default function AdminEditProduct({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -81,7 +79,7 @@ export default function AdminEditProduct({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
             <Field
               name="amount"
@@ -91,7 +89,7 @@ export default function AdminEditProduct({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -102,18 +100,18 @@ export default function AdminEditProduct({
             showError={showError}
             errors={errors}
             value={values}
-            onChange={handleChange}
+            setValues={setValues}
           />
 
           <label id="textarealabel">Description : </label>
           <span className="errorText">
             {errors.description && showError ? errors.description : ""}
           </span>
-          <br/>
+          <br />
           <textarea
             name="description"
             value={values.description}
-            onChange={handleChange}
+            setValues={setValues}
             rows="8"
             cols="50"
           />

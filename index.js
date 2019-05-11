@@ -13,6 +13,8 @@ app.use(morgan('dev'));
 
 require("./routes/userRouters")(app);
 require("./routes/productRouters")(app);
+require("./routes/forgetPasswordRouters")(app);
+
 
 
 

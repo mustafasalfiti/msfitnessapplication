@@ -1,6 +1,5 @@
 import React from "react";
 import Navbar from "../base/Navbar";
-import handleInputState from "../../utils/handleInputState";
 import Field from "../base/Field";
 import Store from '../../context/store';
 import { createProduct } from '../../actions';
@@ -10,8 +9,7 @@ export default function AdminAddProduct({ history }) {
   const [errors, setErrors] = React.useState({});
   const [showError, setShowError] = React.useState(false);
   const {dispatch} = React.useContext(Store);
-
-  let { values, handleChange } = handleInputState({
+  const [values, setValues] = React.useState({
     name: "",
     type: "",
     price: "",
@@ -19,6 +17,7 @@ export default function AdminAddProduct({ history }) {
     description: "",
     image: ""
   });
+
 
 
   React.useEffect(() => {
@@ -49,7 +48,7 @@ export default function AdminAddProduct({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <Field
@@ -60,7 +59,7 @@ export default function AdminAddProduct({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -73,7 +72,7 @@ export default function AdminAddProduct({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
             <Field
               name="amount"
@@ -83,7 +82,7 @@ export default function AdminAddProduct({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -94,8 +93,8 @@ export default function AdminAddProduct({ history }) {
             showError={showError}
             errors={errors}
             value={values}
-            onChange={handleChange}
-          />
+            setValues={setValues}
+            />
 
           <div className="label-input">
             <label>Description : </label>
@@ -105,7 +104,7 @@ export default function AdminAddProduct({ history }) {
             <textarea
               name="description"
               value={values.description}
-              onChange={handleChange}
+              setValues={setValues}
               rows="8"
             />
           </div>

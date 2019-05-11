@@ -43,7 +43,7 @@ export default function AdminShowMember({ history }) {
                 Phone Number: <span>{member.phone_number}</span>
               </p>
               <p>
-                Age: <span>{member.birthday}</span>
+                Birthday: <span>{member.birthday.substring(0,10)}</span>
               </p>
               <p>
                 Gender: <span>{member.gender}</span>
@@ -55,10 +55,10 @@ export default function AdminShowMember({ history }) {
                 Address: <span>{member.address}</span>
               </p>
               <p>
-                Registration Date: <span>{member.register_date}</span>
+                Registration Date: <span>{member.register_date.substring(0 ,10)}</span>
               </p>
               <p>
-                Expire Date: <span>{member.expire_date}</span>
+                Expire Date: <span>{member.expire_date.substring(0 ,10)}</span>
               </p>
             </div>
           </div>

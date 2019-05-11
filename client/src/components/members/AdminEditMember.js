@@ -1,5 +1,4 @@
 import React from "react";
-import handleInputState from "../../utils/handleInputState";
 import Field from "../base/Field";
 import Store from "../../context/store";
 import { updateMember } from "../../actions";
@@ -16,20 +15,19 @@ export default function AdminEditMember({
   const [fileError, setFileError] = React.useState(null);
   const [errors, setErrors] = React.useState({});
   const [showError, setShowError] = React.useState(false);
-
-  const { dispatch } = React.useContext(Store);
-
-  let { values, handleChange } = handleInputState({
+  const [values, setValues] = React.useState({
     fullname: member.fullname,
     phone_number: member.phone_number,
     branch: member.branch,
     gender: member.gender,
     address: member.address,
-    birthday: member.birthday,
-    register_date: member.register_date,
-    expire_date: member.expire_date,
+    birthday: member.birthday.substring(0, 10),
+    register_date: member.register_date.substring(0, 10),
+    expire_date: member.expire_date.substring(0, 10),
     image: member.image
   });
+
+  const { dispatch } = React.useContext(Store);
 
   function onImageChange(event) {
     let file = event.target.files[0];
@@ -86,7 +84,7 @@ export default function AdminEditMember({
             showError={showError}
             errors={errors}
             value={values}
-            onChange={handleChange}
+            setValues={setValues}
           />
           <div className="input-2">
             <Field
@@ -97,7 +95,7 @@ export default function AdminEditMember({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <Field
@@ -108,7 +106,7 @@ export default function AdminEditMember({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -121,7 +119,7 @@ export default function AdminEditMember({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
             <Field
               name="address"
@@ -131,7 +129,7 @@ export default function AdminEditMember({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -144,7 +142,7 @@ export default function AdminEditMember({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <Field
@@ -154,7 +152,7 @@ export default function AdminEditMember({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <Field
@@ -164,7 +162,7 @@ export default function AdminEditMember({
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 

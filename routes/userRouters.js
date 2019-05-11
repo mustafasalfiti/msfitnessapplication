@@ -48,8 +48,8 @@ const upload = multer({
 module.exports = app => {
   app.get("/auth/members", requireLogin, requireAdmin, async (req, res) => {
     try {
-      const members = await User.find({ type: "member" }, "-password");
-      res.status(200).json(members);
+      const members = await User.filterMembers();
+      res.status(200).send(members);
     } catch (err) {
       res.status(400).send(err);
     }

@@ -291,10 +291,11 @@ footer h6 {
   top: 40%;
   left: 50%;
   transform: translate(-50%, -40%);
+  border: 1px solid #8e44ad;
+
 }
 
 .login-container form {
-  border: 1px solid #8e44ad;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
@@ -418,7 +419,6 @@ tr {
   display: flex;
   justify-content: space-between;
   font-size: 18px;
-  border-bottom: 1px solid #000305;
 }
 
 th {
@@ -637,4 +637,93 @@ textarea {
 
 .sp-box img {
   max-width: 250px;
+}
+
+#isExpire {
+  background-color:rgba(255, 0, 0, 0.562);
+  color:white;
+}
+
+.forget_password {
+  text-align:center;
+  padding:5px 0;
+  margin-top:-15px;
+} 
+
+.forget_password a {
+  color:#401e4e;
+  font-size: 80%;
+  transition: all .2s;
+} 
+.forget_password a:hover {
+  color:#a11c1c;
+  font-size: 80%;
+} 
+
+.forgetpassword {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+.forgetpassword-container {
+  width: 40%;
+  height:23%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  border: 1px solid #8e44ad;
+}
+
+.forgetpassword-container form {
+  border-radius: 3px;
+  flex-direction: column;
+  text-align: center;
+  color: #2c3e50;
+
+}
+.forgetpassword-container form h1:nth-child(1) {
+  margin: 1.2rem;
+  text-align: center;
+  color: transparent;
+  font-size: 160%;
+  background-image: linear-gradient(to left, #8e44ad, #2c3e50);
+  background-clip: text;
+}
+
+.forgetpassword-container form p:nth-child(2) {
+  margin: 15px 50px;
+  color:#401e4e;
+}
+.forgetpassword-container form input:nth-child(3) {
+  padding:5px 5px;
+  border:1px solid #8e44ad;
+  font-family: inherit;
+  margin: 15px 50px;
+}
+
+#fp-btn {
+  padding:4px 25px;
+  background-color: transparent;
+  color:#2c3e50;
+  border:1px solid #8e44ad;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+}
+
+#fp-btn:hover {
+  padding:4px 25px;
+  background-color:#2c3e50;
+  color:white;
+  border:1px solid #8e44ad;
+}
+
+
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  appearance: none; 
+  margin: 0; 
 }

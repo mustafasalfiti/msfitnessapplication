@@ -37,7 +37,15 @@ const userSchema = new Schema({
     type:String ,
     default:'member',
   },
-  token:String
+  isExpire: {
+    type:Boolean ,
+    default:false
+  } ,
+  token:String,
+  resetpassword:{
+    type:mongoose.Schema.Types.ObjectId ,
+    ref:"resetpassword"
+  } ,
 });
 
 userSchema.methods.auth = {
@@ -55,5 +63,21 @@ userSchema.methods.auth = {
     return bcrypt.compareSync(password , this.password) ;
   }
 }
+
+userSchema.statics.filterMembers =  async function() {
+    let members = await this.find({type:'member'} , '-password');
+    members.forEach(member=> {
+      if(member.expire_date <= Date.now()) {
+        member.isExpire = true ;
+        member.save();
+      }
+      if(member.expire_date >= Date.now() && member.isExpire) {
+        member.isExpire = false;
+        member.save();
+      }
+    });
+    return members;
+}
+
 
 module.exports = mongoose.model('User' , userSchema);

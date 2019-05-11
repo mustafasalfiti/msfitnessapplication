@@ -1,16 +1,30 @@
 import React from "react";
 import Navbar from "../base/Navbar";
-import handleInputState from "../../utils/handleInputState";
 import Field from "../base/Field";
 import Store from "../../context/store";
 import { createMember } from "../../actions";
 import { handleMemberErrors, imageError } from "../../utils/errors";
-
 export default function AdminAddMember({ history }) {
+  
   const [errors, setErrors] = React.useState({});
   const [showError, setShowError] = React.useState(false);
   const [imageFile, setImageFile] = React.useState(null);
   const [fileError, setFileError] = React.useState(null);
+  const [values, setValues] = React.useState({
+    username: "",
+    fullname: "",
+    phone_number: "",
+    branch: "",
+    gender: "",
+    address: "",
+    birthday: "",
+    register_date: "",
+    expire_date: "",
+    password: ""
+  });
+
+
+
   const { dispatch } = React.useContext(Store);
 
   async function handleSubmit(event) {
@@ -20,8 +34,8 @@ export default function AdminAddMember({ history }) {
       Object.keys(values).forEach(key => {
         data.append(key, values[key]);
       });
-      if(imageFile) {
-        data.append('imageFile' , imageFile)
+      if (imageFile) {
+        data.append("imageFile", imageFile);
       }
       createMember(dispatch, data, history);
     }
@@ -38,19 +52,6 @@ export default function AdminAddMember({ history }) {
       setFileError(imageFileError);
     }
   }
-
-  let { values, handleChange } = handleInputState({
-    username: "",
-    fullname: "",
-    phone_number: "",
-    branch: "",
-    gender: "",
-    address: "",
-    birthday: "",
-    register_date: "",
-    expire_date: "",
-    password: ""
-  });
 
   React.useEffect(() => {
     setErrors(handleMemberErrors(values));
@@ -73,7 +74,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
             <Field
               name="fullname"
@@ -83,7 +84,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -96,7 +97,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <Field
@@ -107,7 +108,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -120,7 +121,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
             <Field
               name="address"
@@ -130,7 +131,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -143,7 +144,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <Field
@@ -153,7 +154,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <Field
@@ -163,7 +164,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
           </div>
 
@@ -176,7 +177,7 @@ export default function AdminAddMember({ history }) {
               showError={showError}
               errors={errors}
               value={values}
-              onChange={handleChange}
+              setValues={setValues}
             />
 
             <div className="label-input">

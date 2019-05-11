@@ -6,6 +6,7 @@ export const LOGOUT_USER = "LOGOUT_USER";
 export const FETCH_USER = "FETCH_USER";
 export const UPDATE_USER = "UPDATE_USER";
 
+
 // MEMBER
 
 export const FETCH_MEMBERS = "FETCH_MEMBERS";
@@ -54,6 +55,7 @@ export async function updateUser(dispatch, values, username) {
     return err.response.data;
   }
 }
+
 
 //Members #FF0000#FF0000#FF0000#FF0000#FF0000
 

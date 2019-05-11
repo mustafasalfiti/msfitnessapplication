@@ -7,6 +7,7 @@ import AdminShowMembers from "./members/AdminShowMembers";
 import AdminAddMember from "./members/AdminAddMember";
 import AdminShowMember from "./members/AdminShowMember";
 import ShowMember from "./members/ShowMember";
+import ForgetPassword from './members/ForgetPassword';
 
 import AdminAddProduct from "./products/AdminAddProduct";
 import AdminShowProducts from "./products/AdminShowProducts";
@@ -21,6 +22,7 @@ import Cart from "./products/Cart";
 export default function App() {
   // To Render Page!!
   const [isDone, setIsDone] = React.useState(false);
+  
 
   setTimeout(() => {
     setIsDone(true);
@@ -90,6 +92,7 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/forgetpassword" component={ForgetPassword} />
           <Route exact path="/:else" component={Home} />
         </Switch>
       );
@@ -98,7 +101,7 @@ export default function App() {
 
   return (
     <div>
-      <Store.Provider value={{ products, members, user, dispatch  }}>
+      <Store.Provider value={{ products, members, user, dispatch   }}>
         <BrowserRouter>{isDone ? renderRoutes() : ""}</BrowserRouter>
       </Store.Provider>
     </div>

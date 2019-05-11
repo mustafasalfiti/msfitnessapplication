@@ -2,8 +2,14 @@ import React from 'react';
 
 
 
-export default function Field({ value  , onChange , name, label , placeholder , type , showError , errors  }) {
- 
+export default function Field({setValues , value ,  name, label , placeholder , type , showError , errors  }) {
+  function handleChange(event) {
+    event.persist();
+    setValues(prevValues => ({
+      ...prevValues,
+      [event.target.name]: event.target.value
+    }));
+  }
  
   return (
     <div className="label-input">
@@ -17,7 +23,7 @@ export default function Field({ value  , onChange , name, label , placeholder , 
         type={type}
         name={name}
         placeholder={placeholder}
-        onChange={onChange}
+        onChange={handleChange}
         
       />
     </div>

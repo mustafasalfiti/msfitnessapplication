@@ -11,18 +11,28 @@ export default function AdminShowMembers() {
     fetchMembers(dispatch);
   }, []);
 
+  function renderExpiredNumber() {
+    let filterd = Object.keys(members).filter(id => {
+      return members[id].isExpire === true;
+    });
+
+    return filterd.length;
+  }
   function renderMembers() {
     if (members !== null) {
       return Object.keys(members).map((id, i) => (
-        <tr key={members[id]._id}>
+        <tr id={members[id].isExpire ? "isExpire" : ""} key={members[id]._id}>
           <td>{i + 1}</td>
           <td>{members[id].username}</td>
           <td>{members[id].fullname}</td>
           <td>{members[id].phone_number}</td>
           <td>{members[id].address}</td>
-          <td>{members[id].expire_date}</td>
+          <td>{members[id].expire_date.substring(0, 10)}</td>
           <td>
-            <NavLink className="td-link" to={`/admin/members/${members[id].username}`}>
+            <NavLink
+              className="td-link"
+              to={`/admin/members/${members[id].username}`}
+            >
               more info
             </NavLink>
           </td>
@@ -42,9 +52,16 @@ export default function AdminShowMembers() {
         <Navbar />
         <div className="showinfo-block">
           <div className="showinfo-blockinfo">
-            <p>Members: {members ? members.length : "Loading"}</p>
-            <p>Active Members: {members ? members.length : "Loading"}</p>
-            <p>Expired Members: {members ? members.length : "Loading"}</p>
+            <p>Members: {members ? Object.keys(members).length : "Loading"}</p>
+            <p>
+              Active Members:{" "}
+              {members
+                ? Object.keys(members).length - renderExpiredNumber()
+                : "Loading"}
+            </p>
+            <p>
+              Expired Members: {members ? renderExpiredNumber() : "Loading"}
+            </p>
           </div>
           <div className="showinfo-blocklinks">
             <NavLink className="btn" to="/admin/members/create">
