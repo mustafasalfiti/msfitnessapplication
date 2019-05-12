@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcrypt');
+const ResetPassword = require("./ResetPassword");
 
 const { Schema } = mongoose;
 
@@ -42,7 +43,7 @@ const userSchema = new Schema({
     default:false
   } ,
   token:String,
-  resetpassword:{
+  resetPassword:{
     type:mongoose.Schema.Types.ObjectId ,
     ref:"resetpassword"
   } ,
@@ -62,6 +63,25 @@ userSchema.methods.auth = {
   comparePassword(password) {
     return bcrypt.compareSync(password , this.password) ;
   }
+}
+
+userSchema.methods.handleResetPassword = {
+  async saveCode(code) {
+    this.resetPassword = new ResetPassword({code})
+    this.resetPassword.save();
+    this.save();
+
+  } ,
+ async timesRequested() {
+  this.resetPassword.codeManyTyped +=1;
+  await this.resetPassword.save();
+  return this.resetPassword.codeManyTyped;
+ },
+ async saveToken(token) {
+   this.resetPassword.token = token ;
+   await this.resetPassword.save();
+ }
+
 }
 
 userSchema.statics.filterMembers =  async function() {

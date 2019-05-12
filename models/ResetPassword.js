@@ -4,11 +4,15 @@ const { Schema } = mongoose;
 
 const resetPasswordSchema = new Schema({
   code:String ,
-  codeManyTyped:Number ,
-  createdAt: {
+  codeManyTyped:{
+    default:0,
+    type:Number
+  } ,
+  token:String,
+  expireAt: {
     type:Date ,
     default:Date.now ,
-    expires:6000
+    expires:60*60*5
   }
 
 

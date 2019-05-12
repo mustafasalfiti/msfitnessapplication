@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-export default function Field({setValues , value ,  name, label , placeholder , type , showError , errors  }) {
+export default function Field({setValues , className , value ,  name, label , placeholder , type , showError , errors  }) {
   function handleChange(event) {
     event.persist();
     setValues(prevValues => ({
@@ -24,6 +24,7 @@ export default function Field({setValues , value ,  name, label , placeholder , 
         name={name}
         placeholder={placeholder}
         onChange={handleChange}
+        className={className}
         
       />
     </div>

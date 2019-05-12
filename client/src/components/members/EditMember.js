@@ -3,9 +3,8 @@ import Field from "../base/Field";
 import { changePasswordErrors, imageError } from "../../utils/errors";
 import { updateUser } from "../../actions";
 
-export default function EditMember({ edit, dispatch, user, setEdit , handleInputState}) {
+export default function EditMember({ edit, dispatch, user, setEdit }) {
   const [values, setValues] = React.useState({
-    currentPassword: "",
     password: "",
     retypedPassword: ""
   });

@@ -24,6 +24,7 @@ nav {
 }
 
 .errorText {
+  display: block;
   color: #a63232;
   margin: 2px 0;
 }
@@ -667,10 +668,9 @@ textarea {
 }
 
 .forgetpassword-container {
-  width: 40%;
-  height:23%;
   position: absolute;
   top: 40%;
+  padding:0 20px;
   left: 50%;
   transform: translate(-50%, -40%);
   border: 1px solid #8e44ad;
@@ -696,13 +696,19 @@ textarea {
   margin: 15px 50px;
   color:#401e4e;
 }
-.forgetpassword-container form input:nth-child(3) {
+.forgetpassword-container form input:nth-child(4) {
   padding:5px 5px;
   border:1px solid #8e44ad;
   font-family: inherit;
   margin: 15px 50px;
 }
-
+.resetpassword_input {
+  width:250px;
+  border:1px solid #8e44ad;
+  padding:5px 0;
+  margin:0 auto;
+  text-align: center;
+}
 #fp-btn {
   padding:4px 25px;
   background-color: transparent;
@@ -710,6 +716,7 @@ textarea {
   border:1px solid #8e44ad;
   transition: all .2s ease-in-out;
   cursor: pointer;
+  margin: 14px 0;
 }
 
 #fp-btn:hover {
@@ -719,6 +726,10 @@ textarea {
   border:1px solid #8e44ad;
 }
 
+#success {
+  color:#2c3e50;
+  padding:2rem;
+}
 
 
 
