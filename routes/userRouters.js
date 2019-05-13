@@ -12,6 +12,9 @@ storageMember = multer.diskStorage({
   destination: (req, file, cb) => {
     const url = "/../client/public/uploads/members/";
     const username = req.params.username || req.body.username;
+    if(username.length < 5) {
+      return cb(null);
+    }
     const dir = path.join(`${__dirname}${url}${username}`);
     try {
       if (fs.existsSync(dir)) {

@@ -13,7 +13,7 @@ export default function AdminEditProduct({
 }) {
   const [errors, setErrors] = React.useState({});
   const [showError, setShowError] = React.useState(false);
-  const { dispatch, handleInputState } = React.useContext(Store);
+  const { dispatch } = React.useContext(Store);
   const [values, setValues] = React.useState({
     name: product.name,
     type: product.type,

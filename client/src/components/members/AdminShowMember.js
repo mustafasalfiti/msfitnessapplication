@@ -14,7 +14,7 @@ export default function AdminShowMember({ history }) {
     if (members === null) {
       fetchMember(dispatch, username);
     }
-  }, []);
+  }, [dispatch , members , username]);
 
   function handleDeleteMember() {
     let promptValue = prompt("Please type 'yes' in order to delete member");

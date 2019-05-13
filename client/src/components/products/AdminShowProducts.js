@@ -9,7 +9,7 @@ export default function AdminShowProducts() {
 
   React.useEffect(() => {
     fetchProducts(dispatch);
-  }, []);
+  }, [dispatch]);
   function renderProducts() {
     if (products !== null) {
       return Object.keys(products).map((id, i) => (

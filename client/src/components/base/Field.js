@@ -18,13 +18,12 @@ export default function Field({setValues , className , value ,  name, label , pl
         {errors[name] && showError ? errors[name]: ""}
       </span>
       <input
-        className={errors[name]&& showError ? "input-error" : ""}
+        className={errors[name]&& showError ? "input-error" : className || ''}
         value={value[name]}
         type={type}
         name={name}
         placeholder={placeholder}
         onChange={handleChange}
-        className={className}
         
       />
     </div>

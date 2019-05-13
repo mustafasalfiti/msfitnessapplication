@@ -21,7 +21,7 @@ export default function Navbar() {
               <NavLink to="/cart">Cart</NavLink>
             </li>
             <li id="hoverli">
-              <a href="#">Admin</a>
+              <NavLink to="/">Admin</NavLink>
               <ul>
                 <li>
                   <NavLink to="/admin/members">Control Members</NavLink>
@@ -85,9 +85,9 @@ export default function Navbar() {
     <nav>
       <div className="row">
         <div className="nav-logo">
-          <a className="btn" href="#">
+          <NavLink to="/" className="btn">
             MS Fitness
-          </a>
+          </NavLink>
         </div>
         <div className="nav-links">{renderNanlinks()}</div>
       </div>

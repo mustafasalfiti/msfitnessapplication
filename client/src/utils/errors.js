@@ -59,13 +59,12 @@ export function imageError(file) {
   if(!file) {
     return undefined;
   }
-  let error = ''
   if(file.type === 'image/jpeg' || file.type ===  'image/jpg' || file.type === 'image/png') {
     if(file.size > 1000 * 1000 * 2) {
-      return error = 'image must be no bigger than 2mb';
+      return  'image must be no bigger than 2mb';
     }
   } else {
-    return error = 'it must be an image with types of jpg jpeg png'
+    return 'it must be an image with types of jpg jpeg png'
   }
 }
 

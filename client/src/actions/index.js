@@ -40,7 +40,7 @@ export async function loginUser(dispatch, data) {
 }
 
 export async function logoutUser(dispatch) {
-  const response = await axios.get("/auth/logout");
+   await axios.get("/auth/logout");
   dispatch({ type: LOGOUT_USER });
 }
 

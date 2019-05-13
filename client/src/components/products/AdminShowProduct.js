@@ -14,7 +14,7 @@ export default function AdminShowProduct({ history }) {
     if (products === null) {
       fetchProduct(dispatch, id);
     }
-  }, []);
+  }, [products , dispatch , id]);
 
   function handleDeleteProduct() {
     let promptValue = prompt("Please type 'yes' in order to delete product");

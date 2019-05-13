@@ -9,7 +9,7 @@ export default function Home() {
         <div className="intro">
           <div className="intro-info">
             <h3>Only 20€ Per Month , Join our family now !</h3>
-            <a className="btn" href="#">
+            <a className="btn" href="/">
               more info
             </a>
           </div>
@@ -31,7 +31,7 @@ export default function Home() {
             <div className="img-1" />
             <div className="info-text">
               <h3>Discover our Courses for Members </h3>
-              <a className="btn" href="#">
+              <a className="btn" href="/">
                 more info
               </a>
             </div>
@@ -49,7 +49,7 @@ export default function Home() {
             <div className="img-2" />
             <div className="info-text">
               <h3>We Have 40 branches spreaded around Germany </h3>
-              <a className="btn" href="#">
+              <a className="btn" href="/">
                 more info
               </a>
             </div>

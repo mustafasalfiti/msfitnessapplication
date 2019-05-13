@@ -9,7 +9,7 @@ export default function AdminShowMembers() {
 
   React.useEffect(() => {
     fetchMembers(dispatch);
-  }, []);
+  }, [dispatch]);
 
   function renderExpiredNumber() {
     let filterd = Object.keys(members).filter(id => {
