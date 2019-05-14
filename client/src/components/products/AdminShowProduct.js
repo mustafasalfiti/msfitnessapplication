@@ -29,7 +29,7 @@ export default function AdminShowProduct({ history }) {
         return (
           <div className="editblock-container">
             <div className="eb-left">
-              <img alt={`${product.name}`} src="/1.jpg" />
+              <img alt={`${product.name}`} src={`/uploads/products/${product.image}/${product.image}`} />
               <h4>{product.name}</h4>
               <button onClick={() => setEditProduct(!editProduct)}>Edit</button>
               <br />

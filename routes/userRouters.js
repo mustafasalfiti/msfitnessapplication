@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Product = require("../models/Product");
 const { requireLogin, requireAdmin } = require("../middlewares/auth");
 const multer = require("multer");
 const fs = require("fs");
@@ -19,7 +20,7 @@ storageMember = multer.diskStorage({
     try {
       if (fs.existsSync(dir)) {
         fs.readdirSync(dir).forEach(file => {
-          fs.unlinkSync(`${__dirname}${url}${req.params.username}/${file}`);
+          fs.unlinkSync(`${__dirname}${url}${username}/${file}`);
         });
         cb(null, dir);
       } else {
@@ -161,9 +162,10 @@ module.exports = app => {
     requireLogin,
     upload.single("image_file"),
     async (req, res) => {
-      const { password, currentPassword } = req.body;
+      const { productId , request ,  password, currentPassword } = req.body;
       try {
-        const member = await User.findOne({ username: req.params.username });
+        const member = await User.findOne({ username: req.params.username }).populate('cart');
+        const product = await Product.findOne({_id:productId});
         if (password) {
           const isTrue = member.auth.comparePassword(currentPassword);
           if (isTrue) {
@@ -177,10 +179,19 @@ module.exports = app => {
           member.image = req.file.filename;
           await member.save();
           res.status(200).send(member);
-        } else {
-          return new Error("Something went wrong");
+        } else if(request === 'cart'){
+          if(member.cart.id == productId) {
+            console.log('hello');
+          } else {
+            member.cart.push({...product , amount:1})
+            await member.save();
+          return  console.log(member);
+          }
         }
+        return res.status(400).send("Something went wrong");
+
       } catch (err) {
+        console.log(err);
         return res.status(400).send("Something went wrong");
       }
     }
@@ -206,7 +217,7 @@ module.exports = app => {
             }
           });
         }
-        const member = await User.findOneAndRemove({
+        await User.findOneAndRemove({
           username: req.params.username
         });
         res.status(200).send("User Deleted!");

@@ -124,12 +124,10 @@ export async function createProduct(dispatch, values, { push }) {
   }
 }
 
-export async function updateProduct(dispatch, values, { push }) {
-  const response = await axios.put(`/products/${values._id}`, values);
+export async function updateProduct(dispatch, values, id , { push }) {
+  const response = await axios.put(`/products/${id}`, values);
   dispatch({ type: UPDATE_PRODUCT, data: response.data });
-  if (response.status === 200) {
-    push(`/admin/products/${values._id}`);
-  }
+
 }
 
 export async function deleteProduct(dispatch, id, { push }) {

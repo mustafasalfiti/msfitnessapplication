@@ -31,7 +31,7 @@ nav {
 
 .passwordError {
   display: block;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .input-error {
@@ -293,7 +293,6 @@ footer h6 {
   left: 50%;
   transform: translate(-50%, -40%);
   border: 1px solid #8e44ad;
-
 }
 
 .login-container form {
@@ -457,7 +456,7 @@ td:nth-child(1) {
 }
 
 #textarealabel {
-  display:block;
+  display: block;
   margin-top: 5px;
 }
 textarea {
@@ -525,9 +524,9 @@ textarea {
 }
 
 #btn_edit {
-  width:200px;
-  height:30px;
-  margin-top:5px;
+  width: 200px;
+  height: 30px;
+  margin-top: 5px;
 }
 
 .eb-left button {
@@ -607,59 +606,100 @@ textarea {
   margin-top: 5px;
 }
 
-.showproducts {
-  margin-top: 30px;
+.sp {
+  width: 100%;
+  height: 100%;
 }
 
 .sp-container {
+  width: 100%;
+  height: 100%;
+}
+
+.sp-products {
+  width: 1140px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  width: 70%;
   margin: 0 auto;
+  justify-content: space-around;
 }
 
 .sp-box {
+  border: 1px solid #8e44ad;
+  padding: 20px;
+  box-shadow: 0px 5px 10px -10px rgba(0, 0, 0, 0.616);
   display: flex;
   flex-direction: column;
-  border: 1px solid gray;
+  margin-top: 10px;
   text-align: center;
-  margin: 20px;
-  height: 250px;
-  justify-content: space-between;
-  box-shadow: 0px 5px 10px -10px rgba(0, 0, 0, 0.616);
+  position: relative;
+}
+.sp-box a:link,
+.sp-box a:visited {
+  color: #8e44ad;
+  text-transform: uppercase;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  margin: 5px 0;
+}
+
+.sp-box a:active,
+.sp-box a:hover {
+  color: #2c3e50;
 }
 
 .sp-box button {
   border: none;
   padding: 6px 0;
   cursor: pointer;
+  background-color: #8e44ad;
+  color: white;
+  border: 1px solid #2c3e50;
+  transition: all 0.2s;
+}
+
+.sp-box button:hover {
+  background-color: #2c3e50;
+  border: 1px solid;
+}
+.sp-box button:focus {
+ outline:none;
+}
+.sp-price {
+  position: absolute;
+  background-color:#e42929;
+  color:white;
+  width:60px;
+  transform: rotate(-45deg);
+  top:18px;
+  left:-4px
 }
 
 .sp-box img {
   max-width: 250px;
+  max-height: 250px;
 }
 
 #isExpire {
-  background-color:rgba(255, 0, 0, 0.562);
-  color:white;
+  background-color: rgba(255, 0, 0, 0.562);
+  color: white;
 }
 
 .forget_password {
-  text-align:center;
-  padding:5px 0;
-  margin-top:-15px;
-} 
+  text-align: center;
+  padding: 5px 0;
+  margin-top: -15px;
+}
 
 .forget_password a {
-  color:#401e4e;
+  color: #401e4e;
   font-size: 80%;
-  transition: all .2s;
-} 
+  transition: all 0.2s;
+}
 .forget_password a:hover {
-  color:#a11c1c;
+  color: #a11c1c;
   font-size: 80%;
-} 
+}
 
 .forgetpassword {
   height: 100vh;
@@ -670,7 +710,7 @@ textarea {
 .forgetpassword-container {
   position: absolute;
   top: 40%;
-  padding:0 20px;
+  padding: 0 20px;
   left: 50%;
   transform: translate(-50%, -40%);
   border: 1px solid #8e44ad;
@@ -681,7 +721,6 @@ textarea {
   flex-direction: column;
   text-align: center;
   color: #2c3e50;
-
 }
 .forgetpassword-container form h1:nth-child(1) {
   margin: 1.2rem;
@@ -694,47 +733,45 @@ textarea {
 
 .forgetpassword-container form p:nth-child(2) {
   margin: 15px 50px;
-  color:#401e4e;
+  color: #401e4e;
 }
 .forgetpassword-container form input:nth-child(4) {
-  padding:5px 5px;
-  border:1px solid #8e44ad;
+  padding: 5px 5px;
+  border: 1px solid #8e44ad;
   font-family: inherit;
   margin: 15px 50px;
 }
 .resetpassword_input {
-  width:250px;
-  border:1px solid #8e44ad;
-  padding:5px 0;
-  margin:0 auto;
+  width: 250px;
+  border: 1px solid #8e44ad;
+  padding: 5px 0;
+  margin: 0 auto;
   text-align: center;
 }
 #fp-btn {
-  padding:4px 25px;
+  padding: 4px 25px;
   background-color: transparent;
-  color:#2c3e50;
-  border:1px solid #8e44ad;
-  transition: all .2s ease-in-out;
+  color: #2c3e50;
+  border: 1px solid #8e44ad;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
   margin: 14px 0;
 }
 
 #fp-btn:hover {
-  padding:4px 25px;
-  background-color:#2c3e50;
-  color:white;
-  border:1px solid #8e44ad;
+  padding: 4px 25px;
+  background-color: #2c3e50;
+  color: white;
+  border: 1px solid #8e44ad;
 }
 
 #success {
-  color:#2c3e50;
-  padding:2rem;
+  color: #2c3e50;
+  padding: 2rem;
 }
 
-
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  appearance: none; 
-  margin: 0; 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
 }

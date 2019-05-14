@@ -12,6 +12,8 @@ import ForgetPassword from './members/ForgetPassword';
 import AdminAddProduct from "./products/AdminAddProduct";
 import AdminShowProducts from "./products/AdminShowProducts";
 import AdminShowProduct from "./products/AdminShowProduct";
+import ShowProducts from "./products/ShowProducts";
+
 
 import reducer from "../reducers";
 
@@ -48,6 +50,7 @@ export default function App() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/products" component={ShowProducts} />
             <Route exact path="/:username" component={Home} />
 
             <Route exact path="/admin/members" component={AdminShowMembers} />
@@ -79,7 +82,7 @@ export default function App() {
         return (
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/products" component={Home} />
+            <Route exact path="/products" component={ShowProducts} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path={`/${user.username}`} component={ShowMember} />
             <Route exact path="/:else" component={Home} />

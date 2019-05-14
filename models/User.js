@@ -38,6 +38,11 @@ const userSchema = new Schema({
     type:String ,
     default:'member',
   },
+  cart:[{
+    type:mongoose.Schema.Types.ObjectId ,
+    ref:"Product" ,
+    amount:Number
+  }],
   isExpire: {
     type:Boolean ,
     default:false

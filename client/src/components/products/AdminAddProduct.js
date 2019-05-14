@@ -1,24 +1,23 @@
 import React from "react";
 import Navbar from "../base/Navbar";
 import Field from "../base/Field";
-import Store from '../../context/store';
-import { createProduct } from '../../actions';
-import {handleProductErrors} from '../../utils/errors' ;
+import Store from "../../context/store";
+import { createProduct } from "../../actions";
+import { handleProductErrors, imageError } from "../../utils/errors";
 
 export default function AdminAddProduct({ history }) {
   const [errors, setErrors] = React.useState({});
+  const [imageFile, setImageFile] = React.useState(null);
+  const [fileError, setFileError] = React.useState(null);
   const [showError, setShowError] = React.useState(false);
-  const {dispatch} = React.useContext(Store);
+  const { dispatch } = React.useContext(Store);
   const [values, setValues] = React.useState({
     name: "",
     type: "",
     price: "",
     amount: "",
-    description: "",
-    image: ""
+    description: ""
   });
-
-
 
   React.useEffect(() => {
     setErrors(handleProductErrors(values));
@@ -26,11 +25,33 @@ export default function AdminAddProduct({ history }) {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (Object.keys(errors).length === 0) {
-      createProduct(dispatch  ,values , history)
+    if (Object.keys(errors).length === 0 && fileError === null) {
+      const data = new FormData();
+      Object.keys(values).forEach(key => {
+        data.append(key, values[key]);
+      });
+      if (imageFile) {
+        // Multer Read req.body only before the image file so put all the request body you want
+        // before you put the file 
+        data.append('random' , `${1000000 + Math.floor(Math.random() * 9999999)}`)
+        data.append("imageFile", imageFile);
+      }
+      createProduct(dispatch, data, history);
     }
     setShowError(true);
   }
+
+  function onImageChange(event) {
+    let file = event.target.files[0];
+    const imageFileError = imageError(file);
+    if (imageFileError === undefined) {
+      setFileError(null);
+      setImageFile(file);
+    } else {
+      setFileError(imageFileError);
+    }
+  }
+
   return (
     <div className="addblock">
       <header>
@@ -86,16 +107,6 @@ export default function AdminAddProduct({ history }) {
             />
           </div>
 
-          <Field
-            name="image"
-            label="Image"
-            type="text"
-            showError={showError}
-            errors={errors}
-            value={values}
-            setValues={setValues}
-            />
-
           <div className="label-input">
             <label>Description : </label>
             <span className="errorText">
@@ -104,9 +115,23 @@ export default function AdminAddProduct({ history }) {
             <textarea
               name="description"
               value={values.description}
-              setValues={setValues}
+              onChange={event => {
+                event.persist();
+                setValues(prev => ({
+                  ...prev,
+                  description: event.target.value
+                }));
+              }}
               rows="8"
             />
+          </div>
+
+          <div className="label-input">
+            <label>Image : </label>
+            <span className="errorText">
+              {fileError && showError ? fileError : ""}
+            </span>
+            <input type="file" name="image_file" onChange={onImageChange} />
           </div>
 
           <input type="submit" value="Submit" />

@@ -1,84 +1,53 @@
 import React from "react";
 import Navbar from "../base/Navbar";
-import { NavLink } from 'react-router-dom';
-
+import Store from "../../context/store";
+import { fetchProducts } from "../../actions";
+import { NavLink } from "react-router-dom";
+import { updateUser } from '../../actions';
 export default function ShowProduct() {
+  const { user, products, dispatch } = React.useContext(Store);
+  console.log(user);
+  React.useEffect(() => {
+    fetchProducts(dispatch);
+  }, [dispatch]);
+
+  function handleAddToCart(event) {
+    let data = {
+      request:'cart' ,
+      productId:event.target.name
+    }
+    updateUser(dispatch , data , user.username )
+  }
+
+  function renderComponents() {
+    if (products) {
+      return Object.keys(products).map(id => (
+        <div key={products[id]._id} className="sp-box">
+          <img
+            alt={products[id].name}
+            src={`/uploads/products/${products[id].image}/${
+              products[id].image
+            }`}
+          />
+          <span className="sp-price">{products[id].price + "€"}</span>
+          <p>{products[id].name}</p>
+          <NavLink to="#">more info</NavLink>
+          <button name={products[id]._id} onClick={handleAddToCart}>Add to Cart</button>
+        </div>
+      ));
+    }
+  }
   return (
-    <div>
+    <div className="sp">
       <header>
         <Navbar />
       </header>
-    <div className="showproducts">
-    <div className="title">
-      <h2>Our Products for the best Prices!</h2>
-    </div>
-
       <div className="sp-container">
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
+        <div className="title">
+          <h2>Our Products for the best Prices!</h2>
         </div>
-
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
-
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
-
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
-
-
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
-
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
-
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
-
-        <div className="sp-box">
-          <img src="../1.jpg" />
-          <p>Whey Protein</p>
-          <NavLink to="#">more info</NavLink>
-          <button>Add to Cart</button>
-        </div>
+        <div className="sp-products">{renderComponents()}</div>
       </div>
-    </div>
-  
     </div>
   );
 }
