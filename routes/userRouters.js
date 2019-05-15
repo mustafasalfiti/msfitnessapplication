@@ -13,7 +13,7 @@ storageMember = multer.diskStorage({
   destination: (req, file, cb) => {
     const url = "/../client/public/uploads/members/";
     const username = req.params.username || req.body.username;
-    if(username.length < 5) {
+    if (username.length < 5) {
       return cb(null);
     }
     const dir = path.join(`${__dirname}${url}${username}`);
@@ -162,10 +162,12 @@ module.exports = app => {
     requireLogin,
     upload.single("image_file"),
     async (req, res) => {
-      const { productId , request ,  password, currentPassword } = req.body;
+      const { productId, request, password, currentPassword } = req.body;
       try {
-        const member = await User.findOne({ username: req.params.username }).populate('cart');
-        const product = await Product.findOne({_id:productId});
+        const member = await User.findOne({
+          username: req.params.username
+        }).populate("cart");
+        const product = await Product.findOne({ _id: productId });
         if (password) {
           const isTrue = member.auth.comparePassword(currentPassword);
           if (isTrue) {
@@ -179,17 +181,19 @@ module.exports = app => {
           member.image = req.file.filename;
           await member.save();
           res.status(200).send(member);
-        } else if(request === 'cart'){
-          if(member.cart.id == productId) {
-            console.log('hello');
-          } else {
-            member.cart.push({...product , amount:1})
+        } else if (request === "cart") {
+          let index = member.cart.findIndex(cur => cur._id == productId);
+          if (index !== -1){
+            member.cart[index].quantity++
             await member.save();
-          return  console.log(member);
+            console.log(member.cart)
+          } else {
+            member.cart.push(product);
+            await member.save();
+            return res.send(member);
           }
         }
         return res.status(400).send("Something went wrong");
-
       } catch (err) {
         console.log(err);
         return res.status(400).send("Something went wrong");

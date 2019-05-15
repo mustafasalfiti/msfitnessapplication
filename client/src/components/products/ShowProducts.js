@@ -6,7 +6,6 @@ import { NavLink } from "react-router-dom";
 import { updateUser } from '../../actions';
 export default function ShowProduct() {
   const { user, products, dispatch } = React.useContext(Store);
-  console.log(user);
   React.useEffect(() => {
     fetchProducts(dispatch);
   }, [dispatch]);
@@ -16,6 +15,7 @@ export default function ShowProduct() {
       request:'cart' ,
       productId:event.target.name
     }
+    console.log(data.productId);
     updateUser(dispatch , data , user.username )
   }
 
