@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const ResetPassword = require("./ResetPassword");
+const cartSchema = require("./Cart");
 
 const { Schema } = mongoose;
 
@@ -39,12 +40,14 @@ const userSchema = new Schema({
   },
   cart: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+      },
       quantity: {
         type: Number,
         default: 1
-      },
-      ref: "Product"
+      }
     }
   ],
   isExpire: {

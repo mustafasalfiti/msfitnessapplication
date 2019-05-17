@@ -828,3 +828,21 @@ input[type="number"]::-webkit-outer-spin-button {
   width: 30%;
   border:1px solid red;
 }
+
+.cart_submit {
+  width:20px;
+  height:20px;
+  border:0;
+  transition: all .2s;
+}
+
+.cart_submit:hover ,
+.cart_submit:active {
+background-color:#8e44ad;
+color:white;
+}
+
+
+.cart_quantity {
+  margin:0 5px;
+}

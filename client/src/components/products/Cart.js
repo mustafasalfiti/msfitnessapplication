@@ -1,12 +1,41 @@
 import React from "react";
 import Navbar from "../base/Navbar";
 import Store from "../../context/store";
+import { updateUser } from "../../actions";
+import StripeCheckout from "react-stripe-checkout";
 
 export default function Cart() {
   const { user, products, dispatch } = React.useContext(Store);
-  console.log(user);
+  const [total, setTotal] = React.useState(0);
+  function increaseQuantity(event) {
+    let data = {
+      request: "cart",
+      target: "increaseQuantity",
+      productId: event.target.name
+    };
+    updateUser(dispatch, data, user.username);
+  }
+  function decreaseQuantity(event) {
+    let data = {
+      request: "cart",
+      target: "decreaseQuantity",
+      productId: event.target.name
+    };
+    updateUser(dispatch, data, user.username);
+  }
+
+  function handleToken(token) {
+    console.log(token);
+  }
+  React.useEffect(() => {
+    let result = 0;
+    user.cart.forEach(({ product, quantity }) => {
+      result += product.price * quantity;
+    });
+    setTotal(result);
+  }, [user]);
   function renderCartElemets() {
-    return user.cart.map(product => (
+    return user.cart.map(({ product, quantity }) => (
       <tr key={product._id}>
         <td className="item">
           <img
@@ -18,12 +47,32 @@ export default function Cart() {
             <p>{product.description}</p>
           </div>
         </td>
-        <td>{product.price}€</td>
-        <td>{product.type}</td>
-
+        <td>{product.price * quantity}€</td>
+        <td>
+          <div>
+            <input
+              onClick={increaseQuantity}
+              name={product._id}
+              className="cart_submit"
+              type="Submit"
+              value="+"
+              readOnly
+            />
+            <span className="cart_quantity">{quantity}</span>
+            <input
+              onClick={decreaseQuantity}
+              name={product._id}
+              className="cart_submit"
+              type="Submit"
+              value="-"
+              readOnly
+            />
+          </div>
+        </td>
       </tr>
     ));
   }
+
   return (
     <div className="cart">
       <header>
@@ -43,7 +92,19 @@ export default function Cart() {
             <tbody>{renderCartElemets()}</tbody>
           </table>
         </div>
-        <div className="cart-summary">Summary</div>
+        <div className="cart-summary">
+          <StripeCheckout
+            stripeKey={process.env.REACT_APP_PK_STRIPE}
+            amount={total * 100}
+            locale="auto"
+            name="MSfitness Studio"
+            currency="EUR"
+            token={token => handleToken(token)}
+            email='payments@MSfitness.com'
+          >
+            <button className="btn btn-primary">Checkout</button>
+          </StripeCheckout>
+        </div>
       </div>
     </div>
   );

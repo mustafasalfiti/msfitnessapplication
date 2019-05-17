@@ -162,11 +162,22 @@ module.exports = app => {
     requireLogin,
     upload.single("image_file"),
     async (req, res) => {
-      const { productId, request, password, currentPassword } = req.body;
+      const {
+        target,
+        productId,
+        request,
+        password,
+        currentPassword
+      } = req.body;
       try {
         const member = await User.findOne({
           username: req.params.username
-        }).populate("cart");
+        }).populate({
+          path: "cart.product",
+          populate: {
+            path: "product"
+          }
+        });
         const product = await Product.findOne({ _id: productId });
         if (password) {
           const isTrue = member.auth.comparePassword(currentPassword);
@@ -182,15 +193,28 @@ module.exports = app => {
           await member.save();
           res.status(200).send(member);
         } else if (request === "cart") {
-          let index = member.cart.findIndex(cur => cur._id == productId);
-          if (index !== -1){
-            member.cart[index].quantity++
-            await member.save();
-            console.log(member.cart)
+          let index = member.cart.findIndex(
+            cur => cur.product._id == productId
+          );
+          if (target === "decreaseQuantity") {
+            if (member.cart[index].quantity === 1) {
+              member.cart.splice(index, 1);
+              let newMember = await member.save();
+              return res.status(200).send(newMember);
+            } else {
+              member.cart[index].quantity--;
+              let newMember = await member.save();
+              return res.status(200).send(newMember);
+            }
+          }
+          if (index !== -1) {
+            member.cart[index].quantity++;
+            let newMember = await member.save();
+            return res.status(200).send(newMember);
           } else {
-            member.cart.push(product);
-            await member.save();
-            return res.send(member);
+            member.cart.push({ product, quantity: 1 });
+            let newMember = await member.save();
+            return res.status(200).send(newMember);
           }
         }
         return res.status(400).send("Something went wrong");

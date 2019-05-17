@@ -15,8 +15,8 @@ export default function ShowProduct() {
       request:'cart' ,
       productId:event.target.name
     }
-    console.log(data.productId);
     updateUser(dispatch , data , user.username )
+    alert('Added To Cart Successfully');
   }
 
   function renderComponents() {
