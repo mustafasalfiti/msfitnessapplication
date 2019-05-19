@@ -6,7 +6,7 @@ import Field from "../base/Field";
 import { LoginErrors } from "../../utils/errors";
 import { loginUser } from "../../actions";
 
-export default function Login() {
+export default function Login({history}) {
   const [values, setValues] = React.useState({
     username: "",
     password: ""
@@ -21,6 +21,8 @@ export default function Login() {
       let response = await loginUser(dispatch, values);
       if (response.status !== 200) {
         alert("Invalid Password / Username");
+      } else if(response.status === 200) {
+        history.push('/')
       }
     } else {
       setShowError(true);
