@@ -15,10 +15,10 @@ export default function App() {
   const [store, dispatch] = React.useReducer(reducer, {
     user: null,
     products: null,
-    members: null
+    members:null
   });
   const { members, products, user } = store;
-
+console.log(store);
   React.useEffect(() => {
     fetchUser(dispatch);
   }, []);
