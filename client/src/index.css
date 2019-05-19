@@ -7,7 +7,6 @@
 body {
   font-family: "Ubuntu", sans-serif;
   overflow-x: hidden;
-  background: radial-gradient(white, rgb(194, 194, 194));
   background-repeat: no-repeat;
 }
 
@@ -475,6 +474,7 @@ textarea {
   width: 60%;
   background-color: white;
   border: 1px solid #8e44ad;
+  background: radial-gradient(white, rgb(243, 243, 243));
   box-shadow: 5px 1px 10px 1px rgba(0, 0, 0, 0.1);
   border-radius: 2px;
   position: absolute;

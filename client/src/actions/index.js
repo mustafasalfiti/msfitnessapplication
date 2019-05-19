@@ -44,6 +44,8 @@ export async function logoutUser(dispatch) {
   dispatch({ type: LOGOUT_USER });
 }
 
+
+
 export async function updateUser(dispatch, values, username) {
   try {
     const response = await axios.put(`/members/${username}`, values);
@@ -60,17 +62,17 @@ export async function updateUser(dispatch, values, username) {
 //Members #FF0000#FF0000#FF0000#FF0000#FF0000
 
 export async function fetchMembers(dispatch) {
-  const response = await axios.get("/auth/members");
+  const response = await axios.get("/members");
   dispatch({ type: FETCH_MEMBERS, data: response.data });
 }
 
 export async function fetchMember(dispatch, username) {
-  const response = await axios.get(`/auth/members/${username}`);
+  const response = await axios.get(`/members/${username}`);
   dispatch({ type: FETCH_MEMBER, data: response.data });
 }
 
 export async function createMember(dispatch, values, { push }) {
-  const response = await axios.post("/auth/members", values);
+  const response = await axios.post("/members", values);
   dispatch({ type: CREATE_MEMBER, data: response.data });
   if (response.status === 200) {
     push("/admin/members");
@@ -79,7 +81,7 @@ export async function createMember(dispatch, values, { push }) {
 
 export async function updateMember(dispatch, values, { push }) {
   const response = await axios.put(
-    `/auth/members/${values.get("username")}`,
+    `/members/${values.get("username")}`,
     values,
     {
       onUploadProgress: progressEvent =>
@@ -97,7 +99,7 @@ export async function updateMember(dispatch, values, { push }) {
 }
 
 export async function deleteMember(dispatch, username, { push }) {
-  const response = await axios.delete(`/auth/members/${username}`);
+  const response = await axios.delete(`/members/${username}`);
   dispatch({ type: DELETE_MEMBER, data: response.data });
   if (response.status === 200) {
     push("/admin/members");

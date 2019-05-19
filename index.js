@@ -11,9 +11,10 @@ app.use(bodyParser.json());
 app.use(cookieParser("key12345"));
 app.use(morgan('dev'));
 
-require("./routes/userRouters")(app);
-require("./routes/productRouters")(app);
-require("./routes/forgetPasswordRouters")(app);
+require("./routes/userRoutes")(app);
+require("./routes/memberRoutes")(app);
+require("./routes/productRoutes")(app);
+require("./routes/forgetPasswordRoutes")(app);
 
 
 
