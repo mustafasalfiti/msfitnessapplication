@@ -57,7 +57,7 @@ module.exports = app => {
       const members = await User.filterMembers();
       res.status(200).send(members);
     } catch (err) {
-      res.status(400).send(err);
+      res.status(500).send(err);
     }
   });
 
@@ -69,7 +69,7 @@ module.exports = app => {
       );
       res.status(200).json(member);
     } catch (err) {
-      res.status(400).send(err);
+      res.status(500).send(err);
     }
   });
 
@@ -95,14 +95,14 @@ module.exports = app => {
         await user.save();
         res.status(200).json(user);
       } catch (err) {
-        res.status(400).json({ ...err, message: err.message });
+        res.status(500).json({ ...err, message: err.message });
       }
     }
   );
 
 
   app.put(
-    "/members/:username",
+    "/member/:username",
     requireLogin,
     requireAdmin,
     upload.single("imageFile"),
@@ -122,7 +122,7 @@ module.exports = app => {
         );
         res.status(200).json(member);
       } catch (err) {
-        res.status(400).send(err);
+        res.status(500).send(err);
       }
     }
   );
@@ -187,10 +187,10 @@ module.exports = app => {
             return res.status(200).send(newMember);
           }
         }
-        return res.status(400).send("Something went wrong");
+        return res.status(500).send("Something went wrong");
       } catch (err) {
         console.log(err);
-        return res.status(400).send("Something went wrong");
+        return res.status(500).send("Something went wrong");
       }
     }
   );
@@ -221,7 +221,7 @@ module.exports = app => {
         res.status(200).send("User Deleted!");
       } catch (err) {
         console.log(err);
-        res.status(400).send(err);
+        res.status(500).send(err);
       }
     }
   );

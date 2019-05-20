@@ -18,7 +18,7 @@ export default function App() {
     members:null
   });
   const { members, products, user } = store;
-console.log(store);
+  
   React.useEffect(() => {
     fetchUser(dispatch);
   }, []);

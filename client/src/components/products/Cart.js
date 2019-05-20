@@ -3,6 +3,7 @@ import Navbar from "../base/Navbar";
 import Store from "../../context/store";
 import { updateUser } from "../../actions";
 import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 
 export default function Cart() {
   const { user, products, dispatch } = React.useContext(Store);
@@ -24,8 +25,13 @@ export default function Cart() {
     updateUser(dispatch, data, user.username);
   }
 
-  function handleToken(token) {
-    console.log(token);
+  async function handleToken(token) {
+    const data = {
+      token ,
+      amount:total * 100
+    }
+    const response = await axios.post('/products/charge' , data);
+    console.log(response);
   }
   React.useEffect(() => {
     let result = 0;
@@ -100,7 +106,7 @@ export default function Cart() {
             name="MSfitness Studio"
             currency="EUR"
             token={token => handleToken(token)}
-            email='payments@MSfitness.com'
+            email="payments@MSfitness.com"
           >
             <button className="btn btn-primary">Checkout</button>
           </StripeCheckout>

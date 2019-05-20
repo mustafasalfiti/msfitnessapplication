@@ -14,6 +14,7 @@ app.use(morgan('dev'));
 require("./routes/userRoutes")(app);
 require("./routes/memberRoutes")(app);
 require("./routes/productRoutes")(app);
+require("./routes/paymentRoutes")(app);
 require("./routes/forgetPasswordRoutes")(app);
 
 

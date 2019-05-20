@@ -8,7 +8,6 @@ export const UPDATE_USER = "UPDATE_USER";
 
 
 // MEMBER
-
 export const FETCH_MEMBERS = "FETCH_MEMBERS";
 export const FETCH_MEMBER = "FETCH_MEMBER";
 export const CREATE_MEMBER = "CREATE_MEMBER";
@@ -67,7 +66,7 @@ export async function fetchMembers(dispatch) {
 }
 
 export async function fetchMember(dispatch, username) {
-  const response = await axios.get(`/members/${username}`);
+  const response = await axios.get(`/member/${username}`);
   dispatch({ type: FETCH_MEMBER, data: response.data });
 }
 
