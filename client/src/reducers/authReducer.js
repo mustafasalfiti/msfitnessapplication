@@ -1,4 +1,10 @@
-import { LOGIN_USER, LOGOUT_USER, FETCH_USER, UPDATE_USER } from "../actions";
+import {
+  LOGIN_USER,
+  LOGOUT_USER,
+  FETCH_USER,
+  UPDATE_USER,
+  PAYMENT_USER
+} from "../actions";
 
 export default function authReducer(state, action) {
   switch (action.type) {
@@ -12,6 +18,9 @@ export default function authReducer(state, action) {
       return { ...state, user: action.data };
     }
     case UPDATE_USER: {
+      return { ...state, user: action.data };
+    }
+    case PAYMENT_USER: {
       return { ...state, user: action.data };
     }
     default:

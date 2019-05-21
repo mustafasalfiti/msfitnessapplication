@@ -64,7 +64,6 @@ module.exports = app => {
           )
           .toString();
         user.handleResetPassword.saveToken(token);
-        console.log(token);
         return res.status(200).send(token);
       } else {
         let times = await user.handleResetPassword.timesRequested();

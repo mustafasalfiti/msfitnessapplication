@@ -13,7 +13,7 @@ export default function AdminShowProducts() {
   function renderProducts() {
     if (products !== null) {
       return Object.keys(products).map((id, i) => (
-        <tr key={id}>
+        <tr className={products[id].amount <= 0 ? 'isExpire' : ""} key={id}>
           <td>{i + 1}</td>
           <td>{products[id].name}</td>
           <td>{products[id].type}</td>

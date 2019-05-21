@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const ResetPassword = require("./ResetPassword");
-const cartSchema = require("./Cart");
 
 const { Schema } = mongoose;
 

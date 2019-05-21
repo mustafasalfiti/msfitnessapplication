@@ -5,7 +5,6 @@ const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
 
-
 storageMember = multer.diskStorage({
   filename: (req, file, cb) => {
     const username = req.params.username || req.body.username;
@@ -49,7 +48,6 @@ const upload = multer({
   },
   limits: { fileSize: 1000 * 1000 * 20 }
 });
-
 
 module.exports = app => {
   app.get("/members", requireLogin, requireAdmin, async (req, res) => {
@@ -99,7 +97,6 @@ module.exports = app => {
       }
     }
   );
-
 
   app.put(
     "/member/:username",
@@ -178,9 +175,11 @@ module.exports = app => {
             }
           }
           if (index !== -1) {
-            member.cart[index].quantity++;
-            let newMember = await member.save();
-            return res.status(200).send(newMember);
+            if(member.cart[index].quantity < member.cart[index].product.amount) {
+              member.cart[index].quantity++;
+              let newMember = await member.save();
+              return res.status(200).send(newMember);
+            }
           } else {
             member.cart.push({ product, quantity: 1 });
             let newMember = await member.save();

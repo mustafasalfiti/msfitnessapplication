@@ -21,7 +21,7 @@ export default function AdminShowMembers() {
   function renderMembers() {
     if (members !== null) {
       return Object.keys(members).map((id, i) => (
-        <tr id={members[id].isExpire ? "isExpire" : ""} key={members[id]._id}>
+        <tr className={members[id].isExpire ? "isExpire" : ""} key={members[id]._id}>
           <td>{i + 1}</td>
           <td>{members[id].username}</td>
           <td>{members[id].fullname}</td>

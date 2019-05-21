@@ -680,7 +680,7 @@ textarea {
   max-height: 250px;
 }
 
-#isExpire {
+.isExpire {
   background-color: rgba(255, 0, 0, 0.562);
   color: white;
 }

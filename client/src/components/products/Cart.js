@@ -1,9 +1,8 @@
 import React from "react";
 import Navbar from "../base/Navbar";
 import Store from "../../context/store";
-import { updateUser } from "../../actions";
+import { updateUser, handlePayment } from "../../actions";
 import StripeCheckout from "react-stripe-checkout";
-import axios from "axios";
 
 export default function Cart() {
   const { user, products, dispatch } = React.useContext(Store);
@@ -25,58 +24,79 @@ export default function Cart() {
     updateUser(dispatch, data, user.username);
   }
 
-  async function handleToken(token) {
+  function handleToken(token) {
     const data = {
-      token ,
-      amount:total * 100
-    }
-    const response = await axios.post('/products/charge' , data);
-    console.log(response);
+      token,
+      amount: total * 100,
+      username: user.username
+    };
+    handlePayment(dispatch, data);
   }
+
   React.useEffect(() => {
     let result = 0;
-    user.cart.forEach(({ product, quantity }) => {
-      result += product.price * quantity;
-    });
-    setTotal(result);
+    if (user.cart) {
+      user.cart.forEach(({ product, quantity }) => {
+        if(product.amount <= 0) {
+          return;
+        } else {
+          result += product.price * quantity;
+        }
+      });
+      setTotal(result);
+    } else {
+      setTotal(0);
+    }
   }, [user]);
   function renderCartElemets() {
-    return user.cart.map(({ product, quantity }) => (
-      <tr key={product._id}>
-        <td className="item">
-          <img
-            alt={product._id}
-            src={`/uploads/products/${product.image}/${product.image}`}
-          />
-          <div className="product-infomartion">
-            <h3>{product.name}</h3>
-            <p>{product.description}</p>
-          </div>
-        </td>
-        <td>{product.price * quantity}€</td>
-        <td>
-          <div>
-            <input
-              onClick={increaseQuantity}
-              name={product._id}
-              className="cart_submit"
-              type="Submit"
-              value="+"
-              readOnly
+    if (user.cart) {
+      return user.cart.map(({ product, quantity }) => (
+        <tr key={product._id}>
+          <td className="item">
+            <img
+              alt={product._id}
+              src={`/uploads/products/${product.image}/${product.image}`}
             />
-            <span className="cart_quantity">{quantity}</span>
-            <input
-              onClick={decreaseQuantity}
-              name={product._id}
-              className="cart_submit"
-              type="Submit"
-              value="-"
-              readOnly
-            />
-          </div>
-        </td>
-      </tr>
-    ));
+            <div className="product-infomartion">
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+            </div>
+          </td>
+          <td>{product.price * quantity}€</td>
+          <td>
+            {(function() {
+              if (product.amount <= 0) {
+                return <span>Sold out</span>;
+              } else {
+                return (
+                  <div>
+                    <input
+                      onClick={increaseQuantity}
+                      name={product._id}
+                      className="cart_submit"
+                      type="Submit"
+                      value="+"
+                      readOnly
+                    />
+                    <span className="cart_quantity">{quantity}</span>
+                    <input
+                      onClick={decreaseQuantity}
+                      name={product._id}
+                      className="cart_submit"
+                      type="Submit"
+                      value="-"
+                      readOnly
+                    />
+                  </div>
+                );
+              }
+            })()}
+          </td>
+        </tr>
+      ));
+    } else {
+      return;
+    }
   }
 
   return (
