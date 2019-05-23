@@ -31,6 +31,19 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now
   },
+  notification: [Object],
+  myProducts: [
+    {
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+      },
+      quantity: {
+        type: Number,
+        default: 1
+      }
+    }
+  ],
   expire_date: Date,
   branch: String,
   type: {

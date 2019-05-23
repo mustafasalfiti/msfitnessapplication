@@ -37,7 +37,7 @@ export default function Cart() {
     let result = 0;
     if (user.cart) {
       user.cart.forEach(({ product, quantity }) => {
-        if(product.amount <= 0) {
+        if (product.amount <= 0) {
           return;
         } else {
           result += product.price * quantity;
@@ -50,50 +50,46 @@ export default function Cart() {
   }, [user]);
   function renderCartElemets() {
     if (user.cart) {
-      return user.cart.map(({ product, quantity }) => (
-        <tr key={product._id}>
-          <td className="item">
-            <img
-              alt={product._id}
-              src={`/uploads/products/${product.image}/${product.image}`}
-            />
-            <div className="product-infomartion">
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-            </div>
-          </td>
-          <td>{product.price * quantity}€</td>
-          <td>
-            {(function() {
-              if (product.amount <= 0) {
-                return <span>Sold out</span>;
-              } else {
-                return (
-                  <div>
-                    <input
-                      onClick={increaseQuantity}
-                      name={product._id}
-                      className="cart_submit"
-                      type="Submit"
-                      value="+"
-                      readOnly
-                    />
-                    <span className="cart_quantity">{quantity}</span>
-                    <input
-                      onClick={decreaseQuantity}
-                      name={product._id}
-                      className="cart_submit"
-                      type="Submit"
-                      value="-"
-                      readOnly
-                    />
-                  </div>
-                );
-              }
-            })()}
-          </td>
-        </tr>
-      ));
+      return user.cart.map(({ product, quantity }) => {
+        if (product.amount > 0) {
+          return (
+            <tr key={product._id}>
+              <td className="item">
+                <img
+                  alt={product._id}
+                  src={`/uploads/products/${product.image}/${product.image}`}
+                />
+                <div className="product-infomartion">
+                  <h3>{product.name}</h3>
+                  <p>{product.description}</p>
+                </div>
+              </td>
+              <td>{product.price * quantity}€</td>
+              <td>
+                <div>
+                  <input
+                    onClick={increaseQuantity}
+                    name={product._id}
+                    className="cart_submit"
+                    type="Submit"
+                    value="+"
+                    readOnly
+                  />
+                  <span className="cart_quantity">{quantity}</span>
+                  <input
+                    onClick={decreaseQuantity}
+                    name={product._id}
+                    className="cart_submit"
+                    type="Submit"
+                    value="-"
+                    readOnly
+                  />
+                </div>
+              </td>
+            </tr>
+          );
+        }
+      });
     } else {
       return;
     }
@@ -104,7 +100,6 @@ export default function Cart() {
       <header>
         <Navbar />
       </header>
-
       <div className="row cart-container">
         <div className="cart-products">
           <table>
@@ -117,19 +112,25 @@ export default function Cart() {
             </thead>
             <tbody>{renderCartElemets()}</tbody>
           </table>
-        </div>
-        <div className="cart-summary">
-          <StripeCheckout
-            stripeKey={process.env.REACT_APP_PK_STRIPE}
-            amount={total * 100}
-            locale="auto"
-            name="MSfitness Studio"
-            currency="EUR"
-            token={token => handleToken(token)}
-            email="payments@MSfitness.com"
-          >
-            <button className="btn btn-primary">Checkout</button>
-          </StripeCheckout>
+          {(function() {
+            if (user.cart.length > 0) {
+              return (
+                <tr>
+                  <StripeCheckout
+                    stripeKey={process.env.REACT_APP_PK_STRIPE}
+                    amount={total * 100}
+                    locale="auto"
+                    name="MSfitness Studio"
+                    currency="EUR"
+                    token={token => handleToken(token)}
+                    email="payments@MSfitness.com"
+                  >
+                    <button className="btn btn-checkout">Pay {total}€</button>
+                  </StripeCheckout>
+                </tr>
+              );
+            }
+          })()}
         </div>
       </div>
     </div>
