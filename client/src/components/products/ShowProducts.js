@@ -11,6 +11,9 @@ export default function ShowProduct() {
   }, [dispatch]);
 
   function handleAddToCart(event) {
+    if (user.type === "admin") {
+      return alert("Admin allows to spectate and detect mistakes");
+    }
     let data = {
       request: "cart",
       productId: event.target.name

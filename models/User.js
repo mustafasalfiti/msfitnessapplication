@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const ResetPassword = require("./ResetPassword");
+const cartSchema = require("./cartSchema");
+const orderedListSchema = require("./orderedListSchema");
 
 const { Schema } = mongoose;
 
@@ -31,37 +33,15 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  notification: [Object],
-  myProducts: [
-    {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
-      },
-      quantity: {
-        type: Number,
-        default: 1
-      }
-    }
-  ],
+  notifications: [Object],
+  ordered_products: [orderedListSchema],
   expire_date: Date,
   branch: String,
   type: {
     type: String,
     default: "member"
   },
-  cart: [
-    {
-      product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
-      },
-      quantity: {
-        type: Number,
-        default: 1
-      }
-    }
-  ],
+  cart: [cartSchema],
   isExpire: {
     type: Boolean,
     default: false

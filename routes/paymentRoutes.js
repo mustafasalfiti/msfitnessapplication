@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const keys = require("../config/keys");
 const stripe = require("stripe")(keys.stripleSecretKey);
 const User = require("../models/User");
@@ -22,14 +23,16 @@ module.exports = app => {
       );
       if (charge.status === "succeeded") {
         const user = await User.findOne({ username });
-        user.cart.forEach(async ({ product, quantity }) => {
+        user.cart.forEach(async ({ product, quantity } , i) => {
           try {
             let foundProduct = await Product.findOne({ _id: product });
             admins.forEach(admin => {
-              admin.notification.push({
-                message: `${user.fullname} had order this product`,
+              admin.notifications.push({
+                message: `${user.fullname} with username : ${user.username} had order this / these product(s)`,
                 product,
-                quantity
+                quantity ,
+                createdDate:new Date() ,
+                _id : new mongoose.Types.ObjectId()
               });
             });
 
@@ -41,11 +44,14 @@ module.exports = app => {
           }
         });
         admins.forEach(admin => admin.save());
-        user.myProducts = user.cart.slice(0);
-        user.cart = [];
-        user.notification.push({
-          message: "Thank you for Buying we will ship it as soon as possible"
+        user.ordered_products.push(...user.cart);
+        user.notifications.push({
+          message: "Thank you for using our online store we will send you a notification as soon as we ship" ,
+          createdDate:new Date() ,
+          _id : new mongoose.Types.ObjectId()
         });
+        user.cart = [];
+
         await user.save();
         res.status(200).send(user);
       }

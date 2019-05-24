@@ -11,9 +11,10 @@ import AdminAddProduct from "../products/AdminAddProduct";
 import AdminShowProducts from "../products/AdminShowProducts";
 import AdminShowProduct from "../products/AdminShowProduct";
 import ShowProducts from "../products/ShowProducts";
-import Cart from '../products/Cart';
+import OrderedProducts from "../products/OrderedProducts";
+import Notifications from "../base/Notifications";
+import Cart from "../products/Cart";
 import Store from "../../context/store";
-
 
 export default function RenderRoutes() {
   const { user } = React.useContext(Store);
@@ -23,8 +24,11 @@ export default function RenderRoutes() {
         <BrowserRouter>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/notifications" component={Notifications} />
+            <Route exact path="/myproducts" component={OrderedProducts} />
+
             <Route exact path="/products" component={ShowProducts} />
+            <Route exact path={`/${user.username}`} component={ShowMember} />
             <Route exact path="/:username" component={Home} />
 
             <Route exact path="/admin/members" component={AdminShowMembers} />
@@ -60,9 +64,10 @@ export default function RenderRoutes() {
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={ShowProducts} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/notifications" component={Notifications} />
+            <Route exact path="/myproducts" component={OrderedProducts} />
             <Route exact path={`/${user.username}`} component={ShowMember} />
             <Route exact path="/:else" component={Home} />
-            <Route exact path="/products/:id" component={Home} />
           </Switch>
         </BrowserRouter>
       );

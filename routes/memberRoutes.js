@@ -99,21 +99,18 @@ module.exports = app => {
   );
 
   app.put(
-    "/member/:username",
+    "/admin/:username",
     requireLogin,
     requireAdmin,
     upload.single("imageFile"),
     async (req, res) => {
-      if (req.body.type) {
-        req.body.type = undefined;
-      }
       if (req.file) {
         req.body.image = req.file.filename;
       }
 
       try {
         const member = await User.findOneAndUpdate(
-          { username: req.params.username },
+          { username: req.params.username, type: "admin" },
           { $set: req.body },
           { new: true }
         );
@@ -127,14 +124,19 @@ module.exports = app => {
   app.put(
     "/members/:username",
     requireLogin,
-    upload.single("image_file"),
+    upload.single("imageFile"),
     async (req, res) => {
       const {
         target,
         productId,
+        noti_id,
         request,
         password,
-        currentPassword
+        currentPassword,
+        fullname,
+        phone_number,
+        address,
+        birthday
       } = req.body;
       try {
         const member = await User.findOne({
@@ -155,10 +157,25 @@ module.exports = app => {
           } else {
             return res.status(401).send("Current Password is Incorrect");
           }
-        } else if (req.file) {
-          member.image = req.file.filename;
-          await member.save();
-          res.status(200).send(member);
+        } else if (request === "edit_user") {
+          let image = member.image;
+          if (req.file) {
+            image = req.file.filename;
+          }
+          const updatedMember = await User.findOneAndUpdate(
+            { username: req.params.username },
+            {
+              $set: {
+                fullname,
+                phone_number,
+                address,
+                birthday,
+                image
+              }
+            },
+            { new: true }
+          );
+          return res.status(200).send(updatedMember);
         } else if (request === "cart") {
           let index = member.cart.findIndex(
             cur => cur.product._id == productId
@@ -175,7 +192,9 @@ module.exports = app => {
             }
           }
           if (index !== -1) {
-            if(member.cart[index].quantity < member.cart[index].product.amount) {
+            if (
+              member.cart[index].quantity < member.cart[index].product.amount
+            ) {
               member.cart[index].quantity++;
               let newMember = await member.save();
               return res.status(200).send(newMember);
@@ -185,11 +204,18 @@ module.exports = app => {
             let newMember = await member.save();
             return res.status(200).send(newMember);
           }
+        } else if (request === "delete_notification") {
+          member.notifications = member.notifications.filter(
+            cur => cur._id != noti_id
+          );
+          await member.save();
+          return res.status(200).send(member);
         }
         return res.status(500).send("Something went wrong");
       } catch (err) {
         console.log(err);
         return res.status(500).send("Something went wrong");
+        console.log(err);
       }
     }
   );

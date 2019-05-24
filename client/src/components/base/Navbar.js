@@ -15,12 +15,13 @@ export default function Navbar() {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
+              <NavLink to="/contactus">Contact us</NavLink>
+            </li>2
+            <li>
               <NavLink to="/products">Products</NavLink>
             </li>
-            <li>
-              <NavLink to="/cart">Cart</NavLink>
-            </li>
-            <li id="hoverli">
+            
+            <li className="hoverli">
               <NavLink to="/">Admin</NavLink>
               <ul>
                 <li>
@@ -29,6 +30,13 @@ export default function Navbar() {
 
                 <li>
                   <NavLink to="/admin/products">Control Products</NavLink>
+                </li>
+                <li>
+                  <NavLink to={`/${user.username}`}>Edit information</NavLink>
+                </li>
+
+                <li>
+                  <NavLink to="/notifications">Notifications</NavLink>
                 </li>
 
                 <li>
@@ -50,16 +58,29 @@ export default function Navbar() {
             <li>
               <NavLink to="/contactus">Contact us</NavLink>
             </li>
-            <li>
-              <NavLink to={`/${user.username}`}>My Profile</NavLink>
+            <li className="hoverli">
+              <NavLink to="/">My Profile</NavLink>
+              <ul>
+                <li>
+                  <NavLink to={`/${user.username}`}>Edit information</NavLink>
+                </li>
+
+                <li>
+                  <NavLink to="/myproducts">Ordered List</NavLink>
+                </li>
+
+                <li>
+                  <NavLink to="/notifications">Notifications</NavLink>
+                </li>
+
+                <li>
+                  <NavLink to="/" onClick={()=>logoutUser(dispatch)}>Logout</NavLink>
+                </li>
+              </ul>
             </li>
 
             <li>
               <NavLink to="/cart">Cart</NavLink>
-            </li>
-
-            <li>
-              <NavLink to="/"  onClick={()=>logoutUser(dispatch)} >Logout</NavLink>
             </li>
           </ul>
         );

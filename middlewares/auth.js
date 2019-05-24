@@ -9,7 +9,7 @@ module.exports = {
       undefined;
     if (token !== undefined) {
       const { _id } = jwt.verify(token, "key12345");
-      const user = await User.findOne({ _id }, "-password").populate('cart.product');
+      const user = await User.findOne({ _id }, "-password").populate('cart.product').populate('ordered_products.product');
       req.user = user;
       next();
     } else {

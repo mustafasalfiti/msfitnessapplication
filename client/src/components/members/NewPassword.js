@@ -11,7 +11,6 @@ export default function NewPassword({ token }) {
     password: "",
     retypedPassword: ""
   });
-
   async function handleSubmit(event) {
     event.preventDefault();
     if (!cleanState) {
