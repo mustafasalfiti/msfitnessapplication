@@ -7,7 +7,6 @@ export const FETCH_USER = "FETCH_USER";
 export const UPDATE_USER = "UPDATE_USER";
 export const PAYMENT_USER = "PAYMENT_USER";
 
-
 // MEMBER
 export const FETCH_MEMBERS = "FETCH_MEMBERS";
 export const FETCH_MEMBER = "FETCH_MEMBER";
@@ -15,15 +14,12 @@ export const CREATE_MEMBER = "CREATE_MEMBER";
 export const UPDATE_MEMBER = "UPDATE_MEMBER";
 export const DELETE_MEMBER = "DELETE_MEMBER";
 
-
-
 // PRODUCT
 export const FETCH_PRODUCTS = "FETCH_PRODUCTS";
 export const FETCH_PRODUCT = "FETCH_PRODUCT";
 export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
-
 
 ///User
 
@@ -43,11 +39,9 @@ export async function loginUser(dispatch, data) {
 }
 
 export async function logoutUser(dispatch) {
-   await axios.get("/auth/logout");
+  await axios.get("/auth/logout");
   dispatch({ type: LOGOUT_USER });
 }
-
-
 
 export async function updateUser(dispatch, values, username) {
   try {
@@ -63,11 +57,10 @@ export async function updateUser(dispatch, values, username) {
 
 //payments #FF0000#FF0000#FF0000#FF0000#FF0000
 
-export async function handlePayment(dispatch , data) {
-  const response = await axios.post("/products/charge" , data);
-  dispatch({type:PAYMENT_USER , data:response.data});
+export async function handlePayment(dispatch, data) {
+  const response = await axios.post("/products/charge", data);
+  dispatch({ type: PAYMENT_USER, data: response.data });
 }
-
 
 //Members #FF0000#FF0000#FF0000#FF0000#FF0000
 
@@ -89,23 +82,9 @@ export async function createMember(dispatch, values, { push }) {
   }
 }
 
-export async function updateMember(dispatch, values, { push }) {
-  const response = await axios.put(
-    `/members/${values.get("username")}`,
-    values,
-    {
-      onUploadProgress: progressEvent =>
-        console.log(
-          "progress = " +
-            Math.round(progressEvent.loaded / progressEvent.total) * 100 +
-            "%"
-        )
-    }
-  );
+export async function updateMember(dispatch, values, username) {
+  const response = await axios.put(`/member/${username}`, values);
   dispatch({ type: UPDATE_MEMBER, data: response.data });
-  if (response.status === 200) {
-    push(`/admin/members/${values.get("username")}`);
-  }
 }
 
 export async function deleteMember(dispatch, username, { push }) {
@@ -115,9 +94,6 @@ export async function deleteMember(dispatch, username, { push }) {
     push("/admin/members");
   }
 }
-
-
-
 
 //Products #FF0000#FF0000#FF0000#FF0000#FF0000
 
@@ -139,10 +115,9 @@ export async function createProduct(dispatch, values, { push }) {
   }
 }
 
-export async function updateProduct(dispatch, values, id , { push }) {
+export async function updateProduct(dispatch, values, id, { push }) {
   const response = await axios.put(`/products/${id}`, values);
   dispatch({ type: UPDATE_PRODUCT, data: response.data });
-
 }
 
 export async function deleteProduct(dispatch, id, { push }) {

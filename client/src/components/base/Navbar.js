@@ -16,7 +16,7 @@ export default function Navbar() {
             </li>
             <li>
               <NavLink to="/contactus">Contact us</NavLink>
-            </li>2
+            </li>
             <li>
               <NavLink to="/products">Products</NavLink>
             </li>

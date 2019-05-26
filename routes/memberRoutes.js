@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Product = require("../models/Product");
+const mongoose = require("mongoose");
 const { requireLogin, requireAdmin } = require("../middlewares/auth");
 const multer = require("multer");
 const fs = require("fs");
@@ -59,6 +60,15 @@ module.exports = app => {
     }
   });
 
+  app.get("/member/:username", requireLogin, requireAdmin, async (req, res) => {
+    try {
+      const member = await User.findOne({ username: req.params.username });
+      res.status(200).send(member);
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  });
+
   app.get("/members/:username", requireLogin, async (req, res) => {
     try {
       const member = await User.findOne(
@@ -99,18 +109,36 @@ module.exports = app => {
   );
 
   app.put(
-    "/admin/:username",
+    "/member/:username",
     requireLogin,
     requireAdmin,
     upload.single("imageFile"),
     async (req, res) => {
+      if (req.body.type) {
+        req.body.type = undefined;
+      }
       if (req.file) {
         req.body.image = req.file.filename;
       }
-
       try {
+        if (req.body.request === "send_notificaton") {
+          const member = await User.findOneAndUpdate(
+            { username: req.params.username },
+            {
+              $push: {
+                notifications: {
+                  message: req.body.notification,
+                  createdDate: new Date(),
+                  _id: new mongoose.Types.ObjectId()
+                }
+              }
+            },
+            { new: true }
+          );
+          return res.status(200).json(member);
+        }
         const member = await User.findOneAndUpdate(
-          { username: req.params.username, type: "admin" },
+          { username: req.params.username },
           { $set: req.body },
           { new: true }
         );

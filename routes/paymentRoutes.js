@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const keys = require("../config/keys");
 const stripe = require("stripe")(keys.stripleSecretKey);
 const User = require("../models/User");
@@ -8,7 +8,6 @@ const { requireLogin } = require("../middlewares/auth");
 module.exports = app => {
   app.post("/products/charge", requireLogin, async (req, res) => {
     const { token, amount, username } = req.body;
-    const admins = await User.find({ type: "admin" });
 
     try {
       const charge = await stripe.charges.create(
@@ -23,19 +22,27 @@ module.exports = app => {
       );
       if (charge.status === "succeeded") {
         const user = await User.findOne({ username });
-        user.cart.forEach(async ({ product, quantity } , i) => {
+        user.cart.forEach(async ({ product, quantity }, i) => {
           try {
             let foundProduct = await Product.findOne({ _id: product });
-            admins.forEach(admin => {
-              admin.notifications.push({
-                message: `${user.fullname} with username : ${user.username} had order this / these product(s)`,
-                product,
-                quantity ,
-                createdDate:new Date() ,
-                _id : new mongoose.Types.ObjectId()
-              });
-            });
-
+            let data = {
+              message: `${user.fullname} with username : ${
+                user.username
+              } had ordered this product`,
+              product:{
+                name:foundProduct.name ,
+                price:foundProduct.price ,
+                image:foundProduct.image
+              },
+              quantity,
+              createdDate: new Date(),
+              _id: new mongoose.Types.ObjectId()
+            };
+           let a =  await User.updateMany(
+              { type: "admin" },
+              { $push: { notifications: data } }
+            );
+            console.log(a);
             foundProduct.amount -= quantity;
             foundProduct.save();
           } catch (err) {
@@ -43,12 +50,12 @@ module.exports = app => {
             console.log(err);
           }
         });
-        admins.forEach(admin => admin.save());
         user.ordered_products.push(...user.cart);
         user.notifications.push({
-          message: "Thank you for using our online store we will send you a notification as soon as we ship" ,
-          createdDate:new Date() ,
-          _id : new mongoose.Types.ObjectId()
+          message:
+            "Thank you for using our online store we will send you a notification as soon as we ship",
+          createdDate: new Date(),
+          _id: new mongoose.Types.ObjectId()
         });
         user.cart = [];
 

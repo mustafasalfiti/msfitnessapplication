@@ -7,8 +7,8 @@ import { handleMemberErrors, imageError } from "../../utils/errors";
 export default function AdminEditMember({
   handleDeleteMember,
   member,
-  editMember,
-  setEditMember,
+  edit,
+  setEdit,
   history
 }) {
   const [imageFile, setImageFile] = React.useState(null);
@@ -44,7 +44,7 @@ export default function AdminEditMember({
     setErrors(handleMemberErrors(values));
   }, [values]);
 
-  async function handleSubmit(event) {
+  function handleSubmit(event) {
     event.preventDefault();
     if (Object.keys(errors).length === 0 && fileError === null) {
       const data = new FormData();
@@ -55,8 +55,8 @@ export default function AdminEditMember({
       if (imageFile) {
         data.append("imageFile", imageFile);
       }
-      updateMember(dispatch, data, history);
-      setEditMember(false);
+      updateMember(dispatch, data, member.username);
+      setEdit(null);
     }
     setShowError(true);
   }
@@ -69,8 +69,22 @@ export default function AdminEditMember({
           src={`/uploads/members/${member.username}/${member.image}`}
         />
         <h4>{member.username}</h4>
-        <button onClick={() => setEditMember(!editMember)}>Edit</button>
-        <br />
+        <button
+          onClick={() =>
+            setEdit(prev => {
+              if (prev === "EditMember") {
+                return null;
+              } else {
+                return "EditMember";
+              }
+            })
+          }
+        >
+          {edit === "EditMember" ? "Cancel" : "Edit Member"}
+        </button>
+        <button onClick={() => setEdit("SendNotification")}>
+          {edit === "SendNotification" ? "Cancel" : "Send Notification"}
+        </button>
         <button onClick={handleDeleteMember}>Delete Member</button>
       </div>
       <div className="eb-right">

@@ -3,6 +3,7 @@ import Navbar from "../base/Navbar";
 import { NavLink } from "react-router-dom";
 import { fetchMembers } from "../../actions";
 import Store from "../../context/store";
+import AdminSendNotification from './AdminSendNotification';
 
 export default function AdminShowMembers() {
   const { dispatch, members } = React.useContext(Store);

@@ -512,14 +512,24 @@ textarea {
   background-color: #504f2c;
 }
 
+
+
 .eb-left button:nth-of-type(1):hover {
   background-color: #afa900;
 }
+
 .eb-left button:nth-of-type(2) {
-  background-color: #502c2c;
+  background-color: rgb(28, 37, 87);
 }
 
 .eb-left button:nth-of-type(2):hover {
+  background-color: #1353cc;
+}
+.eb-left button:nth-of-type(3) {
+  background-color: #502c2c;
+}
+
+.eb-left button:nth-of-type(3):hover {
   background-color: rgb(175, 0, 0);
 }
 
@@ -863,7 +873,8 @@ input[type="number"]::-webkit-outer-spin-button {
   box-shadow:1px 2px 10px rgba(0, 0, 0, 0.171);
   margin-bottom: 20px;
   color:#fff;
-  background-color: #8e44ad;
+  border:1px solid #8e44ad;
+  color:#8e44ad;
 }
 
 .btn-notification {
@@ -873,4 +884,19 @@ height: 0;
 width: 0;
 border:none;
 cursor: pointer;
+}
+
+.notification-content img {
+  width:200px;
+  height:200px;
+}
+
+
+.notification-info {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.notification-info p{
+margin-bottom:5px;
 }
