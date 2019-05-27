@@ -1,10 +1,10 @@
 import React from "react";
 import Store from "../../context/store";
 import { NavLink } from "react-router-dom";
-import { logoutUser } from '../../actions';
+import { logoutUser } from "../../actions";
 
 export default function Navbar() {
-  const { user ,  dispatch } = React.useContext(Store);
+  const { user, dispatch } = React.useContext(Store);
 
   function renderNanlinks() {
     if (user) {
@@ -20,7 +20,7 @@ export default function Navbar() {
             <li>
               <NavLink to="/products">Products</NavLink>
             </li>
-            
+
             <li className="hoverli">
               <NavLink to="/">Admin</NavLink>
               <ul>
@@ -32,6 +32,9 @@ export default function Navbar() {
                   <NavLink to="/admin/products">Control Products</NavLink>
                 </li>
                 <li>
+                  <NavLink to="/admin/sales">Control Sales</NavLink>
+                </li>
+                <li>
                   <NavLink to={`/${user.username}`}>Edit information</NavLink>
                 </li>
 
@@ -40,7 +43,9 @@ export default function Navbar() {
                 </li>
 
                 <li>
-                  <NavLink to="/" onClick={()=>logoutUser(dispatch)}>Logout</NavLink>
+                  <NavLink to="/" onClick={() => logoutUser(dispatch)}>
+                    Logout
+                  </NavLink>
                 </li>
               </ul>
             </li>
@@ -74,7 +79,9 @@ export default function Navbar() {
                 </li>
 
                 <li>
-                  <NavLink to="/" onClick={()=>logoutUser(dispatch)}>Logout</NavLink>
+                  <NavLink to="/" onClick={() => logoutUser(dispatch)}>
+                    Logout
+                  </NavLink>
                 </li>
               </ul>
             </li>

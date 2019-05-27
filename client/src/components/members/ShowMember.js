@@ -27,7 +27,7 @@ export default function ShowMember() {
           dispatch={dispatch}
         />
       );
-    } else if (edit === "Image") {
+    } else if (edit === "EditInformation") {
       return (
         <EditUser
           edit={edit}
@@ -104,8 +104,8 @@ export default function ShowMember() {
             src={`/uploads/members/${user.username}/${user.image}`}
           />
           <h4>{user.username}</h4>
-          <button id="btn_edit" name="Image" onClick={handleClick}>
-            {edit === "Image" ? "Cancel" : "Change Image"}
+          <button id="btn_edit" name="EditInformation" onClick={handleClick}>
+            {edit === "EditInformation" ? "Cancel" : "Edit Information"}
           </button>
           <button id="btn_edit" name="Password" onClick={handleClick}>
             {edit === "Password" ? "Cancel" : "Change Password"}

@@ -12,9 +12,11 @@ import AdminShowProducts from "../products/AdminShowProducts";
 import AdminShowProduct from "../products/AdminShowProduct";
 import ShowProducts from "../products/ShowProducts";
 import OrderedProducts from "../products/OrderedProducts";
+import AdminShowSales from "../sales/AdminShowSales";
 import Notifications from "../base/Notifications";
 import Cart from "../products/Cart";
 import Store from "../../context/store";
+import AdminShowSale from "../sales/AdminShowSale";
 
 export default function RenderRoutes() {
   const { user } = React.useContext(Store);
@@ -32,6 +34,7 @@ export default function RenderRoutes() {
             <Route exact path="/:username" component={Home} />
 
             <Route exact path="/admin/members" component={AdminShowMembers} />
+            <Route exact path="/admin/sales" component={AdminShowSales} />
             <Route exact path="/admin/products" component={AdminShowProducts} />
             <Route exact path="/products/:id" component={Home} />
             <Route
@@ -54,6 +57,7 @@ export default function RenderRoutes() {
               path="/admin/products/:id"
               component={AdminShowProduct}
             />
+            <Route exact path="/admin/sales/:id" component={AdminShowSale} />
           </Switch>
         </BrowserRouter>
       );

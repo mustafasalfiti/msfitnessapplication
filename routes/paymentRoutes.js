@@ -4,6 +4,7 @@ const stripe = require("stripe")(keys.stripleSecretKey);
 const User = require("../models/User");
 const Product = require("../models//Product");
 const { requireLogin } = require("../middlewares/auth");
+const Sale = require('../models/Sale');
 
 module.exports = app => {
   app.post("/products/charge", requireLogin, async (req, res) => {
@@ -42,7 +43,6 @@ module.exports = app => {
               { type: "admin" },
               { $push: { notifications: data } }
             );
-            console.log(a);
             foundProduct.amount -= quantity;
             foundProduct.save();
           } catch (err) {
@@ -50,15 +50,19 @@ module.exports = app => {
             console.log(err);
           }
         });
-        user.ordered_products.push(...user.cart);
         user.notifications.push({
           message:
             "Thank you for using our online store we will send you a notification as soon as we ship",
           createdDate: new Date(),
           _id: new mongoose.Types.ObjectId()
         });
+        let sale = await new Sale({
+          products:user.cart.slice() ,
+          cost:amount / 100 ,
+          buyer:user
+        }).save();
+        user.sales.push(sale);
         user.cart = [];
-
         await user.save();
         res.status(200).send(user);
       }

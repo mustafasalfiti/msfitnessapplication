@@ -34,7 +34,12 @@ const userSchema = new Schema({
     default: Date.now
   },
   notifications: [Object],
-  ordered_products: [orderedListSchema],
+  sales: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Sale"
+    }
+  ],
   expire_date: Date,
   branch: String,
   type: {

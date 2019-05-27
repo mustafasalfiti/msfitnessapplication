@@ -21,6 +21,11 @@ export const CREATE_PRODUCT = "CREATE_PRODUCT";
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
+// SALES
+
+export const FETCH_SALES = "FETCH_SALES";
+export const FETCH_SALE = "FETCH_SALE";
+
 ///User
 
 export async function fetchUser(dispatch) {
@@ -62,7 +67,7 @@ export async function handlePayment(dispatch, data) {
   dispatch({ type: PAYMENT_USER, data: response.data });
 }
 
-//Members #FF0000#FF0000#FF0000#FF0000#FF0000
+//Members #0000FF#0000FF#0000FF#0000FF#0000FF#0000FF#0000FF#0000FF
 
 export async function fetchMembers(dispatch) {
   const response = await axios.get("/members");
@@ -126,4 +131,17 @@ export async function deleteProduct(dispatch, id, { push }) {
   if (response.status === 200) {
     push(`/admin/products`);
   }
+}
+;
+
+//Sales #00FF00#00FF00#00FF00#00FF00#00FF00#00FF00#00FF00
+
+export async function fetchSales(dispatch) {
+  const response = await axios.get("/sales");
+  dispatch({ type: FETCH_SALES, data: response.data });
+}
+
+export async function fetchSale(dispatch, id) {
+  const response = await axios.get(`/sales/${id}`);
+  dispatch({ type: FETCH_SALE, data: response.data });
 }

@@ -15,9 +15,10 @@ export default function App() {
   const [store, dispatch] = React.useReducer(reducer, {
     user: null,
     products: null,
-    members:null
+    members:null ,
+    sales:null
   });
-  const { members, products, user } = store;
+  const { members, sales , products, user } = store;
   
   React.useEffect(() => {
     fetchUser(dispatch);
@@ -25,7 +26,7 @@ export default function App() {
 
   return (
     <div>
-      <Store.Provider value={{ products, members, user, dispatch }}>
+      <Store.Provider value={{ sales , products, members, user, dispatch }}>
         {isDone ? <RenderRoutes /> : ""}
       </Store.Provider>
     </div>
