@@ -7,11 +7,12 @@ import AdminAddMember from "../members/AdminAddMember";
 import AdminShowMember from "../members/AdminShowMember";
 import ShowMember from "../members/ShowMember";
 import ForgetPassword from "../members/ForgetPassword";
+import ShowSales from "../members/ShowSales";
+import ShowSale from "../members/ShowSale";
 import AdminAddProduct from "../products/AdminAddProduct";
 import AdminShowProducts from "../products/AdminShowProducts";
 import AdminShowProduct from "../products/AdminShowProduct";
 import ShowProducts from "../products/ShowProducts";
-import OrderedProducts from "../products/OrderedProducts";
 import AdminShowSales from "../sales/AdminShowSales";
 import Notifications from "../base/Notifications";
 import Cart from "../products/Cart";
@@ -27,8 +28,6 @@ export default function RenderRoutes() {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/notifications" component={Notifications} />
-            <Route exact path="/myproducts" component={OrderedProducts} />
-
             <Route exact path="/products" component={ShowProducts} />
             <Route exact path={`/${user.username}`} component={ShowMember} />
             <Route exact path="/:username" component={Home} />
@@ -69,9 +68,10 @@ export default function RenderRoutes() {
             <Route exact path="/products" component={ShowProducts} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/notifications" component={Notifications} />
-            <Route exact path="/myproducts" component={OrderedProducts} />
+            <Route exact path="/myproducts" component={ShowSales} />
             <Route exact path={`/${user.username}`} component={ShowMember} />
             <Route exact path="/:else" component={Home} />
+            <Route exact path="/myproducts/:id" component={ShowSale} />
           </Switch>
         </BrowserRouter>
       );

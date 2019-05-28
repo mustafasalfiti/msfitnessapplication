@@ -35,11 +35,11 @@ export default function AdminShowMember({ history }) {
                 src={`/uploads/members/${member.username}/${member.image}`}
               />
               <h4>{member.username}</h4>
-              <button onClick={() => setEdit("EditMember")}>Edit</button>
-              <button onClick={() => setEdit("SendNotification")}>
+              <button className="btn-primary btn-edit" onClick={() => setEdit("EditMember")}>Edit</button>
+              <button className="btn-primary btn-blue" onClick={() => setEdit("SendNotification")}>
                 Send Notification
               </button>
-              <button onClick={handleDeleteMember}>Delete Member</button>
+              <button className="btn-primary btn-danger" onClick={handleDeleteMember}>Delete Member</button>
             </div>
             <div className="eb-right">
               <p>

@@ -4,7 +4,7 @@ const stripe = require("stripe")(keys.stripleSecretKey);
 const User = require("../models/User");
 const Product = require("../models//Product");
 const { requireLogin } = require("../middlewares/auth");
-const Sale = require('../models/Sale');
+const Sale = require("../models/Sale");
 
 module.exports = app => {
   app.post("/products/charge", requireLogin, async (req, res) => {
@@ -30,16 +30,16 @@ module.exports = app => {
               message: `${user.fullname} with username : ${
                 user.username
               } had ordered this product`,
-              product:{
-                name:foundProduct.name ,
-                price:foundProduct.price ,
-                image:foundProduct.image
+              product: {
+                name: foundProduct.name,
+                price: foundProduct.price,
+                image: foundProduct.image
               },
               quantity,
               createdDate: new Date(),
               _id: new mongoose.Types.ObjectId()
             };
-           let a =  await User.updateMany(
+            await User.updateMany(
               { type: "admin" },
               { $push: { notifications: data } }
             );
@@ -57,9 +57,9 @@ module.exports = app => {
           _id: new mongoose.Types.ObjectId()
         });
         let sale = await new Sale({
-          products:user.cart.slice() ,
-          cost:amount / 100 ,
-          buyer:user
+          products: user.cart.slice(),
+          cost: amount / 100,
+          buyer: user
         }).save();
         user.sales.push(sale);
         user.cart = [];

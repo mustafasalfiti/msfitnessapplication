@@ -25,6 +25,8 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 export const FETCH_SALES = "FETCH_SALES";
 export const FETCH_SALE = "FETCH_SALE";
+export const UPDATE_SALE = "UPDATE_SALE";
+
 
 ///User
 
@@ -144,4 +146,9 @@ export async function fetchSales(dispatch) {
 export async function fetchSale(dispatch, id) {
   const response = await axios.get(`/sales/${id}`);
   dispatch({ type: FETCH_SALE, data: response.data });
+}
+
+export async function updateSale(dispatch, data , id) {
+  const response = await axios.put(`/sales/${id}` , data);
+  dispatch({ type: UPDATE_SALE, data: response.data });
 }

@@ -104,10 +104,10 @@ export default function ShowMember() {
             src={`/uploads/members/${user.username}/${user.image}`}
           />
           <h4>{user.username}</h4>
-          <button id="btn_edit" name="EditInformation" onClick={handleClick}>
+          <button className="btn-primary btn-edit" name="EditInformation" onClick={handleClick}>
             {edit === "EditInformation" ? "Cancel" : "Edit Information"}
           </button>
-          <button id="btn_edit" name="Password" onClick={handleClick}>
+          <button className="btn-primary btn-danger" name="Password" onClick={handleClick}>
             {edit === "Password" ? "Cancel" : "Change Password"}
           </button>
         </div>

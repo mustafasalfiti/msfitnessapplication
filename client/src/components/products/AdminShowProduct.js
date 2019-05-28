@@ -31,9 +31,8 @@ export default function AdminShowProduct({ history }) {
             <div className="eb-left">
               <img alt={`${product.name}`} src={`/uploads/products/${product.image}/${product.image}`} />
               <h4>{product.name}</h4>
-              <button onClick={() => setEditProduct(!editProduct)}>Edit</button>
-              <br />
-              <button onClick={handleDeleteProduct}>Delete Product</button>
+              <button className="btn-primary btn-edit" onClick={() => setEditProduct(!editProduct)}>Edit</button>
+              <button className="btn-primary btn-danger" onClick={handleDeleteProduct}>Delete Product</button>
             </div>
             <div className="eb-right">
               <p>

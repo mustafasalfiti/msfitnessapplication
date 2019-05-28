@@ -495,7 +495,7 @@ textarea {
   margin: 5px 0;
 }
 
-.eb-left button {
+.btn-primary {
   margin-bottom: 10px;
   width: 150px;
   height: 25px;
@@ -508,26 +508,24 @@ textarea {
   transition: all 0.1s ease-in-out;
 }
 
-.eb-left button:nth-of-type(1) {
+.btn-edit {
   background-color: #504f2c;
 }
-
-.eb-left button:nth-of-type(1):hover {
+.btn-edit:hover {
   background-color: #afa900;
 }
-
-.eb-left button:nth-of-type(2) {
+.btn-blue {
   background-color: rgb(28, 37, 87);
 }
 
-.eb-left button:nth-of-type(2):hover {
+.btn-blue:hover {
   background-color: #1353cc;
 }
-.eb-left button:nth-of-type(3) {
+.btn-danger {
   background-color: #502c2c;
 }
 
-.eb-left button:nth-of-type(3):hover {
+.btn-danger:hover {
   background-color: rgb(175, 0, 0);
 }
 
@@ -535,18 +533,6 @@ textarea {
   width: 200px;
   height: 30px;
   margin-top: 5px;
-}
-
-.eb-left button {
-  margin-bottom: 10px;
-  width: 150px;
-  height: 25px;
-  cursor: pointer;
-  background-color: #2c3e50;
-  color: white;
-  font-weight: 700;
-  font-family: inherit;
-  border: none;
 }
 
 .eb-left img {
@@ -895,6 +881,13 @@ input[type="number"]::-webkit-outer-spin-button {
   color: #757306 !important ;
 }
 
+.Shipped {
+  color: #06750f !important ;
+}
+
+.Recieved {
+  color: #4e4e4e !important ;
+}
 .sale {
   height: 100vh;
   width: 100vw;
@@ -953,4 +946,12 @@ input[type="number"]::-webkit-outer-spin-button {
 .sale-container a:hover {
   color: #2c3e50;
   font-size: 100%;
+}
+
+.sale-info button {
+  display:block;
+  margin-top:10px;
+  width:200px;
+  height: 30px;
+  font-size:100%;
 }

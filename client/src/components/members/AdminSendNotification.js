@@ -6,7 +6,7 @@ export default function AdminSendNotification({
   member,
   edit,
   setEdit,
-  dispatch ,
+  dispatch
 }) {
   const [notification, setNotification] = React.useState("");
 
@@ -15,13 +15,13 @@ export default function AdminSendNotification({
     if (notification.length <= 7) {
       return alert("You Must at least write more than 2 words");
     } else {
-      const data ={
-        request:"send_notificaton" ,
+      const data = {
+        request: "send_notificaton",
         notification
-      }
+      };
       updateMember(dispatch, data, member.username);
-      alert('Notification Sent!!');
-      setEdit(null)
+      alert("Notification Sent!!");
+      setEdit(null);
     }
   }
   return (
@@ -32,10 +32,14 @@ export default function AdminSendNotification({
           src={`/uploads/members/${member.username}/${member.image}`}
         />
         <h4>{member.username}</h4>
-        <button onClick={() => setEdit("EditMember")}>
+        <button
+          className="btn-primary btn-edit"
+          onClick={() => setEdit("EditMember")}
+        >
           {edit === "EditMember" ? "Cancel" : "Edit"}
         </button>
         <button
+          className="btn-primary btn-blue"
           onClick={() =>
             setEdit(prev => {
               if (prev === "SendNotification") {
@@ -48,13 +52,19 @@ export default function AdminSendNotification({
         >
           {edit === "SendNotification" ? "Cancel" : "SendNotification"}
         </button>
-        <button onClick={handleDeleteMember}>Delete Member</button>
+        <button className="btn-primary btn-danger" onClick={handleDeleteMember}>
+          Delete Member
+        </button>
       </div>
       <div className="eb-right">
         <form onSubmit={handleSubmit}>
           <div className="label-input">
-          <label>Send Notification : </label>
-            <input type="text" name="image_file" onChange={(e)=>setNotification(e.target.value)} />
+            <label>Send Notification : </label>
+            <input
+              type="text"
+              name="image_file"
+              onChange={e => setNotification(e.target.value)}
+            />
           </div>
           <input type="submit" value="Send" />
         </form>

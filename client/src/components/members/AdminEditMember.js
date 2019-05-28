@@ -70,6 +70,7 @@ export default function AdminEditMember({
         />
         <h4>{member.username}</h4>
         <button
+        className="btn-primary btn-edit"
           onClick={() =>
             setEdit(prev => {
               if (prev === "EditMember") {
@@ -82,10 +83,12 @@ export default function AdminEditMember({
         >
           {edit === "EditMember" ? "Cancel" : "Edit Member"}
         </button>
-        <button onClick={() => setEdit("SendNotification")}>
+        <button className="btn-primary btn-blue" onClick={() => setEdit("SendNotification")}>
           {edit === "SendNotification" ? "Cancel" : "Send Notification"}
         </button>
-        <button onClick={handleDeleteMember}>Delete Member</button>
+        <button 
+        className="btn-primary btn-danger"
+        onClick={handleDeleteMember}>Delete Member</button>
       </div>
       <div className="eb-right">
         <form onSubmit={handleSubmit}>

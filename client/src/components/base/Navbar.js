@@ -71,7 +71,7 @@ export default function Navbar() {
                 </li>
 
                 <li>
-                  <NavLink to="/myproducts">Ordered List</NavLink>
+                  <NavLink to="/myproducts">Purchased products</NavLink>
                 </li>
 
                 <li>

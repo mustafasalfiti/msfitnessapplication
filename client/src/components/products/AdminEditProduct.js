@@ -67,9 +67,8 @@ export default function AdminEditProduct({
           src={`/uploads/products/${product.image}/${product.image}`}
         />
         <h4>{product.name}</h4>
-        <button onClick={() => setEditProduct(!editProduct)}>Edit</button>
-        <br />
-        <button onClick={handleDeleteProduct}>Delete Product</button>{" "}
+        <button className="btn-primary btn-edit" onClick={() => setEditProduct(!editProduct)}>{editProduct ? 'Cancel' : 'Edit'}</button>
+        <button className="btn-primary btn-danger" onClick={handleDeleteProduct}>Delete Product</button>{" "}
       </div>
       <div className="eb-right">
         <form onSubmit={handleSubmit}>
