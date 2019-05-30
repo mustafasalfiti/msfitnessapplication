@@ -6,7 +6,6 @@ import { fetchSales } from "../../actions";
 
 export default function AdminShowSales() {
   const { sales, dispatch } = React.useContext(Store);
-  console.log(sales);
   React.useEffect(() => {
     fetchSales(dispatch);
   }, [dispatch]);
