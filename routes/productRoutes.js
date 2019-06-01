@@ -47,7 +47,7 @@ const upload = multer({
 });
 
 module.exports = app => {
-  app.get("/products", requireLogin, async (req, res) => {
+  app.get("/api/products", requireLogin, async (req, res) => {
     try {
       const products = await Product.find({});
       res.status(200).json(products);
@@ -57,7 +57,7 @@ module.exports = app => {
   });
 
   app.post(
-    "/products",
+    "/api/products",
     requireLogin,
     requireAdmin,
     upload.single("imageFile"),
@@ -76,7 +76,7 @@ module.exports = app => {
     }
   );
 
-  app.get("/products/:id", requireLogin, async (req, res) => {
+  app.get("/api/products/:id", requireLogin, async (req, res) => {
     try {
       const product = await Product.findOne({ _id: req.params.id });
       res.status(200).json(product);
@@ -86,7 +86,7 @@ module.exports = app => {
   });
 
   app.put(
-    "/products/:id",
+    "/api/products/:id",
     requireLogin,
     requireAdmin,
     upload.single("imageFile"),
@@ -107,7 +107,7 @@ module.exports = app => {
     }
   );
 
-  app.delete("/products/:id", requireLogin, requireAdmin, async (req, res) => {
+  app.delete("/api/products/:id", requireLogin, requireAdmin, async (req, res) => {
     try {
       let product = await Product.findOneAndRemove({ _id: req.params.id });
       const url = "/../client/public/uploads/products/";

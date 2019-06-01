@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const Product = require("../models/Product");
 const mongoose = require("mongoose");
 const { requireLogin, requireAdmin } = require("../middlewares/auth");
 const multer = require("multer");
@@ -51,7 +50,7 @@ const upload = multer({
 });
 
 module.exports = app => {
-  app.get("/members", requireLogin, requireAdmin, async (req, res) => {
+  app.get("/api/members", requireLogin, requireAdmin, async (req, res) => {
     try {
       const members = await User.filterMembers();
       res.status(200).send(members);
@@ -60,7 +59,7 @@ module.exports = app => {
     }
   });
 
-  app.get("/member/:username", requireLogin, requireAdmin, async (req, res) => {
+  app.get("/api/members/:username", requireLogin, requireAdmin, async (req, res) => {
     try {
       const member = await User.findOne({ username: req.params.username });
       res.status(200).send(member);
@@ -69,20 +68,8 @@ module.exports = app => {
     }
   });
 
-  app.get("/members/:username", requireLogin, async (req, res) => {
-    try {
-      const member = await User.findOne(
-        { username: req.params.username },
-        "-password"
-      );
-      res.status(200).json(member);
-    } catch (err) {
-      res.status(500).send(err);
-    }
-  });
-
   app.post(
-    "/members",
+    "/api/members",
     requireLogin,
     requireAdmin,
     upload.single("imageFile"),
@@ -109,7 +96,7 @@ module.exports = app => {
   );
 
   app.put(
-    "/member/:username",
+    "/api/members/:username",
     requireLogin,
     requireAdmin,
     upload.single("imageFile"),
@@ -149,107 +136,8 @@ module.exports = app => {
     }
   );
 
-  app.put(
-    "/members/:username",
-    requireLogin,
-    upload.single("imageFile"),
-    async (req, res) => {
-      const {
-        target,
-        productId,
-        noti_id,
-        request,
-        password,
-        currentPassword,
-        fullname,
-        phone_number,
-        address,
-        birthday
-      } = req.body;
-      try {
-        const member = await User.findOne({
-          username: req.params.username
-        }).populate({
-          path: "cart.product",
-          populate: {
-            path: "product"
-          }
-        });
-        const product = await Product.findOne({ _id: productId });
-        if (password) {
-          const isTrue = member.auth.comparePassword(currentPassword);
-          if (isTrue) {
-            member.password = member.auth.generateSalts(password);
-            await member.save();
-            return res.status(200).send(member);
-          } else {
-            return res.status(401).send("Current Password is Incorrect");
-          }
-        } else if (request === "edit_user") {
-          let image = member.image;
-          if (req.file) {
-            image = req.file.filename;
-          }
-          const updatedMember = await User.findOneAndUpdate(
-            { username: req.params.username },
-            {
-              $set: {
-                fullname,
-                phone_number,
-                address,
-                birthday,
-                image
-              }
-            },
-            { new: true }
-          );
-          return res.status(200).send(updatedMember);
-        } else if (request === "cart") {
-          let index = member.cart.findIndex(
-            cur => cur.product._id == productId
-          );
-          if (target === "decreaseQuantity") {
-            if (member.cart[index].quantity === 1) {
-              member.cart.splice(index, 1);
-              let newMember = await member.save();
-              return res.status(200).send(newMember);
-            } else {
-              member.cart[index].quantity--;
-              let newMember = await member.save();
-              return res.status(200).send(newMember);
-            }
-          }
-          if (index !== -1) {
-            if (
-              member.cart[index].quantity < member.cart[index].product.amount
-            ) {
-              member.cart[index].quantity++;
-              let newMember = await member.save();
-              return res.status(200).send(newMember);
-            }
-          } else {
-            member.cart.push({ product, quantity: 1 });
-            let newMember = await member.save();
-            return res.status(200).send(newMember);
-          }
-        } else if (request === "delete_notification") {
-          member.notifications = member.notifications.filter(
-            cur => cur._id != noti_id
-          );
-          await member.save();
-          return res.status(200).send(member);
-        }
-        return res.status(500).send("Something went wrong");
-      } catch (err) {
-        console.log(err);
-        return res.status(500).send("Something went wrong");
-        console.log(err);
-      }
-    }
-  );
-
   app.delete(
-    "/members/:username",
+    "/api/members/:username",
     requireLogin,
     requireAdmin,
     async (req, res) => {

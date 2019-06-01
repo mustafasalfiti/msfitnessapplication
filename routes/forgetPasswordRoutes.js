@@ -9,7 +9,7 @@ const nexmo = new Nexmo({
 });
 
 module.exports = app => {
-  app.post("/forgetpassword", async (req, res) => {
+  app.post("/api/forgetpassword", async (req, res) => {
     const { phone_number } = req.body;
     try {
       const user = await User.findOne({ phone_number });
@@ -50,7 +50,7 @@ module.exports = app => {
     }
   });
 
-  app.post("/resetpassword", async (req, res) => {
+  app.post("/api/resetpassword", async (req, res) => {
     const { code, phone_number } = req.body;
     try {
       const user = await User.findOne({ phone_number }).populate(

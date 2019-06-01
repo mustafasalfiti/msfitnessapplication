@@ -7,7 +7,7 @@ const { requireLogin } = require("../middlewares/auth");
 const Sale = require("../models/Sale");
 
 module.exports = app => {
-  app.post("/products/charge", requireLogin, async (req, res) => {
+  app.post("/api/products/charge", requireLogin, async (req, res) => {
     const { token, amount, username } = req.body;
 
     try {

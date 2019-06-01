@@ -50,9 +50,9 @@ export async function logoutUser(dispatch) {
   dispatch({ type: LOGOUT_USER });
 }
 
-export async function updateUser(dispatch, values, username) {
+export async function updateUser(dispatch, values) {
   try {
-    const response = await axios.put(`/members/${username}`, values);
+    const response = await axios.put(`/auth/edit`, values);
     if (response.status === 200) {
       dispatch({ type: UPDATE_USER, data: response.data });
       return 200;
@@ -65,24 +65,24 @@ export async function updateUser(dispatch, values, username) {
 //payments #FF0000#FF0000#FF0000#FF0000#FF0000
 
 export async function handlePayment(dispatch, data) {
-  const response = await axios.post("/products/charge", data);
+  const response = await axios.post("/api/products/charge", data);
   dispatch({ type: PAYMENT_USER, data: response.data });
 }
 
 //Members #0000FF#0000FF#0000FF#0000FF#0000FF#0000FF#0000FF#0000FF
 
 export async function fetchMembers(dispatch) {
-  const response = await axios.get("/members");
+  const response = await axios.get("/api/members");
   dispatch({ type: FETCH_MEMBERS, data: response.data });
 }
 
 export async function fetchMember(dispatch, username) {
-  const response = await axios.get(`/member/${username}`);
+  const response = await axios.get(`/api/members/${username}`);
   dispatch({ type: FETCH_MEMBER, data: response.data });
 }
 
 export async function createMember(dispatch, values, { push }) {
-  const response = await axios.post("/members", values);
+  const response = await axios.post("/api/members", values);
   dispatch({ type: CREATE_MEMBER, data: response.data });
   if (response.status === 200) {
     push("/admin/members");
@@ -90,12 +90,12 @@ export async function createMember(dispatch, values, { push }) {
 }
 
 export async function updateMember(dispatch, values, username) {
-  const response = await axios.put(`/member/${username}`, values);
+  const response = await axios.put(`/api/members/${username}`, values);
   dispatch({ type: UPDATE_MEMBER, data: response.data });
 }
 
 export async function deleteMember(dispatch, username, { push }) {
-  const response = await axios.delete(`/members/${username}`);
+  const response = await axios.delete(`/api/members/${username}`);
   dispatch({ type: DELETE_MEMBER, data: response.data });
   if (response.status === 200) {
     push("/admin/members");
@@ -105,17 +105,17 @@ export async function deleteMember(dispatch, username, { push }) {
 //Products #FF0000#FF0000#FF0000#FF0000#FF0000
 
 export async function fetchProducts(dispatch) {
-  const response = await axios.get("/products");
+  const response = await axios.get("/api/products");
   dispatch({ type: FETCH_PRODUCTS, data: response.data });
 }
 
 export async function fetchProduct(dispatch, id) {
-  const response = await axios.get(`/products/${id}`);
+  const response = await axios.get(`/api/products/${id}`);
   dispatch({ type: FETCH_PRODUCT, data: response.data });
 }
 
 export async function createProduct(dispatch, values, { push }) {
-  const response = await axios.post("/products", values);
+  const response = await axios.post("/api/products", values);
   dispatch({ type: CREATE_PRODUCT, data: response.data });
   if (response.status === 200) {
     push("/admin/products");
@@ -123,12 +123,12 @@ export async function createProduct(dispatch, values, { push }) {
 }
 
 export async function updateProduct(dispatch, values, id, { push }) {
-  const response = await axios.put(`/products/${id}`, values);
+  const response = await axios.put(`/api/products/${id}`, values);
   dispatch({ type: UPDATE_PRODUCT, data: response.data });
 }
 
 export async function deleteProduct(dispatch, id, { push }) {
-  const response = await axios.delete(`/products/${id}`);
+  const response = await axios.delete(`/api/products/${id}`);
   dispatch({ type: DELETE_PRODUCT, data: response.data });
   if (response.status === 200) {
     push(`/admin/products`);
@@ -139,16 +139,16 @@ export async function deleteProduct(dispatch, id, { push }) {
 //Sales #00FF00#00FF00#00FF00#00FF00#00FF00#00FF00#00FF00
 
 export async function fetchSales(dispatch) {
-  const response = await axios.get("/sales");
+  const response = await axios.get("/api/sales");
   dispatch({ type: FETCH_SALES, data: response.data });
 }
 
 export async function fetchSale(dispatch, id) {
-  const response = await axios.get(`/sales/${id}`);
+  const response = await axios.get(`/api/sales/${id}`);
   dispatch({ type: FETCH_SALE, data: response.data });
 }
 
 export async function updateSale(dispatch, data , id) {
-  const response = await axios.put(`/sales/${id}` , data);
+  const response = await axios.put(`/api/sales/${id}` , data);
   dispatch({ type: UPDATE_SALE, data: response.data });
 }

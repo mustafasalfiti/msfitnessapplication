@@ -3,7 +3,7 @@ const User = require("../models/User");
 const mongoose = require("mongoose");
 const { requireLogin, requireAdmin } = require("../middlewares/auth");
 module.exports = app => {
-  app.get("/sales", requireLogin, requireAdmin, async (req, res) => {
+  app.get("/api/sales", requireLogin, requireAdmin, async (req, res) => {
     try {
       const sales = await Sale.find({})
         .populate("products.product")
@@ -15,7 +15,7 @@ module.exports = app => {
     }
   });
 
-  app.post("/sales", requireLogin, requireAdmin, async (req, res) => {
+  app.post("/api/sales", requireLogin, requireAdmin, async (req, res) => {
     try {
       const sale = await new Sale(req.body);
       await sale.save();
@@ -25,7 +25,7 @@ module.exports = app => {
     }
   });
 
-  app.get("/sales/:id", requireLogin, requireAdmin, async (req, res) => {
+  app.get("/api/sales/:id", requireLogin, requireAdmin, async (req, res) => {
     try {
       const sale = await Sale.findOne({ _id: req.params.id })
         .populate("products.product")
@@ -36,7 +36,7 @@ module.exports = app => {
     }
   });
 
-  app.put("/sales/:id", requireLogin, requireAdmin, async (req, res) => {
+  app.put("/api/sales/:id", requireLogin, requireAdmin, async (req, res) => {
     try {
       const sale = await Sale.findOneAndUpdate(
         { _id: req.params.id },
@@ -66,7 +66,7 @@ module.exports = app => {
     }
   });
 
-  app.delete("/sale/:id", requireLogin, requireAdmin, async (req, res) => {
+  app.delete("/api/sale/:id", requireLogin, requireAdmin, async (req, res) => {
     try {
       await Sale.findOneAndRemove({ _id: req.params.id });
       res.status(200).json("Successfully Deleted");
