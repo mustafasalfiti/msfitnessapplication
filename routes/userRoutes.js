@@ -100,6 +100,13 @@ module.exports = app => {
     }
   });
 
+  app.post('/auth' , async(req , res)=> {
+   let user =  await new User(req.body)
+    user.password = user.auth.generateSalts(req.body.password);
+    await user.save();
+    res.status(200).send('Registered');
+  })
+
   app.put(
     "/auth/edit",
     requireLogin,
