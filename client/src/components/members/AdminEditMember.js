@@ -39,7 +39,6 @@ export default function AdminEditMember({
       setFileError(imageFileError);
     }
   }
-
   React.useEffect(() => {
     setErrors(handleMemberErrors(values));
   }, [values]);

@@ -67,7 +67,7 @@ module.exports = app => {
             httpOnly: true // that means we cannot get this cookie from document.cookie
           })
           .send(user);
-      } else if (isTrue && user.type === "user") {
+      } else if (isTrue && user.type === "member") {
         return res
           .cookie("omega-access", token, {
             maxAge: 1000 * 60 * 60 * 24 * 15,

@@ -46,7 +46,7 @@ export default function ShowMember() {
             Phone Number: <span>{user.phone_number}</span>
           </p>
           <p>
-            Birthday: <span>{user.birthday.substring(0, 10)}</span>
+            Birthday: <span>{user.birthday ? user.birthday.substring(0, 10) : 'No Info'}</span>
           </p>
           <p>
             Gender: <span>{user.gender}</span>

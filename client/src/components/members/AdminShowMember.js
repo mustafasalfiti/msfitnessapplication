@@ -14,7 +14,7 @@ export default function AdminShowMember({ history }) {
     if (members === null || !members[username]) {
       fetchMember(dispatch, username);
     }
-  }, [dispatch , username]);
+  }, [dispatch, username]);
 
   function handleDeleteMember() {
     let promptValue = prompt("Please type 'yes' in order to delete member");
@@ -85,28 +85,28 @@ export default function AdminShowMember({ history }) {
               </div>
             </div>
           );
+        } else if (edit === "EditMember") {
+          return (
+            <AdminEditMember
+              member={member}
+              edit={edit}
+              setEdit={setEdit}
+              history={history}
+              handleDeleteMember={handleDeleteMember}
+            />
+          );
+        } else if (edit === "SendNotification") {
+          return (
+            <AdminSendNotification
+              member={member}
+              edit={edit}
+              setEdit={setEdit}
+              history={history}
+              dispatch={dispatch}
+              handleDeleteMember={handleDeleteMember}
+            />
+          );
         }
-      } else if (edit === "EditMember") {
-        return (
-          <AdminEditMember
-            member={member}
-            edit={edit}
-            setEdit={setEdit}
-            history={history}
-            handleDeleteMember={handleDeleteMember}
-          />
-        );
-      } else if (edit === "SendNotification") {
-        return (
-          <AdminSendNotification
-            member={member}
-            edit={edit}
-            setEdit={setEdit}
-            history={history}
-            dispatch={dispatch}
-            handleDeleteMember={handleDeleteMember}
-          />
-        );
       }
     } else {
       return <div>Loading</div>;

@@ -14,7 +14,7 @@ export default function EditUser({ edit, dispatch, user, setEdit }) {
     fullname: user.fullname,
     phone_number: user.phone_number,
     address: user.address,
-    birthday: user.birthday.substring(0, 10),
+    birthday: user.birthday ? user.birthday.substring(0, 10) : ''
   });
 
   function onImageChange(event) {
