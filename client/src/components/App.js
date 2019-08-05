@@ -24,6 +24,7 @@ export default function App() {
     fetchUser(dispatch);
   }, []);
 
+  console.log(user);
   return (
     <div>
       <Store.Provider value={{ sales , products, members, user, dispatch }}>

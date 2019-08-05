@@ -8,15 +8,12 @@ const Product = require('../models/Product');
 
 storageMember = multer.diskStorage({
   filename: (req, file, cb) => {
-    const username = req.params.username || req.body.username;
+    const username = req.params.username || req.body.username || req.user.username
     cb(null, username + Date.now());
   },
   destination: (req, file, cb) => {
     const url = "/../client/public/uploads/members/";
-    const username = req.params.username || req.body.username;
-    if (username.length < 5) {
-      return cb(null);
-    }
+    const username = req.params.username || req.body.username || req.user.username
     const dir = path.join(`${__dirname}${url}${username}`);
     try {
       if (fs.existsSync(dir)) {
@@ -55,7 +52,14 @@ module.exports = app => {
     try {
       let { username, password } = req.body;
       username = username.toLowerCase();
-      const user = await User.findOne({ username });
+      const user =  await User.findOne({ username }, "-password")
+      .populate("cart.product")
+      .populate({
+        path: "sales",
+        populate: {
+          path: "products.product"
+        }
+      });
       const isTrue = user.auth.comparePassword(password);
       const token = user.auth.generateAuthToken();
 
@@ -80,7 +84,7 @@ module.exports = app => {
       }
     } catch (err) {
       console.log(err);
-      res.status(500).send(err);
+      res.status(422).send(err);
     }
   });
 
@@ -127,10 +131,10 @@ module.exports = app => {
       try {
         const user = await User.findOne({
           username: req.user.username
-        }).populate({
-          path: "cart.product",
-          populate: {
-            path: "product"
+        }).populate("cart.product").populate({
+          path:"sales" , 
+          populate : {
+            path:'products.product'
           }
         });
         const product = await Product.findOne({ _id: productId });
@@ -200,12 +204,17 @@ module.exports = app => {
         return res.status(500).send("Something went wrong");
       } catch (err) {
         console.log(err);
-  
         return res.status(500).send("Something went wrong");
       }
     }
   );
 
+  app.post('/auth/register' , async (req , res)=> {
+    let user = await new User(req.body)
+    user.password = user.auth.generateSalts(user.password);
+    await user.save();
+    res.status(200).send(user);
+  }) 
   app.get("/auth/me", requireLogin, (req, res) => {
     res.status(200).json(req.user);
   });

@@ -64,11 +64,20 @@ module.exports = app => {
         user.sales.push(sale);
         user.cart = [];
         await user.save();
+        await user
+          .populate({
+            path: "sales",
+            populate: {
+              path: "products.product"
+            }
+          })
+          .execPopulate();
+        console.log(user);
         res.status(200).send(user);
       }
     } catch (err) {
-      res.status(500).send(err);
       console.log(err);
+      return res.status(500).send(err);
     }
   });
 };
